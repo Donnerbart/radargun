@@ -301,7 +301,7 @@
                            <arg value="jdg62" />
                         </java>
 
-                        <echo message="Packaging the framework, and the following plugins: hazelcast2, hazelcast30, hazelcast31, hazelcast32rc1, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, terracotta3" />
+                        <echo message="Packaging the framework, and the following plugins: hazelcast2, hazelcast30, hazelcast31, hazelcast32rc1, hazelcast32rc2, hazelcast32rc3, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, terracotta3" />
 
                         <copy todir="${distribution.artifact}/plugins/hazelcast2">
                            <fileset dir="plugins/hazelcast2/target/distribution/plugin-hazelcast2-bin/plugin-hazelcast2">

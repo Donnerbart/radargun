@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config hazelcast-config-3.0.xsd"
+<hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config
+                               http://www.hazelcast.com/schema/config/hazelcast-config-3.1.xsd"
            xmlns="http://www.hazelcast.com/schema/config"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
@@ -29,6 +30,7 @@
     </executor-service>
 
     <map name="default">
+        <statistics-enabled>false</statistics-enabled>
         <backup-count>1</backup-count>
         <async-backup-count>0</async-backup-count>
         <time-to-live-seconds>0</time-to-live-seconds>
