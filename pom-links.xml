@@ -328,6 +328,7 @@
                            <arg value="hazelcast31" />
                            <arg value="hazelcast32rc1" />
                            <arg value="hazelcast32rc2" />
+                           <arg value="hazelcast32rc3" />
                            <arg value="infinispan4" />
                            <arg value="infinispan50" />
                            <arg value="infinispan51" />
@@ -436,6 +437,23 @@
                          <exec executable="bash" failonerror="true">
                              <arg value="-c"/>
                              <arg value="for FILE in `ls plugins/hazelcast32rc2/target/distribution/plugin-hazelcast32rc2-bin/plugin-hazelcast32rc2/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast32rc2/lib/; done;"/>
+                         </exec>
+
+                         <!-- Hazelcast 3.2-rc3-->
+                         <copy todir="${distribution.artifact}/plugins/hazelcast32rc3">
+                             <fileset dir="plugins/hazelcast32rc3/target/distribution/plugin-hazelcast32rc1-bin/plugin-hazelcast32rc3">
+                                 <include name="**/*" />
+                                 <exclude name="**/*.jar" />
+                             </fileset>
+                         </copy>
+                         <copy todir="${distribution.artifact}/plugin-dependencies">
+                             <fileset dir="plugins/hazelcast32rc3/target/distribution/plugin-hazelcast32rc3-bin/plugin-hazelcast32rc3/lib">
+                                 <include name="*.jar" />
+                             </fileset>
+                         </copy>
+                         <exec executable="bash" failonerror="true">
+                             <arg value="-c"/>
+                             <arg value="for FILE in `ls plugins/hazelcast32rc3/target/distribution/plugin-hazelcast32rc3-bin/plugin-hazelcast32rc3/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast32rc3/lib/; done;"/>
                          </exec>
 
 

@@ -81,6 +81,7 @@
                         <element name="hazelcast31" type="rg:hazelcast31"/>
                         <element name="hazelcast32rc1" type="rg:hazelcast32rc1"/>
                         <element name="hazelcast32rc2" type="rg:hazelcast32rc2"/>
+                        <element name="hazelcast32rc3" type="rg:hazelcast32rc3"/>
                         <element name="infinispan4" type="rg:infinispan4"/>
                         <element name="infinispan50" type="rg:infinispan50"/>
                         <element name="infinispan51" type="rg:infinispan51"/>
@@ -2078,6 +2079,11 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
       </complexContent>
    </complexType>
    <complexType name="hazelcast32rc2">
+      <complexContent>
+         <extension base="rg:abstractProduct"/>
+      </complexContent>
+   </complexType>
+   <complexType name="hazelcast32rc3">
       <complexContent>
          <extension base="rg:abstractProduct"/>
       </complexContent>
