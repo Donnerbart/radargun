@@ -23,6 +23,7 @@
       <module>plugins/hazelcast31</module>
       <module>plugins/hazelcast32rc1</module>
       <module>plugins/hazelcast32rc2</module>
+      <module>plugins/hazelcast32rc3</module>
       <module>plugins/infinispan4</module>
       <module>plugins/infinispan50</module>
       <module>plugins/infinispan51</module>
@@ -274,6 +275,7 @@
                            <arg value="hazelcast31" />
                            <arg value="hazelcast32rc1" />
                            <arg value="hazelcast32rc2" />
+                           <arg value="hazelcast32rc3" />
                            <arg value="infinispan4" />
                            <arg value="infinispan50" />
                            <arg value="infinispan51" />
@@ -327,6 +329,12 @@
 
                          <copy todir="${distribution.artifact}/plugins/hazelcast32rc2">
                              <fileset dir="plugins/hazelcast32rc2/target/distribution/plugin-hazelcast32rc2-bin/plugin-hazelcast32rc2">
+                                 <include name="**/*" />
+                             </fileset>
+                         </copy>
+
+                         <copy todir="${distribution.artifact}/plugins/hazelcast32rc3">
+                             <fileset dir="plugins/hazelcast32rc3/target/distribution/plugin-hazelcast32rc3-bin/plugin-hazelcast32rc3">
                                  <include name="**/*" />
                              </fileset>
                          </copy>
