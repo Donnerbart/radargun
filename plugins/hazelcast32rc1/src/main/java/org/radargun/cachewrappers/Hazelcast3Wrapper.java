@@ -57,7 +57,7 @@ public class Hazelcast3Wrapper implements CacheWrapper, AtomicOperationsCapable 
     @Override
     public void put(String bucket, Object key, Object value) throws Exception {
         if (trace) log.trace("PUT key=" + key);
-        hazelcastMap.set(key, value);
+        hazelcastMap.put(key, value);
     }
 
     @Override
