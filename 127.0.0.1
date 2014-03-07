@@ -1,0 +1,116 @@
+/java/jdk/jdk1.7.0_51//bin/java -server -Xmx1024M -Xms1024M -Dresolve.dns=false -Djgroups.timer.num_threads=4 -Djava.net.preferIPv4Stack=true -Dlog4j.file.prefix=silversurfer-8413 -Dbind.address= -Djgroups.bind_addr= -classpath /tmp/RadarGun-2.0.0-SNAPSHOT/lib/jboss-transaction-api-1.0.1.GA.jar:/tmp/RadarGun-2.0.0-SNAPSHOT/lib/jcommon-1.0.15.jar:/tmp/RadarGun-2.0.0-SNAPSHOT/lib/jfreechart-1.0.12.jar:/tmp/RadarGun-2.0.0-SNAPSHOT/lib/log4j-1.2.16.jar:/tmp/RadarGun-2.0.0-SNAPSHOT/lib/radargun-framework-2.0.0-SNAPSHOT.jar:/tmp/RadarGun-2.0.0-SNAPSHOT/conf org.radargun.Slave -master 127.0.0.1:2103
+--------------------------------------------------------------------------------
+PerNodeRollingFileAppender::Using file prefix:silversurfer-8413
+12:41:16,851 INFO  [Slave] Attempting to connect to master 127.0.0.1:2103
+12:41:16,857 INFO  [Slave] Successfully established connection with master at: 127.0.0.1:2103
+Loading JARS from /tmp/RadarGun-2.0.0-SNAPSHOT/lib/radargun-framework-2.0.0-SNAPSHOT.jar
+12:41:16,917 INFO  [AnnotatedHelper] Loading JARS from /tmp/RadarGun-2.0.0-SNAPSHOT/lib/radargun-framework-2.0.0-SNAPSHOT.jar
+12:41:16,933 WARN  [AnnotatedHelper] Cannot load class org.radargun.logging.PerNodeRollingRandomAccessFileAppender
+12:41:17,115 INFO  [AnnotatedHelper] Loading JARS from /tmp/RadarGun-2.0.0-SNAPSHOT/lib/radargun-framework-2.0.0-SNAPSHOT.jar
+12:41:17,119 WARN  [AnnotatedHelper] Cannot load class org.radargun.logging.PerNodeRollingRandomAccessFileAppender
+12:41:17,260 INFO  [Slave] Executing stage: DestroyWrapper {enforceMemoryThrashHold=true, exitBenchmarkOnSlaveFailure=false, heapDumpDir=null, memoryThreshold=95, runOnAllSlaves=true, slaves=null, useSmartClassLoading=true }
+12:41:17,260 INFO  [DestroyWrapperStage] Received destroy cache wrapper request from master...
+12:41:17,261 INFO  [DestroyWrapperStage] No cache wrapper deployed on this slave, nothing to do.
+12:41:17,261 INFO  [DestroyWrapperStage] Before executing clear, memory looks like this: Memory - free: 989,808 kb - max:1,005,568 kb- total:1,005,568 kb
+12:41:17,306 INFO  [DestroyWrapperStage] After executing cleanup, memory looks like this: Memory - free: 997,364 kb - max:1,005,568 kb- total:1,005,568 kb
+12:41:17,316 INFO  [Slave] Finished stage: DestroyWrapper {enforceMemoryThrashHold=true, exitBenchmarkOnSlaveFailure=false, heapDumpDir=null, memoryThreshold=95, runOnAllSlaves=true, slaves=null, useSmartClassLoading=true }
+12:41:17,317 INFO  [Slave] Ack successfully sent to the master
+12:41:34,087 INFO  [Slave] Executing stage: DestroyWrapper {enforceMemoryThrashHold=true, exitBenchmarkOnSlaveFailure=false, heapDumpDir=null, memoryThreshold=95, runOnAllSlaves=true, slaves=null, useSmartClassLoading=true }
+12:41:34,088 INFO  [DestroyWrapperStage] Received destroy cache wrapper request from master...
+12:41:34,088 INFO  [DestroyWrapperStage] No cache wrapper deployed on this slave, nothing to do.
+12:41:34,088 INFO  [DestroyWrapperStage] Before executing clear, memory looks like this: Memory - free: 986,857 kb - max:1,005,568 kb- total:1,005,568 kb
+12:41:34,132 INFO  [DestroyWrapperStage] Free memory: 1,004,392 kb (101% from the initial free memory - 989,808 kb)
+12:41:34,132 INFO  [DestroyWrapperStage] After executing cleanup, memory looks like this: Memory - free: 999,138 kb - max:1,005,568 kb- total:1,005,568 kb
+12:41:34,137 INFO  [Slave] Finished stage: DestroyWrapper {enforceMemoryThrashHold=true, exitBenchmarkOnSlaveFailure=false, heapDumpDir=null, memoryThreshold=95, runOnAllSlaves=true, slaves=null, useSmartClassLoading=true }
+12:41:34,137 INFO  [Slave] Ack successfully sent to the master
+12:41:51,543 INFO  [Slave] Executing stage: DestroyWrapper {enforceMemoryThrashHold=true, exitBenchmarkOnSlaveFailure=false, heapDumpDir=null, memoryThreshold=95, runOnAllSlaves=true, slaves=null, useSmartClassLoading=true }
+12:41:51,543 INFO  [DestroyWrapperStage] Received destroy cache wrapper request from master...
+12:41:51,543 INFO  [DestroyWrapperStage] No cache wrapper deployed on this slave, nothing to do.
+12:41:51,543 INFO  [DestroyWrapperStage] Before executing clear, memory looks like this: Memory - free: 993,885 kb - max:1,005,568 kb- total:1,005,568 kb
+12:41:51,569 INFO  [DestroyWrapperStage] Free memory: 1,004,391 kb (101% from the initial free memory - 989,808 kb)
+12:41:51,569 INFO  [DestroyWrapperStage] After executing cleanup, memory looks like this: Memory - free: 999,138 kb - max:1,005,568 kb- total:1,005,568 kb
+12:41:51,571 INFO  [Slave] Finished stage: DestroyWrapper {enforceMemoryThrashHold=true, exitBenchmarkOnSlaveFailure=false, heapDumpDir=null, memoryThreshold=95, runOnAllSlaves=true, slaves=null, useSmartClassLoading=true }
+12:41:51,571 INFO  [Slave] Ack successfully sent to the master
+12:41:51,736 INFO  [Slave] Executing stage: StartCluster {clusterFormationTimeout=3 mins 0 secs, configFile=dist-sync.xml, delayAfterFirstSlaveStarts=5.000 secs, delayBetweenStartingSlaves=0.500 secs, exitBenchmarkOnSlaveFailure=true, expectNumSlaves=null, mayFailOn=null, reachable=null, runOnAllSlaves=false, slaves=null, staggerSlaveStartup=true, useSmartClassLoading=true, validateCluster=true }
+12:41:51,736 INFO  [StartClusterStage]  Startup staggering, starting 4 slaves. This is the slave with index 3. Sleeping for 6500 millis.
+12:41:58,236 INFO  [StartClusterStage] Ack master's StartCluster stage. Local address is: /127.0.0.1. This slave's index is: 3
+12:41:58,238 INFO  [Utils] Could not find lib directory: /tmp/RadarGun-2.0.0-SNAPSHOT/specific
+12:41:58,239 INFO  [ClassLoadHelper] Creating newInstance org.radargun.cachewrappers.Hazelcast3Wrapper with classloader java.net.URLClassLoader@2707f992
+12:41:58,244 INFO  [Hazelcast3Wrapper] Creating cache with the following configuration: dist-sync.xml
+Mar 06, 2014 12:41:58 PM com.hazelcast.instance.DefaultAddressPicker
+INFO: Prefer IPv4 stack is true.
+Mar 06, 2014 12:41:58 PM com.hazelcast.instance.DefaultAddressPicker
+INFO: Picked Address[192.168.1.100]:5704, using socket ServerSocket[addr=/0.0.0.0,localport=5704], bind any local is true
+Mar 06, 2014 12:41:58 PM com.hazelcast.system
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Hazelcast Community Edition 3.2-RC2-SNAPSHOT (20140305-1350) starting at Address[192.168.1.100]:5704
+Mar 06, 2014 12:41:58 PM com.hazelcast.system
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Copyright (C) 2008-2013 Hazelcast.com
+Mar 06, 2014 12:41:58 PM com.hazelcast.instance.Node
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Creating MulticastJoiner
+Mar 06, 2014 12:41:58 PM com.hazelcast.core.LifecycleService
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Address[192.168.1.100]:5704 is STARTING
+Mar 06, 2014 12:41:58 PM com.hazelcast.nio.SocketConnector
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Connecting to /192.168.1.100:5701, timeout: 0, bind-any: true
+Mar 06, 2014 12:41:58 PM com.hazelcast.nio.TcpIpConnectionManager
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] 55908 accepted socket connection from /192.168.1.100:5701
+Mar 06, 2014 12:42:04 PM com.hazelcast.nio.SocketAcceptor
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Accepting socket connection from /192.168.1.100:47770
+Mar 06, 2014 12:42:04 PM com.hazelcast.nio.TcpIpConnectionManager
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] 5704 accepted socket connection from /192.168.1.100:47770
+Mar 06, 2014 12:42:04 PM com.hazelcast.nio.SocketAcceptor
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Accepting socket connection from /192.168.1.100:58199
+Mar 06, 2014 12:42:04 PM com.hazelcast.nio.TcpIpConnectionManager
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] 5704 accepted socket connection from /192.168.1.100:58199
+Mar 06, 2014 12:42:04 PM com.hazelcast.cluster.ClusterService
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] 
+
+Members [4] {
+	Member [192.168.1.100]:5701
+	Member [192.168.1.100]:5702
+	Member [192.168.1.100]:5703
+	Member [192.168.1.100]:5704 this
+}
+
+Mar 06, 2014 12:42:05 PM com.hazelcast.core.LifecycleService
+INFO: [192.168.1.100]:5704 [dev] [3.2-RC2-SNAPSHOT] Address[192.168.1.100]:5704 is STARTED
+12:42:05,914 INFO  [Hazelcast3Wrapper] Hazelcast configuration:Config{groupConfig=GroupConfig [name=dev, password=********], properties={}, networkConfig=NetworkConfig {publicAddress='null', port=5701, portCount=100, portAutoIncrement=true, join=JoinConfig{multicastConfig=MulticastConfig [enabled=true, multicastGroup=224.0.2.128, multicastPort=54327, multicastTimeToLive=32, multicastTimeoutSeconds=2, trustedInterfaces=[]], tcpIpConfig=TcpIpConfig [enabled=false, connectionTimeoutSeconds=5, members=[], requiredMember=null], awsConfig=AwsConfig{enabled=false, region='us-east-1', securityGroupName='null', tagKey='null', tagValue='null', hostHeader='ec2.amazonaws.com', connectionTimeoutSeconds=5}}, interfaces=InterfacesConfig{enabled=false, interfaces=[]}, sslConfig=null, socketInterceptorConfig=null, symmetricEncryptionConfig=null}, mapConfigs={default=MapConfig{name='default', inMemoryFormat=BINARY', backupCount=1, asyncBackupCount=0, timeToLiveSeconds=0, maxIdleSeconds=0, evictionPolicy='NONE', evictionPercentage=25, maxSizeConfig=MaxSizeConfig{maxSizePolicy='PER_PARTITION', size=2147483647}, readBackupData=false, nearCacheConfig=null, mapStoreConfig=null, mergePolicyConfig='hz.ADD_NEW_ENTRY', wanReplicationRef=null, listenerConfigs=[], mapIndexConfigs=[]}}, topicConfigs={}, queueConfigs={}, multiMapConfigs={}, executorConfigs={default=ExecutorConfig{name='default', poolSize=8, queueCapacity=2147483647}}, semaphoreConfigs={}, wanReplicationConfigs={}, listenerConfigs=[], partitionGroupConfig=PartitionGroupConfig{enabled=false, groupType=PER_MEMBER, memberGroupConfigs=[]}, managementCenterConfig=ManagementCenterConfig{enabled=false, url='null', clusterId='null', securityToken='null', url='null', updateInterval=5}, securityConfig=SecurityConfig{enabled=false, memberCredentialsConfig=CredentialsFactoryConfig{className='null', implementation=null, properties={}}, memberLoginModuleConfigs=[], clientLoginModuleConfigs=[], clientPolicyConfig=PermissionPolicyConfig{className='null', implementation=null, properties={}}, clientPermissionConfigs=[]}}
+12:42:05,914 INFO  [StartHelper] Number of members is the one expected: 4
+12:42:05,914 INFO  [StartClusterStage] Successfully started cache wrapper on slave 3: org.radargun.cachewrappers.Hazelcast3Wrapper@4a7036f3
+12:42:05,918 INFO  [Slave] Finished stage: StartCluster {clusterFormationTimeout=3 mins 0 secs, configFile=dist-sync.xml, delayAfterFirstSlaveStarts=5.000 secs, delayBetweenStartingSlaves=0.500 secs, exitBenchmarkOnSlaveFailure=true, expectNumSlaves=null, mayFailOn=null, reachable=null, runOnAllSlaves=false, slaves=null, staggerSlaveStartup=true, useSmartClassLoading=true, validateCluster=true }
+12:42:05,918 INFO  [Slave] Ack successfully sent to the master
+12:42:05,924 INFO  [Slave] Executing stage: ClusterValidation {exitBenchmarkOnSlaveFailure=false, partialReplication=false, replicationTimeSleep=2000, replicationTryCount=60, runOnAllSlaves=false, slaves=null, useSmartClassLoading=true }
+12:42:06,478 INFO  [ClusterValidationStage] Number of caches that replicated here is 3
+12:42:06,479 INFO  [ClusterValidationStage] Replication test successfully passed. partialReplication? false, replicationCount = 3
+12:42:08,489 INFO  [ClusterValidationStage] Confirm phase successful.
+12:42:08,492 INFO  [Slave] Finished stage: ClusterValidation {exitBenchmarkOnSlaveFailure=false, partialReplication=false, replicationTimeSleep=2000, replicationTryCount=60, runOnAllSlaves=false, slaves=[ 0, 1, 2, 3 ], useSmartClassLoading=true }
+12:42:08,492 INFO  [Slave] Ack successfully sent to the master
+12:42:09,049 INFO  [Slave] Executing stage: StressTestWarmup {bucketPolicy=NONE, bulkSize=1, cacheSpecificKeyGenerator=false, commitTransactions=true, duration=-0.001 secs, entryLifespan=60 mins 0 secs, entrySize=[100.0%: 1000], exitBenchmarkOnSlaveFailure=false, expectLostKeys=false, fixedKeys=true, generateHistogramRange=false, keyGeneratorClass=org.radargun.stressors.StringKeyGenerator, keyGeneratorParam=null, loadAllKeys=false, numBytes=0, numEntries=100, numOfThreads=2, numRequests=250, numThreads=2, numberOfAttributes=100, numberOfRequests=250, opsCountStatusLog=500, poolKeys=true, preferAsyncOperations=false, removePercentage=0, replaceInvalidPercentage=40, runOnAllSlaves=false, sharedKeys=false, sizeOfAnAttribute=[100.0%: 1000], slaves=null, statisticsPeriod=0.000 secs, transactionSize=1, useAtomics=false, useHistogramStatistics=false, useSimpleStatistics=true, useSmartClassLoading=true, useTransactions=null, valueGeneratorClass=org.radargun.stressors.ByteArrayValueGenerator, valueGeneratorParam=null, writePercentage=20 }
+12:42:09,064 INFO  [StressTestWarmupStage] Starting StressTestWarmupStage: StressTestWarmup {bucketPolicy=NONE, bulkSize=1, cacheSpecificKeyGenerator=false, commitTransactions=true, duration=-0.001 secs, entryLifespan=60 mins 0 secs, entrySize=[100.0%: 1000], exitBenchmarkOnSlaveFailure=false, expectLostKeys=false, fixedKeys=true, generateHistogramRange=false, keyGeneratorClass=org.radargun.stressors.StringKeyGenerator, keyGeneratorParam=null, loadAllKeys=false, numBytes=0, numEntries=100, numOfThreads=2, numRequests=250, numThreads=2, numberOfAttributes=100, numberOfRequests=250, opsCountStatusLog=500, poolKeys=true, preferAsyncOperations=false, removePercentage=0, replaceInvalidPercentage=40, runOnAllSlaves=false, sharedKeys=false, sizeOfAnAttribute=[100.0%: 1000], slaves=null, statisticsPeriod=0.000 secs, transactionSize=1, useAtomics=false, useHistogramStatistics=false, useSimpleStatistics=true, useSmartClassLoading=true, useTransactions=null, valueGeneratorClass=org.radargun.stressors.ByteArrayValueGenerator, valueGeneratorParam=null, writePercentage=20 }
+12:42:09,079 INFO  [StressTestStressor] Using key generator org.radargun.stressors.StringKeyGenerator, param null
+12:42:09,079 INFO  [StressTestStressor] Using value generator org.radargun.stressors.ByteArrayValueGenerator, param null
+12:42:09,080 INFO  [StressTestStressor] Executing: StressTestStressor{opsCountStatusLog=500, numRequests=250, numEntries=100, entrySize=[100.0%: 1000], writePercentage=20, numThreads=2, cacheWrapper=org.radargun.cachewrappers.Hazelcast3Wrapper@4a7036f3, nodeIndex=3, useTransactions=true, transactionSize=1, commitTransactions=true, durationMillis=-1}
+12:42:09,091 INFO  [StressTestStressor] Cache wrapper info is: There are 47 entries in the cache.
+12:42:09,313 INFO  [StressTestStressor] Started 2 stressor threads.
+12:42:09,661 INFO  [StressTestStressor] Finished generating report. Test duration is: 0.581 secs
+12:42:09,662 INFO  [StressTestWarmupStage] The warmup took: 0 seconds.
+12:42:09,667 INFO  [Slave] Finished stage: StressTestWarmup {bucketPolicy=NONE, bulkSize=1, cacheSpecificKeyGenerator=false, commitTransactions=true, duration=-0.001 secs, entryLifespan=60 mins 0 secs, entrySize=[100.0%: 1000], exitBenchmarkOnSlaveFailure=false, expectLostKeys=false, fixedKeys=true, generateHistogramRange=false, keyGeneratorClass=org.radargun.stressors.StringKeyGenerator, keyGeneratorParam=null, loadAllKeys=false, numBytes=0, numEntries=100, numOfThreads=2, numRequests=250, numThreads=2, numberOfAttributes=100, numberOfRequests=250, opsCountStatusLog=500, poolKeys=true, preferAsyncOperations=false, removePercentage=0, replaceInvalidPercentage=40, runOnAllSlaves=false, sharedKeys=false, sizeOfAnAttribute=[100.0%: 1000], slaves=null, statisticsPeriod=0.000 secs, transactionSize=1, useAtomics=false, useHistogramStatistics=false, useSimpleStatistics=true, useSmartClassLoading=true, useTransactions=null, valueGeneratorClass=org.radargun.stressors.ByteArrayValueGenerator, valueGeneratorParam=null, writePercentage=20 }
+12:42:09,668 INFO  [Slave] Ack successfully sent to the master
+12:42:09,685 INFO  [Slave] Executing stage: ClearClusterStage {ClearCluster {exitBenchmarkOnSlaveFailure=false, local=true, runOnAllSlaves=false, slaves=null, useSmartClassLoading=true }
+12:42:09,694 INFO  [ClearClusterStage] Before executing clear, memory looks like this: Memory - free: 846,710 kb - max:1,005,568 kb- total:1,005,568 kb
+12:42:09,694 WARN  [Hazelcast3Wrapper] This cache cannot remove only local entries
+12:42:09,811 INFO  [ClearClusterStage] After executing cleanup, memory looks like this: Memory - free: 993,086 kb - max:1,005,568 kb- total:1,005,568 kb
+12:42:09,813 INFO  [Slave] Finished stage: ClearClusterStage {ClearCluster {exitBenchmarkOnSlaveFailure=false, local=true, runOnAllSlaves=false, slaves=null, useSmartClassLoading=true }
+12:42:09,813 INFO  [Slave] Ack successfully sent to the master
+12:42:09,824 INFO  [Slave] Executing stage: StressTest {bucketPolicy=NONE, bulkSize=1, cacheSpecificKeyGenerator=false, commitTransactions=true, duration=-0.001 secs, entryLifespan=60 mins 0 secs, entrySize=[100.0%: 1000], exitBenchmarkOnSlaveFailure=false, expectLostKeys=false, fixedKeys=true, generateHistogramRange=false, keyGeneratorClass=org.radargun.stressors.StringKeyGenerator, keyGeneratorParam=null, loadAllKeys=false, numBytes=0, numEntries=100, numOfThreads=2, numRequests=100, numThreads=2, numberOfAttributes=100, numberOfRequests=100, opsCountStatusLog=500, poolKeys=true, preferAsyncOperations=false, removePercentage=0, replaceInvalidPercentage=40, runOnAllSlaves=false, sharedKeys=false, sizeOfAnAttribute=[100.0%: 1000], slaves=null, statisticsPeriod=0.000 secs, transactionSize=1, useAtomics=false, useHistogramStatistics=false, useSimpleStatistics=true, useSmartClassLoading=true, useTransactions=null, valueGeneratorClass=org.radargun.stressors.ByteArrayValueGenerator, valueGeneratorParam=null, writePercentage=20 }
+12:42:09,829 INFO  [StressTestStage] Starting StressTestStage: StressTest {bucketPolicy=NONE, bulkSize=1, cacheSpecificKeyGenerator=false, commitTransactions=true, duration=-0.001 secs, entryLifespan=60 mins 0 secs, entrySize=[100.0%: 1000], exitBenchmarkOnSlaveFailure=false, expectLostKeys=false, fixedKeys=true, generateHistogramRange=false, keyGeneratorClass=org.radargun.stressors.StringKeyGenerator, keyGeneratorParam=null, loadAllKeys=false, numBytes=0, numEntries=100, numOfThreads=2, numRequests=100, numThreads=2, numberOfAttributes=100, numberOfRequests=100, opsCountStatusLog=500, poolKeys=true, preferAsyncOperations=false, removePercentage=0, replaceInvalidPercentage=40, runOnAllSlaves=false, sharedKeys=false, sizeOfAnAttribute=[100.0%: 1000], slaves=null, statisticsPeriod=0.000 secs, transactionSize=1, useAtomics=false, useHistogramStatistics=false, useSimpleStatistics=true, useSmartClassLoading=true, useTransactions=null, valueGeneratorClass=org.radargun.stressors.ByteArrayValueGenerator, valueGeneratorParam=null, writePercentage=20 }
+12:42:09,837 INFO  [StressTestStressor] Using key generator org.radargun.stressors.StringKeyGenerator, param null
+12:42:09,837 INFO  [StressTestStressor] Using value generator org.radargun.stressors.ByteArrayValueGenerator, param null
+12:42:09,837 INFO  [StressTestStressor] Executing: StressTestStressor{opsCountStatusLog=500, numRequests=100, numEntries=100, entrySize=[100.0%: 1000], writePercentage=20, numThreads=2, cacheWrapper=org.radargun.cachewrappers.Hazelcast3Wrapper@4a7036f3, nodeIndex=3, useTransactions=true, transactionSize=1, commitTransactions=true, durationMillis=-1}
+12:42:09,847 INFO  [StressTestStressor] Cache wrapper info is: There are 2 entries in the cache.
+12:42:09,982 INFO  [StressTestStressor] Started 2 stressor threads.
+12:42:10,158 INFO  [StressTestStressor] Finished generating report. Test duration is: 0.320 secs
+12:42:10,162 INFO  [StressTestStage] size info: There are 800 entries in the cache., clusterSize:4, nodeIndex:3, cacheSize: -1
+12:42:10,171 INFO  [Slave] Finished stage: StressTest {bucketPolicy=NONE, bulkSize=1, cacheSpecificKeyGenerator=false, commitTransactions=true, duration=-0.001 secs, entryLifespan=60 mins 0 secs, entrySize=[100.0%: 1000], exitBenchmarkOnSlaveFailure=false, expectLostKeys=false, fixedKeys=true, generateHistogramRange=false, keyGeneratorClass=org.radargun.stressors.StringKeyGenerator, keyGeneratorParam=null, loadAllKeys=false, numBytes=0, numEntries=100, numOfThreads=2, numRequests=100, numThreads=2, numberOfAttributes=100, numberOfRequests=100, opsCountStatusLog=500, poolKeys=true, preferAsyncOperations=false, removePercentage=0, replaceInvalidPercentage=40, runOnAllSlaves=false, sharedKeys=false, sizeOfAnAttribute=[100.0%: 1000], slaves=null, statisticsPeriod=0.000 secs, transactionSize=1, useAtomics=false, useHistogramStatistics=false, useSimpleStatistics=true, useSmartClassLoading=true, useTransactions=null, valueGeneratorClass=org.radargun.stressors.ByteArrayValueGenerator, valueGeneratorParam=null, writePercentage=20 }
+12:42:10,171 INFO  [Slave] Ack successfully sent to the master
+12:42:11,026 INFO  [Slave] Master shutdown!
+12:42:11,027 INFO  [ShutDownHook] Slave process is being shutdown

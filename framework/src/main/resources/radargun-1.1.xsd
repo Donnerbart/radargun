@@ -77,7 +77,10 @@
                      <choice maxOccurs="unbounded" minOccurs="1">
                         <element name="product" type="rg:product"/>
                         <element name="hazelcast2" type="rg:hazelcast2"/>
-                        <element name="hazelcast3" type="rg:hazelcast3"/>
+                        <element name="hazelcast30" type="rg:hazelcast30"/>
+                        <element name="hazelcast31" type="rg:hazelcast31"/>
+                        <element name="hazelcast32rc1" type="rg:hazelcast32rc1"/>
+                        <element name="hazelcast32rc2" type="rg:hazelcast32rc2"/>
                         <element name="infinispan4" type="rg:infinispan4"/>
                         <element name="infinispan50" type="rg:infinispan50"/>
                         <element name="infinispan51" type="rg:infinispan51"/>
@@ -94,6 +97,7 @@
                         <element name="jbosscache3" type="rg:jbosscache3"/>
                         <element name="ehcache25" type="rg:ehcache25"/>
                         <element name="ehcache26" type="rg:ehcache26"/>
+                        <element name="ehcache28" type="rg:ehcache28"/>
                         <element name="terracota3" type="rg:terracota3"/>
                         <element name="chm" type="rg:chm"/>
                         <element name="coherence3" type="rg:coherence3"/>
@@ -2058,7 +2062,22 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
          <extension base="rg:abstractProduct"/>
       </complexContent>
    </complexType>
-   <complexType name="hazelcast3">
+   <complexType name="hazelcast30">
+      <complexContent>
+         <extension base="rg:abstractProduct"/>
+      </complexContent>
+   </complexType>
+   <complexType name="hazelcast31">
+      <complexContent>
+         <extension base="rg:abstractProduct"/>
+      </complexContent>
+   </complexType>
+   <complexType name="hazelcast32rc1">
+      <complexContent>
+         <extension base="rg:abstractProduct"/>
+      </complexContent>
+   </complexType>
+   <complexType name="hazelcast32rc2">
       <complexContent>
          <extension base="rg:abstractProduct"/>
       </complexContent>
@@ -2139,6 +2158,11 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
       </complexContent>
    </complexType>
    <complexType name="ehcache26">
+      <complexContent>
+         <extension base="rg:abstractProduct"/>
+      </complexContent>
+   </complexType>
+   <complexType name="ehcache28">
       <complexContent>
          <extension base="rg:abstractProduct"/>
       </complexContent>

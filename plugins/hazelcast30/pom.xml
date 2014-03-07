@@ -9,14 +9,14 @@
       <relativePath>../pom.xml</relativePath>
    </parent>
 
-   <artifactId>plugin-hazelcast2</artifactId>
-   <name>Hazelcast 2.x plugin for RadarGun</name>
+   <artifactId>plugin-hazelcast30</artifactId>
+   <name>Hazelcast 3.0 plugin for RadarGun</name>
 
    <dependencies>
       <dependency>
          <groupId>com.hazelcast</groupId>
          <artifactId>hazelcast</artifactId>
-         <version>2.6.7</version>
+         <version>3.0.3</version>
       </dependency>
    </dependencies>
 

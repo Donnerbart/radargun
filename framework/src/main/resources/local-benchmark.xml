@@ -20,6 +20,26 @@
          <config name="local-config.xml" cache="x"/>
       </infinispan52>
 
+       <ehcache26>
+           <config name="local.xml"/>
+       </ehcache26>
+       <ehcache28>
+           <config name="local.xml"/>
+       </ehcache28>
+
+       <hazelcast30>
+           <config name="dist-sync.xml"/>
+       </hazelcast30>
+       <hazelcast31>
+           <config name="dist-sync.xml"/>
+       </hazelcast31>
+       <hazelcast32rc1>
+           <config name="dist-sync.xml"/>
+       </hazelcast32rc1>
+       <hazelcast32rc2>
+           <config name="dist-sync.xml"/>
+       </hazelcast32rc2>
+
       <!--
       <jbosscache3>
          <config name="mvcc/mvcc-local-RR.xml"/>
