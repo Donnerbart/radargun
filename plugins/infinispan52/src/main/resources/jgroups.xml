@@ -26,7 +26,7 @@
         bind_port="${jgroups.udp.bind_port:52000}"
         loopback="true"
         port_range="200"
-        mcast_addr="${jgroups.udp.mcast_addr:224.2.2.3}"
+        mcast_addr="${jgroups.udp.mcast_addr:224.0.2.128}"
         mcast_port="${jgroups.udp.mcast_port:54327}"
         tos="8"
         ucast_recv_buf_size="20m"
