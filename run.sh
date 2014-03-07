@@ -5,11 +5,11 @@ ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
 ARTIFACT_DIR=target/distribution/
 TARGET_DIR=/tmp
 RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
-MASTER=127.0.0.1
+MASTER=192.168.2.101
 
 #the machines that make up the test cluster, this should include the master.
-MACHINES='127.0.0.1'
-USER=alarmnummer
+MACHINES='192.168.2.101 192.168.2.102 192.168.2.104'
+USER=peter
 REPORTS_DIR=/tmp/reports
 
 function address {
@@ -84,7 +84,7 @@ function start_slave {
 	echo Starting Radargun Slave on ${MACHINE}
 	echo ===============================================================
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/slave.sh"
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/slave.sh -m ${MASTER}:2103"
 
 	echo ===============================================================
 	echo Radargun Slave started on ${MACHINE}
@@ -192,8 +192,8 @@ done
 
 #benchmark dummy 'benchmark-4nodes-dummy.xml' '127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1' 
 #benchmark 2-nodes 'benchmark-2nodes.xml' '127.0.0.1 127.0.0.1' 
-#benchmark 3-nodes 'benchmark-3nodes.xml' '127.0.0.1 127.0.0.1 127.0.0.1' 
-benchmark 4-nodes 'benchmark-4nodes.xml' '127.0.0.1:22 127.0.0.1:22 127.0.0.1:22 127.0.0.1:22' 
+benchmark 3-nodes 'benchmark-3nodes.xml' '192.168.2.101 192.168.2.101 192.168.2.101' 
+#benchmark 4-nodes 'benchmark-4nodes.xml' '127.0.0.1:22 127.0.0.1:22 127.0.0.1:22 127.0.0.1:22' 
 
 #benchmark localbenchmark 'local-benchmark.xml' '127.0.0.1' 
 
