@@ -198,6 +198,7 @@ done
 
 #benchmark dummy 'benchmark-4nodes-dummy.xml' '127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1' 
 #benchmark 2-nodes 'benchmark-2nodes.xml' '127.0.0.1 127.0.0.1' 
+benchmark 2-nodes 'benchmark-2nodes.xml' '192.168.2.101 192.168.2.102'
 benchmark 3-nodes 'benchmark-3nodes.xml' '192.168.2.101 192.168.2.102 192.168.2.104' 
 #benchmark 4-nodes 'benchmark-4nodes.xml' '127.0.0.1:22 127.0.0.1:22 127.0.0.1:22 127.0.0.1:22' 
 

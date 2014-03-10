@@ -1,29 +1,30 @@
 <bench-config xmlns="urn:radargun:benchmark:1.1">
 
-   <master bindAddress="${127.0.0.1:master.address}" port="${2103:master.port}"/>
+   <master bindAddress="${192.168.2.101:master.address}" port="${2103:master.port}"/>
 
    <benchmark initSize="2" maxSize="${2:slaves}" increment="1">
       <DestroyWrapper runOnAllSlaves="true"/>
       <StartCluster staggerSlaveStartup="true" delayAfterFirstSlaveStarts="5000" delayBetweenStartingSlaves = "500"/>
       <ClusterValidation partialReplication="false"/>
-      <StressTestWarmup numRequests="50000" opsCountStatusLog="500" numThreads="2"/>
+      <StressTestWarmup numRequests="50000" opsCountStatusLog="500" numThreads="6"/>
       <ClearCluster/>
       <!--
          This will average to 10000 requests per thread, although a work-stealing pattern is used so some threads may
          do more work than others.
        -->
-      <StressTest numRequests="1000000" opsCountStatusLog="500" numThreads="2"/>
+      <StressTest numRequests="1000000" opsCountStatusLog="5000" numThreads="12"/>
       <CsvReportGeneration/>
    </benchmark>
 
     <products>
-        <!-- infinispan52>
-            <config name="repl-sync.xml"/>
-        </infinispan52 -->
-        <infinispan60>
+        <infinispan52>
             <config name="dist-sync.xml"/>
-        </infinispan60>
- 	<hazelcast2>
+        </infinispan52>
+        <!-- infinispan60>
+            <config name="dist-sync.xml"/>
+        </infinispan60 -->
+
+        <hazelcast2>
             <config name="dist-sync.xml"/>
         </hazelcast2>
 	<hazelcast30>
@@ -38,6 +39,9 @@
         <hazelcast32rc2>
             <config name="dist-sync.xml"/>
         </hazelcast32rc2>
+        <hazelcast32rc3>
+            <config name="dist-sync.xml"/>
+        </hazelcast32rc3>
     </products>
 
    <reports>
