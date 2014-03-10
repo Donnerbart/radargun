@@ -23,8 +23,7 @@
         <infinispan60>
             <config name="dist-sync.xml"/>
         </infinispan60>
-
-        <!-- hazelcast2>
+        <hazelcast2>
             <config name="dist-sync.xml"/>
         </hazelcast2>
         <hazelcast30>
@@ -41,7 +40,7 @@
         </hazelcast32rc2>
         <hazelcast32rc3>
             <config name="dist-sync.xml"/>
-        </hazelcast32rc3 -->
+        </hazelcast32rc3>
     </products>
 
     <reports>

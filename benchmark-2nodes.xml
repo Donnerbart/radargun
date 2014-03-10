@@ -20,10 +20,9 @@
         <infinispan52>
             <config name="dist-sync.xml"/>
         </infinispan52>
-        <!-- infinispan60>
+        <infinispan60>
             <config name="dist-sync.xml"/>
-        </infinispan60 -->
-
+        </infinispan60>
         <hazelcast2>
             <config name="dist-sync.xml"/>
         </hazelcast2>
@@ -43,6 +42,7 @@
             <config name="dist-sync.xml"/>
         </hazelcast32rc3>
     </products>
+
 
     <reports>
         <!-- report name="Replicated">
