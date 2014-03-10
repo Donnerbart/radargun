@@ -49,6 +49,12 @@ function install {
 	echo Unzipping ${ARTIFACT_NAME}.zip
 	ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
 	
+
+	# Comment out these 2 lines of yourkit profiler should not be used.	
+	scp -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
+	scp -P ${PORT} environment.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin
+	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ~/Snapshots"
+	
 	echo ===============================================================
 	echo Finished installing Radargun on ${MACHINE}
 	echo ===============================================================
@@ -84,7 +90,7 @@ function start_slave {
 	echo Starting Radargun Slave on ${MACHINE}
 	echo ===============================================================
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/slave.sh -m ${MASTER}:2103"
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR} ; bin/slave.sh -m ${MASTER}:2103"
 
 	echo ===============================================================
 	echo Radargun Slave started on ${MACHINE}
@@ -192,7 +198,7 @@ done
 
 #benchmark dummy 'benchmark-4nodes-dummy.xml' '127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1' 
 #benchmark 2-nodes 'benchmark-2nodes.xml' '127.0.0.1 127.0.0.1' 
-benchmark 3-nodes 'benchmark-3nodes.xml' '192.168.2.101 192.168.2.101 192.168.2.101' 
+benchmark 3-nodes 'benchmark-3nodes.xml' '192.168.2.101 192.168.2.102 192.168.2.104' 
 #benchmark 4-nodes 'benchmark-4nodes.xml' '127.0.0.1:22 127.0.0.1:22 127.0.0.1:22 127.0.0.1:22' 
 
 #benchmark localbenchmark 'local-benchmark.xml' '127.0.0.1' 

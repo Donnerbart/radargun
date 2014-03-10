@@ -21,10 +21,8 @@
   -->
 <config xmlns="urn:org:jgroups"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-   <UDP
-        bind_addr="${jgroups.udp.bind_addr:localhost}"
-        bind_port="${jgroups.udp.bind_port:52000}"
-        loopback="true"
+   <!-- UDP
+        loopback="false"
         port_range="200"
         mcast_addr="${jgroups.udp.mcast_addr:224.0.2.128}"
         mcast_port="${jgroups.udp.mcast_port:54327}"
@@ -56,7 +54,13 @@
         oob_thread_pool.queue_enabled="false"
         oob_thread_pool.queue_max_size="100"
         oob_thread_pool.rejection_policy="Discard"
-        />
+        / -->
+
+ <UDP mcast_addr="224.0.2.128" mcast_port="54327"
+               ip_ttl="8" ip_mcast="true"
+               mcast_send_buf_size="800000" mcast_recv_buf_size="150000"
+               ucast_send_buf_size="800000" ucast_recv_buf_size="150000"
+               loopback="false"/>
 
    <PING timeout="3000" num_initial_members="3"/>
    <MERGE2 max_interval="30000" min_interval="10000"/>
