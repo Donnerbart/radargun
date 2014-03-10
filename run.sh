@@ -204,12 +204,6 @@ done
 
 # ================================================================
 
-#benchmark dummy 'benchmark-4nodes-dummy.xml' '127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1' 
-#benchmark 2-nodes 'benchmark-2nodes.xml' '127.0.0.1 127.0.0.1' 
-benchmark 2-nodes 'benchmark-2nodes.xml' "$MACHINE1 $MACHINE2"
-benchmark 3-nodes 'benchmark-3nodes.xml' "$MACHINE1 $MACHINE2 $MACHINE4"
-#benchmark 4-nodes 'benchmark-4nodes.xml' '127.0.0.1:22 127.0.0.1:22 127.0.0.1:22 127.0.0.1:22' 
-
-#benchmark localbenchmark 'local-benchmark.xml' '127.0.0.1' 
-
-# todo: option to kill all slaves/master on remote machines
+benchmark 1-nodes 'benchmark-1nodes.xml' "${MACHINE1}"
+benchmark 2-nodes 'benchmark-2nodes.xml' "${MACHINE1} ${MACHINE2}"
+benchmark 3-nodes 'benchmark-3nodes.xml' "${MACHINE1} ${MACHINE2} ${MACHINE4}"
