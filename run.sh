@@ -5,12 +5,18 @@ ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
 ARTIFACT_DIR=target/distribution/
 TARGET_DIR=/tmp
 RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
-MASTER=192.168.2.101
 
 #the machines that make up the test cluster, this should include the master.
-MACHINES='192.168.2.101 192.168.2.102 192.168.2.104'
+MACHINE1='192.168.2.101'
+MACHINE2='192.168.2.102'
+#MACHINE3 currently isn't working.
+#MACHINE3='192.168.2.103'
+MACHINE4='192.168.2.104'
+MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE4}"
+MASTER=${MACHINE1}
 USER=peter
 REPORTS_DIR=/tmp/reports
+YOURKIT_ENABLED=true
 
 function address {
 	MACHINE=$1	
@@ -34,8 +40,8 @@ function port {
 	fi 	
 }
 
-function install {	
-	MACHINE=$1	
+function install {
+	MACHINE=$1
 	ADDRESS=$( address ${MACHINE} )	
 	PORT=$( port ${MACHINE} )
 
@@ -50,11 +56,13 @@ function install {
 	ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
 	
 
-	# Comment out these 2 lines of yourkit profiler should not be used.	
-	scp -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
-	scp -P ${PORT} environment.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin
-	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ~/Snapshots"
-	
+    if [ "$YOURKIT_ENABLED}" = true ] ;
+    then
+	    scp -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
+	    scp -P ${PORT} environment.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin
+	    ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ~/Snapshots"
+	fi
+
 	echo ===============================================================
 	echo Finished installing Radargun on ${MACHINE}
 	echo ===============================================================
@@ -134,7 +142,7 @@ function download_reports {
 function download_logs {
 	SLAVE=$1	
 	DESTINATION_DIR=$2
-	ADDRESS=$( address ${SLAVE} )	
+	ADDRESS=$( address ${SLAVE} )
 	PORT=$( port ${SLAVE} )
 	
 	mkdir -p ${DESTINATION_DIR}/logs
@@ -148,7 +156,7 @@ function benchmark {
 	SLAVES=$3
 	TIMESTAMP=$(date +%s)
 	DESTINATION_DIR=${REPORTS_DIR}/${BENCHMARK_NAME}/${TIMESTAMP}
-	ADDRESS=$( address ${MASTER} )	
+	ADDRESS=$( address ${MASTER} )
 	PORT=$( port ${MASTER} )
 		
 	echo ===============================================================
@@ -177,14 +185,14 @@ function benchmark {
 	wait_completion ${MASTER}
 	
 	echo Downloading reports and logs
-	download_reports ${MASTER} ${DESTINATION_DIR}	
+	download_reports ${MASTER} ${DESTINATION_DIR}
 	for SLAVE in $SLAVES
 	do
 		download_logs ${SLAVE} ${DESTINATION_DIR}
 	done	
 
 	echo ===============================================================
-	echo Benchmark Completed		
+	echo Benchmark Completed
 	echo Report for benchmark ${BENCHMARK_NAME} can be found in ${DESTINATION_DIR}
 	echo ===============================================================
 }
@@ -198,8 +206,8 @@ done
 
 #benchmark dummy 'benchmark-4nodes-dummy.xml' '127.0.0.1 127.0.0.1 127.0.0.1 127.0.0.1' 
 #benchmark 2-nodes 'benchmark-2nodes.xml' '127.0.0.1 127.0.0.1' 
-benchmark 2-nodes 'benchmark-2nodes.xml' '192.168.2.101 192.168.2.102'
-benchmark 3-nodes 'benchmark-3nodes.xml' '192.168.2.101 192.168.2.102 192.168.2.104' 
+benchmark 2-nodes 'benchmark-2nodes.xml' "$MACHINE1 $MACHINE2"
+benchmark 3-nodes 'benchmark-3nodes.xml' "$MACHINE1 $MACHINE2 $MACHINE4"
 #benchmark 4-nodes 'benchmark-4nodes.xml' '127.0.0.1:22 127.0.0.1:22 127.0.0.1:22 127.0.0.1:22' 
 
 #benchmark localbenchmark 'local-benchmark.xml' '127.0.0.1' 
