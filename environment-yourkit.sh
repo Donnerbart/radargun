@@ -16,9 +16,7 @@ echo BIND_ADDRESS = $BIND_ADDRESS
 
 JG_FLAGS="-Dorg.jboss.resolver.warning=true -Dresolve.dns=false -Djgroups.timer.num_threads=4"
 #Yourkit settings
-#JVM_OPTS="-server -Xmx1024M -Xms1024M  -agentpath:/tmp/libyjpagent.so=sampling,onexit=snapshot"
-#Jacoco settings
-JVM_OPTS="-server -Xmx1024M -Xms1024M   -javaagent:/tmp/jacocoagent.jar=destfile=/tmp/jacoco.exec"
+JVM_OPTS="-server -Xmx1024M -Xms1024M  -agentpath:/tmp/libyjpagent.so=sampling,onexit=snapshot"
 
 JVM_OPTS="$JVM_OPTS $JG_FLAGS"
 JPROFILER_HOME=${HOME}/jprofiler6

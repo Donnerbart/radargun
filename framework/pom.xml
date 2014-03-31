@@ -24,6 +24,12 @@
          <version>1.0.1.GA</version>
       </dependency>
 
+	<!-- dependency>
+  		<groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>0.7.0.201403182114</version>                     
+	</dependency -->
+
       <!--<dependency>-->
          <!--<groupId>javax.activation</groupId>-->
          <!--<artifactId>activation</artifactId>-->

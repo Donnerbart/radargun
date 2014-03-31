@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd "$(dirname "$0")"
+
 RADARGUN_VERSION=2.0.0-SNAPSHOT
 ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
 ARTIFACT_DIR=target/distribution/
@@ -16,7 +18,10 @@ MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE4}"
 MASTER=${MACHINE1}
 USER=peter
 REPORTS_DIR=/tmp/reports
-YOURKIT_ENABLED=true
+
+#only one can be enabled. 
+YOURKIT_ENABLED=false
+JACOCO_ENABLED=true
 
 function address {
 	MACHINE=$1	
@@ -56,11 +61,19 @@ function install {
 	ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
 	
 
-    if [ "$YOURKIT_ENABLED}" = true ] ;
-    then
+        if [ "${YOURKIT_ENABLED}" = "true" ] ;
+        then
+	    echo YourKit is enabled
 	    scp -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
-	    scp -P ${PORT} environment.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin
+	    scp -P ${PORT} environment-yourkit.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
 	    ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ~/Snapshots"
+        elif [ "${JACOCO_ENABLED}" = "true" ] ;
+        then
+	    echo Jacoco is enabled
+            scp -P ${PORT} jacocoagent.jar ${USER}@${ADDRESS}:/tmp/
+            scp -P ${PORT} environment-jacoco.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
+        else
+	    echo Jacoc and Yourkit are disabled
 	fi
 
 	echo ===============================================================
@@ -204,6 +217,6 @@ done
 
 # ================================================================
 
-benchmark 1-nodes 'benchmark-1nodes.xml' "${MACHINE1}"
-benchmark 2-nodes 'benchmark-2nodes.xml' "${MACHINE1} ${MACHINE2}"
+#benchmark 1-nodes 'benchmark-1nodes.xml' "${MACHINE1}"
+#benchmark 2-nodes 'benchmark-2nodes.xml' "${MACHINE1} ${MACHINE2}"
 benchmark 3-nodes 'benchmark-3nodes.xml' "${MACHINE1} ${MACHINE2} ${MACHINE4}"
