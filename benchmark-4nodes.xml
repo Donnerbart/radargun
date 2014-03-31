@@ -32,12 +32,12 @@
         <hazelcast31>
             <config name="dist-sync.xml"/>
         </hazelcast31>
-        <hazelcast32rc1>
+        <hazelcast32>
             <config name="dist-sync.xml"/>
-        </hazelcast32rc1>
-        <hazelcast32rc2>
+        </hazelcast32>
+        <hazelcast33>
             <config name="dist-sync.xml"/>
-        </hazelcast32rc2>
+        </hazelcast33>
     </products>
 
     <reports>

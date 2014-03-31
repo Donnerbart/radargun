@@ -15,7 +15,8 @@
       <module>plugins/hazelcast2</module>
       <module>plugins/hazelcast30</module>
       <module>plugins/hazelcast31</module>
-      <module>plugins/hazelcast32rc1</module>
+      <module>plugins/hazelcast32</module>
+      <module>plugins/hazelcast33</module>
       <module>plugins/infinispan4</module>
       <module>plugins/infinispan50</module>
       <module>plugins/infinispan51</module>
@@ -326,9 +327,8 @@
                            <arg value="hazelcast2" />
                            <arg value="hazelcast30" />
                            <arg value="hazelcast31" />
-                           <arg value="hazelcast32rc1" />
-                           <arg value="hazelcast32rc2" />
-                           <arg value="hazelcast32rc3" />
+                           <arg value="hazelcast32" />
+                           <arg value="hazelcast33" />
                            <arg value="infinispan4" />
                            <arg value="infinispan50" />
                            <arg value="infinispan51" />
@@ -353,7 +353,7 @@
                            <arg value="jdg61" />
                            <arg value="jdg62" />
                         </java>
-                        <echo message="Packaging the framework, and the following plugins: hazelcast2, hazelcast30, hazelcast31, hazelcast32rc1, hazelcast32rc2, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, ehcache28, terracotta3" />
+                        <echo message="Packaging the framework, and the following plugins: hazelcast2, hazelcast30, hazelcast31, hazelcast32,hazelcast33, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, ehcache28, terracotta3" />
 
                         <copy todir="${distribution.artifact}/plugins/hazelcast2">
                            <fileset dir="plugins/hazelcast2/target/distribution/plugin-hazelcast2-bin/plugin-hazelcast2">
@@ -405,55 +405,38 @@
                              <arg value="for FILE in `ls plugins/hazelcast31/target/distribution/plugin-hazelcast31-bin/plugin-hazelcast31/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast31/lib/; done;"/>
                          </exec>
 
-                         <!-- Hazelcast 3.2-rc1-->
-                         <copy todir="${distribution.artifact}/plugins/hazelcast32rc1">
-                             <fileset dir="plugins/hazelcast32rc1/target/distribution/plugin-hazelcast32rc1-bin/plugin-hazelcast32rc1">
+                         <!-- Hazelcast 3.2-->
+                         <copy todir="${distribution.artifact}/plugins/hazelcast32">
+                             <fileset dir="plugins/hazelcast32/target/distribution/plugin-hazelcast32/plugin-hazelcast32">
                                  <include name="**/*" />
                                  <exclude name="**/*.jar" />
                              </fileset>
                          </copy>
                          <copy todir="${distribution.artifact}/plugin-dependencies">
-                             <fileset dir="plugins/hazelcast32rc1/target/distribution/plugin-hazelcast32rc1-bin/plugin-hazelcast32rc1/lib">
+                             <fileset dir="plugins/hazelcast32/target/distribution/plugin-hazelcast32-bin/plugin-hazelcast32/lib">
                                  <include name="*.jar" />
                              </fileset>
                          </copy>
                          <exec executable="bash" failonerror="true">
                              <arg value="-c"/>
-                             <arg value="for FILE in `ls plugins/hazelcast32rc1/target/distribution/plugin-hazelcast32rc1-bin/plugin-hazelcast32rc1/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast32rc1/lib/; done;"/>
+                             <arg value="for FILE in `ls plugins/hazelcast32/target/distribution/plugin-hazelcast32-bin/plugin-hazelcast32/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast32/lib/; done;"/>
                          </exec>
 
-                         <!-- Hazelcast 3.2-rc2-->
-                         <copy todir="${distribution.artifact}/plugins/hazelcast32rc2">
-                             <fileset dir="plugins/hazelcast32rc2/target/distribution/plugin-hazelcast32rc1-bin/plugin-hazelcast32rc2">
+                         <!-- Hazelcast 3.3-->
+                         <copy todir="${distribution.artifact}/plugins/hazelcast33">
+                             <fileset dir="plugins/hazelcast33/target/distribution/plugin-hazelcast33/plugin-hazelcast33">
                                  <include name="**/*" />
                                  <exclude name="**/*.jar" />
                              </fileset>
                          </copy>
                          <copy todir="${distribution.artifact}/plugin-dependencies">
-                             <fileset dir="plugins/hazelcast32rc2/target/distribution/plugin-hazelcast32rc2-bin/plugin-hazelcast32rc2/lib">
+                             <fileset dir="plugins/hazelcast33/target/distribution/plugin-hazelcast33-bin/plugin-hazelcast33/lib">
                                  <include name="*.jar" />
                              </fileset>
                          </copy>
                          <exec executable="bash" failonerror="true">
                              <arg value="-c"/>
-                             <arg value="for FILE in `ls plugins/hazelcast32rc2/target/distribution/plugin-hazelcast32rc2-bin/plugin-hazelcast32rc2/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast32rc2/lib/; done;"/>
-                         </exec>
-
-                         <!-- Hazelcast 3.2-rc3-->
-                         <copy todir="${distribution.artifact}/plugins/hazelcast32rc3">
-                             <fileset dir="plugins/hazelcast32rc3/target/distribution/plugin-hazelcast32rc1-bin/plugin-hazelcast32rc3">
-                                 <include name="**/*" />
-                                 <exclude name="**/*.jar" />
-                             </fileset>
-                         </copy>
-                         <copy todir="${distribution.artifact}/plugin-dependencies">
-                             <fileset dir="plugins/hazelcast32rc3/target/distribution/plugin-hazelcast32rc3-bin/plugin-hazelcast32rc3/lib">
-                                 <include name="*.jar" />
-                             </fileset>
-                         </copy>
-                         <exec executable="bash" failonerror="true">
-                             <arg value="-c"/>
-                             <arg value="for FILE in `ls plugins/hazelcast32rc3/target/distribution/plugin-hazelcast32rc3-bin/plugin-hazelcast32rc3/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast32rc3/lib/; done;"/>
+                             <arg value="for FILE in `ls plugins/hazelcast33/target/distribution/plugin-hazelcast33-bin/plugin-hazelcast33/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast33/lib/; done;"/>
                          </exec>
 
 

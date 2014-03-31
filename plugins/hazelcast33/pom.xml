@@ -9,8 +9,8 @@
       <relativePath>../pom.xml</relativePath>
    </parent>
 
-   <artifactId>plugin-hazelcast32rc3</artifactId>
-   <name>Hazelcast 3.2-rc3 plugin for RadarGun</name>
+   <artifactId>plugin-hazelcast33</artifactId>
+   <name>Hazelcast 3.3 plugin for RadarGun</name>
 
     <repositories>
         <repository>
@@ -24,7 +24,7 @@
       <dependency>
          <groupId>com.hazelcast</groupId>
          <artifactId>hazelcast</artifactId>
-         <version>3.2-RC3-SNAPSHOT</version>
+         <version>3.3-SNAPSHOT</version>
       </dependency>
    </dependencies>
 
