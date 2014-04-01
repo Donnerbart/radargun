@@ -2077,7 +2077,7 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
          <extension base="rg:abstractProduct"/>
       </complexContent>
    </complexType>
-   <complexType name="hazelcast32">
+   <complexType name="hazelcast33">
       <complexContent>
          <extension base="rg:abstractProduct"/>
       </complexContent>
