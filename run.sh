@@ -11,17 +11,16 @@ RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
 #the machines that make up the test cluster, this should include the master.
 MACHINE1='192.168.2.101'
 MACHINE2='192.168.2.102'
-#MACHINE3 currently isn't working.
-#MACHINE3='192.168.2.103'
+MACHINE3='192.168.2.103'
 MACHINE4='192.168.2.104'
-MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE4}"
+MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
 MASTER=${MACHINE1}
 USER=peter
 REPORTS_DIR=/tmp/reports
 
 #only one can be enabled. 
 YOURKIT_ENABLED=false
-JACOCO_ENABLED=true
+JACOCO_ENABLED=false
 
 function address {
 	MACHINE=$1	
@@ -217,6 +216,7 @@ done
 
 # ================================================================
 
-#benchmark 1-nodes 'benchmark-1nodes.xml' "${MACHINE1}"
-#benchmark 2-nodes 'benchmark-2nodes.xml' "${MACHINE1} ${MACHINE2}"
+benchmark 1-nodes 'benchmark-1nodes.xml' "${MACHINE1}"
+benchmark 2-nodes 'benchmark-2nodes.xml' "${MACHINE1} ${MACHINE2}"
 benchmark 3-nodes 'benchmark-3nodes.xml' "${MACHINE1} ${MACHINE2} ${MACHINE4}"
+benchmark 4-nodes 'benchmark-4nodes.xml' "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
