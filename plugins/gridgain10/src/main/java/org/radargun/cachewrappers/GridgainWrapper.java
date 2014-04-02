@@ -43,7 +43,7 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
         final GridCacheConfiguration cfg = new GridCacheConfiguration();
         cfg.setCacheMode(GridCacheMode.LOCAL);
         cfg.setSwapEnabled(false);
-        cfg.setAtomicityMode(GridCacheAtomicityMode.ATOMIC);
+        cfg.setAtomicityMode(GridCacheAtomicityMode.TRANSACTIONAL);
         cfg.setQueryIndexEnabled(false);
         cfg.setBackups(0);
         cfg.setStartSize(1000000);
