@@ -16,6 +16,8 @@ import org.radargun.logging.Log;
 import org.radargun.logging.LogFactory;
 import org.radargun.utils.TypedProperties;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
 /**
@@ -34,34 +36,45 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
     public void setUp(String config, boolean isLocal, int nodeIndex, TypedProperties confAttributes) throws Exception {
         log.info("Creating cache with the following configuration: " + config);
         //String mapName = getMapName(confAttributes);
-        //InputStream configStream = getAsInputStreamFromClassLoader(config);
+        InputStream in = getAsInputStreamFromClassLoader(config);
+
+        File file = File.createTempFile("gridgain","config");
+        FileOutputStream out = new FileOutputStream(file);
+
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = in.read(buffer)) != -1) {
+            out.write(buffer, 0, len);
+        }
+       out.close();
+
         //Config cfg = new XmlConfigBuilder(configStream).build();
         //hazelcastInstance = Hazelcast.newHazelcastInstance(cfg);
         //log.info("Hazelcast configuration:" + hazelcastInstance.getConfig().toString());
         //hazelcastMap = hazelcastInstance.getMap(mapName);
 
-        log.info("=====================================");
-        for(Object key: confAttributes.keySet()){
-            log.info(key+" "+confAttributes.get(key));
-        }
-        log.info("=====================================");
+//        log.info("=====================================");
+//        for(Object key: confAttributes.keySet()){
+//            log.info(key+" "+confAttributes.get(key));
+//        }
+//        log.info("=====================================");
+//
+//        final GridCacheConfiguration cfg = new GridCacheConfiguration();
+//        cfg.setCacheMode(GridCacheMode.LOCAL);
+//        cfg.setSwapEnabled(false);
+//        //cfg.setAtomicityMode(GridCacheAtomicityMode.ATOMIC);
+//        cfg.setAtomicityMode(GridCacheAtomicityMode.TRANSACTIONAL);
+//        cfg.setQueryIndexEnabled(false);
+//        cfg.setBackups(0);
+//        cfg.setStartSize(1000000);
+//        cfg.setName(DEFAULT_MAP_NAME);
+//        final GridConfiguration gridConfiguration = new GridConfiguration();
+//        gridConfiguration.setRestEnabled(false);
+//        gridConfiguration.setMarshaller(new GridOptimizedMarshaller());
+//        gridConfiguration.setCacheConfiguration(cfg);
+//
 
-        final GridCacheConfiguration cfg = new GridCacheConfiguration();
-        cfg.setCacheMode(GridCacheMode.LOCAL);
-        cfg.setSwapEnabled(false);
-        //cfg.setAtomicityMode(GridCacheAtomicityMode.ATOMIC);
-        cfg.setAtomicityMode(GridCacheAtomicityMode.TRANSACTIONAL);
-        cfg.setQueryIndexEnabled(false);
-        cfg.setBackups(0);
-        cfg.setStartSize(1000000);
-        cfg.setName(DEFAULT_MAP_NAME);
-        final GridConfiguration gridConfiguration = new GridConfiguration();
-        gridConfiguration.setRestEnabled(false);
-        gridConfiguration.setMarshaller(new GridOptimizedMarshaller());
-        gridConfiguration.setCacheConfiguration(cfg);
-
-
-        grid = GridGain.start(gridConfiguration);
+        grid = GridGain.start(file.getAbsolutePath());
         cache = grid.cache(DEFAULT_MAP_NAME);
     }
 

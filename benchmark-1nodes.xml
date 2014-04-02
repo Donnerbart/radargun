@@ -40,7 +40,7 @@
         </hazelcast33 -->
 
         <gridgain60>
-            <config name="dist-sync.xml"/>
+            <config name="local.xml"/>
         </gridgain60>
     </products>
 
