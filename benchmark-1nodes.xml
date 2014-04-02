@@ -17,7 +17,7 @@
     </benchmark>
 
     <products>
-        <infinispan52>
+        <!-- infinispan52>
             <config name="dist-sync.xml"/>
         </infinispan52>
         <infinispan60>
@@ -37,18 +37,14 @@
         </hazelcast32>
         <hazelcast33>
             <config name="dist-sync.xml"/>
-        </hazelcast33>
+        </hazelcast33 -->
+
+        <gridgain10>
+            <config name="dist-sync.xml"/>
+        </gridgain10>
     </products>
 
     <reports>
-        <!-- report name="Replicated">
-           <item product="infinispan52" config="repl-sync.xml"/>
-           <item product="jbosscache3" config="*"/>
-        </report>
-        <report name="DistVsRepl">
-           <item product="infinispan52" config="repl-sync.xml"/>
-           <item product="infinispan52" config="dist-sync.xml"/>
-        </report -->
         <report name="All" includeAll="true"/>
     </reports>
 
