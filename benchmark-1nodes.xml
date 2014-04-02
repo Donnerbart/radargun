@@ -39,9 +39,9 @@
             <config name="dist-sync.xml"/>
         </hazelcast33 -->
 
-        <gridgain10>
+        <gridgain60>
             <config name="dist-sync.xml"/>
-        </gridgain10>
+        </gridgain60>
     </products>
 
     <reports>

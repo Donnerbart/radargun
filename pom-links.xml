@@ -12,7 +12,7 @@
 
    <modules>
       <module>framework</module>
-      <module>plugins/gridgain10</module>
+      <module>plugins/gridgain60</module>
       <module>plugins/hazelcast2</module>
       <module>plugins/hazelcast30</module>
       <module>plugins/hazelcast31</module>
@@ -325,7 +325,7 @@
                            </classpath>
                            <arg value="framework/src/main/resources" />
                            <arg value="framework/target/distribution/radargun-framework-bin/radargun-framework/lib" />
-                            <arg value="gridgain10" />
+                            <arg value="gridgain60" />
                             <arg value="hazelcast2" />
                            <arg value="hazelcast30" />
                            <arg value="hazelcast31" />
@@ -359,20 +359,20 @@
 
 
                          <!-- Gridgain 1.0-->
-                         <copy todir="${distribution.artifact}/plugins/gridgain10">
-                             <fileset dir="plugins/gridgain10/target/distribution/plugin-gridgain10-bin/plugin-gridgain10">
+                         <copy todir="${distribution.artifact}/plugins/gridgain60">
+                             <fileset dir="plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60">
                                  <include name="**/*" />
                                  <exclude name="**/*.jar" />
                              </fileset>
                          </copy>
                          <copy todir="${distribution.artifact}/plugin-dependencies">
-                             <fileset dir="plugins/gridgain10/target/distribution/plugin-gridgain10-bin/plugin-gridgain10/lib">
+                             <fileset dir="plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60/lib">
                                  <include name="*.jar" />
                              </fileset>
                          </copy>
                          <exec executable="bash" failonerror="true">
                              <arg value="-c"/>
-                             <arg value="for FILE in `ls plugins/gridgain10/target/distribution/plugin-gridgain10-bin/plugin-gridgain10/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/gridgain10/lib/; done;"/>
+                             <arg value="for FILE in `ls plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/gridgain60/lib/; done;"/>
                          </exec>
 
                          <!-- Hazelcast 2.x-->
