@@ -44,16 +44,12 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
 
     @Override
     public void tearDown() throws Exception {
-        //hazelcastInstance.getLifecycleService().shutdown();
-        //todo:
+        GridGain.stopAll(true);
     }
 
     @Override
     public boolean isRunning() {
-        //return hazelcastInstance.getLifecycleService().isRunning();
-        //return grid.forLocal().
-        //todo
-        return true;
+      return GridGain.allGrids().contains(grid);
     }
 
     @Override
