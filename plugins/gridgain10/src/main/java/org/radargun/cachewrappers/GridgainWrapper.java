@@ -40,11 +40,18 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
         //log.info("Hazelcast configuration:" + hazelcastInstance.getConfig().toString());
         //hazelcastMap = hazelcastInstance.getMap(mapName);
 
+        log.info("=====================================");
+        for(Object key: confAttributes.keySet()){
+            log.info(key+" "+confAttributes.get(key));
+        }
+        log.info("=====================================");
+
         final GridCacheConfiguration cfg = new GridCacheConfiguration();
         cfg.setCacheMode(GridCacheMode.LOCAL);
         cfg.setSwapEnabled(false);
-        cfg.setAtomicityMode(GridCacheAtomicityMode.ATOMIC);
-        ///cfg.setAtomicityMode(GridCacheAtomicityMode.TRANSACTIONAL);
+        //cfg.setAtomicityMode(GridCacheAtomicityMode.ATOMIC);
+        cfg.setAtomicityMode(GridCacheAtomicityMode.TRANSACTIONAL);
+
         cfg.setQueryIndexEnabled(false);
         cfg.setBackups(0);
         cfg.setStartSize(1000000);
@@ -53,6 +60,7 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
         gridConfiguration.setRestEnabled(false);
         gridConfiguration.setMarshaller(new GridOptimizedMarshaller());
         gridConfiguration.setCacheConfiguration(cfg);
+
 
         grid = GridGain.start(gridConfiguration);
         cache = grid.cache(DEFAULT_MAP_NAME);
