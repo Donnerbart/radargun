@@ -38,6 +38,9 @@
         <hazelcast33>
             <config name="dist-sync.xml"/>
         </hazelcast33>
+        <hazelcast31>
+            <config name="dist-sync.xml"/>
+        </hazelcast31>
     </products>
 
 

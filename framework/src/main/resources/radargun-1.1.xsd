@@ -76,6 +76,7 @@
                   <sequence>
                      <choice maxOccurs="unbounded" minOccurs="1">
                         <element name="product" type="rg:product"/>
+                        <element name="gridgain10" type="rg:gridgain10"/>
                         <element name="hazelcast2" type="rg:hazelcast2"/>
                         <element name="hazelcast30" type="rg:hazelcast30"/>
                         <element name="hazelcast31" type="rg:hazelcast31"/>
@@ -2057,6 +2058,11 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
          </extension>
       </complexContent>
    </complexType>
+   <complexType name="gridgain10">
+      <complexContent>
+         <extension base="rg:abstractProduct"/>
+      </complexContent>
+   </complexType>
    <complexType name="hazelcast2">
       <complexContent>
          <extension base="rg:abstractProduct"/>
@@ -2077,7 +2083,7 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
          <extension base="rg:abstractProduct"/>
       </complexContent>
    </complexType>
-   <complexType name="hazelcast33">
+   <complexType name="hazelcast32">
       <complexContent>
          <extension base="rg:abstractProduct"/>
       </complexContent>
