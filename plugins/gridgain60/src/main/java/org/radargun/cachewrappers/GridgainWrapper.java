@@ -1,15 +1,10 @@
 package org.radargun.cachewrappers;
 
 import org.gridgain.grid.Grid;
-import org.gridgain.grid.GridConfiguration;
 import org.gridgain.grid.GridException;
 import org.gridgain.grid.GridGain;
 import org.gridgain.grid.cache.GridCache;
-import org.gridgain.grid.cache.GridCacheAtomicityMode;
-import org.gridgain.grid.cache.GridCacheConfiguration;
-import org.gridgain.grid.cache.GridCacheMode;
 import org.gridgain.grid.cache.GridCacheTx;
-import org.gridgain.grid.marshaller.optimized.GridOptimizedMarshaller;
 import org.radargun.CacheWrapper;
 import org.radargun.features.AtomicOperationsCapable;
 import org.radargun.logging.Log;
@@ -38,7 +33,7 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
         //String mapName = getMapName(confAttributes);
         InputStream in = getAsInputStreamFromClassLoader(config);
 
-        File file = File.createTempFile("gridgain","config");
+        File file = File.createTempFile("gridgain", "config");
         FileOutputStream out = new FileOutputStream(file);
 
         byte[] buffer = new byte[1024];
@@ -46,7 +41,7 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
         while ((len = in.read(buffer)) != -1) {
             out.write(buffer, 0, len);
         }
-       out.close();
+        out.close();
 
         //Config cfg = new XmlConfigBuilder(configStream).build();
         //hazelcastInstance = Hazelcast.newHazelcastInstance(cfg);
@@ -89,7 +84,7 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
 
     @Override
     public boolean isRunning() {
-      return GridGain.allGrids().contains(grid);
+        return GridGain.allGrids().contains(grid);
     }
 
     @Override
@@ -137,8 +132,8 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
     public int getNumMembers() {
         try {
             return grid.nodes().size();
-        }catch(RuntimeException e){
-            log.warn("failed to getNumMembers",e);
+        } catch (RuntimeException e) {
+            log.warn("failed to getNumMembers", e);
             return -1;
         }
     }
@@ -155,7 +150,7 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
 
     @Override
     public boolean isTransactional(String bucket) {
-        return true;
+        return false;
     }
 
     private static final ThreadLocal<GridCacheTx> transactionThreadLocal = new ThreadLocal<GridCacheTx>() {
