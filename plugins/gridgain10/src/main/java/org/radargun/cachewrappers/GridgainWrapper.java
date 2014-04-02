@@ -1,10 +1,15 @@
 package org.radargun.cachewrappers;
 
 import org.gridgain.grid.Grid;
+import org.gridgain.grid.GridConfiguration;
 import org.gridgain.grid.GridException;
 import org.gridgain.grid.GridGain;
 import org.gridgain.grid.cache.GridCache;
+import org.gridgain.grid.cache.GridCacheAtomicityMode;
+import org.gridgain.grid.cache.GridCacheConfiguration;
+import org.gridgain.grid.cache.GridCacheMode;
 import org.gridgain.grid.cache.GridCacheTx;
+import org.gridgain.grid.marshaller.optimized.GridOptimizedMarshaller;
 import org.radargun.CacheWrapper;
 import org.radargun.features.AtomicOperationsCapable;
 import org.radargun.logging.Log;
@@ -21,7 +26,7 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
     protected final Log log = LogFactory.getLog(getClass());
     private final boolean trace = log.isTraceEnabled();
 
-    private static final String DEFAULT_MAP_NAME = "default";
+    private static final String DEFAULT_MAP_NAME = "themap";
     protected GridCache<Object, Object> cache;
     private Grid grid;
 
@@ -34,7 +39,21 @@ public class GridgainWrapper implements CacheWrapper, AtomicOperationsCapable {
         //hazelcastInstance = Hazelcast.newHazelcastInstance(cfg);
         //log.info("Hazelcast configuration:" + hazelcastInstance.getConfig().toString());
         //hazelcastMap = hazelcastInstance.getMap(mapName);
-        grid = GridGain.grid();
+
+        final GridCacheConfiguration cfg = new GridCacheConfiguration();
+        cfg.setCacheMode(GridCacheMode.LOCAL);
+        cfg.setSwapEnabled(false);
+        cfg.setAtomicityMode(GridCacheAtomicityMode.ATOMIC);
+        cfg.setQueryIndexEnabled(false);
+        cfg.setBackups(0);
+        cfg.setStartSize(1000000);
+        cfg.setName(DEFAULT_MAP_NAME);
+        final GridConfiguration gridConfiguration = new GridConfiguration();
+        gridConfiguration.setRestEnabled(false);
+        gridConfiguration.setMarshaller(new GridOptimizedMarshaller());
+        gridConfiguration.setCacheConfiguration(cfg);
+
+        grid = GridGain.start(gridConfiguration);
         cache = grid.cache(DEFAULT_MAP_NAME);
     }
 
