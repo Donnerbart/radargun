@@ -17,7 +17,7 @@
     </benchmark>
 
     <products>
-        <!-- infinispan52>
+        <infinispan52>
             <config name="dist-sync.xml"/>
         </infinispan52>
         <infinispan60>
@@ -34,14 +34,20 @@
         </hazelcast31>
         <hazelcast32>
             <config name="dist-sync.xml"/>
-        </hazelcast32 -->
+        </hazelcast32>
         <hazelcast33>
             <config name="dist-sync.xml"/>
         </hazelcast33>
+        <hazelcast331>
+            <config name="dist-sync.xml"/>
+        </hazelcast331>
 
         <gridgain60>
             <config name="local.xml"/>
         </gridgain60>
+        <gridgain62>
+            <config name="local.xml"/>
+        </gridgain62>
     </products>
 
     <reports>

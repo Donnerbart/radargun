@@ -77,11 +77,13 @@
                      <choice maxOccurs="unbounded" minOccurs="1">
                         <element name="product" type="rg:product"/>
                         <element name="gridgain60" type="rg:gridgain60"/>
+                        <element name="gridgain62" type="rg:gridgain62"/>
                         <element name="hazelcast2" type="rg:hazelcast2"/>
                         <element name="hazelcast30" type="rg:hazelcast30"/>
                         <element name="hazelcast31" type="rg:hazelcast31"/>
                         <element name="hazelcast32" type="rg:hazelcast32"/>
-                        <element name="hazelcast32" type="rg:hazelcast32"/>
+                        <element name="hazelcast33" type="rg:hazelcast33"/>
+                        <element name="hazelcast331" type="rg:hazelcast331"/>
                         <element name="infinispan4" type="rg:infinispan4"/>
                         <element name="infinispan50" type="rg:infinispan50"/>
                         <element name="infinispan51" type="rg:infinispan51"/>
@@ -2063,6 +2065,11 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
          <extension base="rg:abstractProduct"/>
       </complexContent>
    </complexType>
+    <complexType name="gridgain62">
+        <complexContent>
+            <extension base="rg:abstractProduct"/>
+        </complexContent>
+    </complexType>
    <complexType name="hazelcast2">
       <complexContent>
          <extension base="rg:abstractProduct"/>
@@ -2083,11 +2090,16 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
          <extension base="rg:abstractProduct"/>
       </complexContent>
    </complexType>
-   <complexType name="hazelcast32">
+   <complexType name="hazelcast33">
       <complexContent>
          <extension base="rg:abstractProduct"/>
       </complexContent>
    </complexType>
+    <complexType name="hazelcast331">
+        <complexContent>
+            <extension base="rg:abstractProduct"/>
+        </complexContent>
+    </complexType>
    <complexType name="infinispan4">
       <complexContent>
          <extension base="rg:abstractProduct"/>

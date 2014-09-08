@@ -9,14 +9,22 @@
       <relativePath>../pom.xml</relativePath>
    </parent>
 
-   <artifactId>plugin-hazelcast32</artifactId>
-   <name>Hazelcast 3.2 plugin for RadarGun</name>
+   <artifactId>plugin-hazelcast331</artifactId>
+   <name>Hazelcast 3.3.1 plugin for RadarGun</name>
+
+    <repositories>
+        <repository>
+            <id>snapshot-repository</id>
+            <name>Maven2 Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
 
    <dependencies>
       <dependency>
          <groupId>com.hazelcast</groupId>
          <artifactId>hazelcast</artifactId>
-         <version>3.2.5</version>
+         <version>3.3.1-SNAPSHOT</version>
       </dependency>
    </dependencies>
 
