@@ -45,9 +45,9 @@
         <gridgain60>
             <config name="local.xml"/>
         </gridgain60>
-        <gridgain62>
+        <!-- gridgain62>
             <config name="local.xml"/>
-        </gridgain62>
+        </gridgain62 -->
     </products>
 
     <reports>
