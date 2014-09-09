@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>org.gridgain</groupId>
-            <artifactId>gridgain-datagrid</artifactId>
+            <artifactId>gridgain-platform</artifactId>
             <version>6.2.1</version>
         </dependency>
     </dependencies>
