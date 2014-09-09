@@ -23,6 +23,7 @@
         <infinispan60>
             <config name="dist-sync.xml"/>
         </infinispan60>
+
         <hazelcast2>
             <config name="dist-sync.xml"/>
         </hazelcast2>
@@ -42,9 +43,9 @@
             <config name="dist-sync.xml"/>
         </hazelcast331>
 
-        <gridgain60>
+        <!-- gridgain60>
             <config name="local.xml"/>
-        </gridgain60>
+        </gridgain60 -->
         <!-- gridgain62>
             <config name="local.xml"/>
         </gridgain62 -->
