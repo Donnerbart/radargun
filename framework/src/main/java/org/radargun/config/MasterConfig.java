@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * Comntains master's configuration elements.
+ * Contains master's configuration elements.
  *
  * @author Mircea.Markus@jboss.com
  */
