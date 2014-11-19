@@ -1,4 +1,3 @@
-.gitignore
 # ignore .svn metadata files
 .svn
 # ignore Maven generated target folders
@@ -29,3 +28,5 @@ core/src/main/resources/schema
 *.*~
 deploy
 install
+local-settings
+reports

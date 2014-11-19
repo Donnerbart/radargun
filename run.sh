@@ -3,24 +3,32 @@
 cd "$(dirname "$0")"
 
 RADARGUN_VERSION=2.0.0-SNAPSHOT
+TARGET_DIR=/tmp
+REPORTS_DIR=/tmp/reports
+
 ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
 ARTIFACT_DIR=target/distribution/
-TARGET_DIR=/tmp
 RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
 
-#the machines that make up the test cluster, this should include the master.
+USER=$(whoami)
+BENCHMARK_OPTS=""
+
+# the machines that make up the test cluster, this should include the master
 MACHINE1='192.168.2.101'
 MACHINE2='192.168.2.102'
 MACHINE3='192.168.2.103'
 MACHINE4='192.168.2.104'
 MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
 MASTER=${MACHINE1}
-USER=peter
-REPORTS_DIR=/tmp/reports
 
-#only one can be enabled. 
+# only one can be enabled
 YOURKIT_ENABLED=false
 JACOCO_ENABLED=false
+
+# override settings with local-settings file
+if [ -f local-settings ]; then
+    source local-settings
+fi
 
 function address {
 	MACHINE=$1	
@@ -52,13 +60,12 @@ function install {
 	echo ===============================================================
 	echo Installing Radargun on ${MACHINE}
 	echo ===============================================================
-	
-	ssh ${USER}@${ADDRESS} -p ${PORT} "killall -9 java"	
+
+	ssh ${USER}@${ADDRESS} -p ${PORT} "killall -9 java"
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
 	scp -P ${PORT} ${ARTIFACT_DIR}/${ARTIFACT_NAME}.zip ${USER}@${ADDRESS}:${TARGET_DIR}/${ARTIFACT_NAME}.zip
 	echo Unzipping ${ARTIFACT_NAME}.zip
 	ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
-	
 
     if [ "${YOURKIT_ENABLED}" = "true" ] ; then
 	    echo YourKit is enabled
@@ -82,14 +89,14 @@ function start_master {
 	MACHINE=$1	
 	ADDRESS=$( address ${MACHINE} )	
 	PORT=$( port ${MACHINE} )
-	
+
 	echo ===============================================================
 	echo Starting Radargun Master on ${MACHINE}
 	echo ===============================================================
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR} ; bin/master.sh -c benchmark.xml"
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/master.sh -c benchmark.xml"
 	
-	#nasty hack to give server time to startup
+	# nasty hack to give server time to startup
 	echo "Waiting for master to be started"
 	sleep 5s
 	echo "Master fully started"
@@ -122,7 +129,7 @@ function wait_completion {
 	
 	while [ 1 ];
 	do 	
-		ssh ${USER}@${ADDRESS} -p ${PORT} "cd $RADARGUN_DIR ; bin/master.sh -status | grep -q not"
+		ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/master.sh -status | grep -q not"
 		RC=$?
 		if [[ ${RC} == 0 ]] ;
 		then
@@ -137,7 +144,7 @@ function tail_log {
 	ADDRESS=$( address ${MACHINE} )	
 	PORT=$( port ${MACHINE} )
 	
-	ssh  -t ${USER}@${ADDRESS} -p ${PORT} "tail -f $RADARGUN_DIR/radargun.log" &
+	ssh  -t ${USER}@${ADDRESS} -p ${PORT} "tail -f ${RADARGUN_DIR}/radargun.log" &
 }
 
 function download_reports {
@@ -168,7 +175,7 @@ function benchmark {
 	DESTINATION_DIR=${REPORTS_DIR}/${BENCHMARK_NAME}/${TIMESTAMP}
 	ADDRESS=$( address ${MASTER} )
 	PORT=$( port ${MASTER} )
-		
+
 	echo ===============================================================
 	echo Starting Benchmark: ${BENCHMARK_NAME}
 	echo Master: ${MASTER}
@@ -213,6 +220,12 @@ do
 done
 
 # ================================================================
+
+if [ -n "${BENCHMARK_OPTS}" ]; then
+    echo Executing benchmark ${BENCHMARK_OPTS}
+    benchmark ${BENCHMARK_OPTS}
+    exit 0
+fi
 
 #benchmark 1-nodes 'benchmark-1nodes.xml' "${MACHINE1}"
 #benchmark 2-nodes 'benchmark-2nodes.xml' "${MACHINE1} ${MACHINE2}"

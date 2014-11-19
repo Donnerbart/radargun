@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# copy this file to local-settings to override default values in run.sh
+
+MACHINE1='127.0.0.1'
+MACHINES="${MACHINE1}"
+MASTER=${MACHINE1}
+
+BENCHMARK_OPTS="local local-benchmark.xml ${MACHINE1}"
+REPORTS_DIR=reports
+
+USER=$(whoami)
