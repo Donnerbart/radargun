@@ -39,9 +39,12 @@
         <hazelcast33>
             <config name="dist-sync.xml"/>
         </hazelcast33>
-        <hazelcast331>
+        <hazelcast333>
             <config name="dist-sync.xml"/>
-        </hazelcast331>
+        </hazelcast333>
+       <hazelcast34>
+          <config name="dist-sync.xml"/>
+       </hazelcast34>
 
         <!-- gridgain60>
             <config name="local.xml"/>
