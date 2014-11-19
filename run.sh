@@ -123,8 +123,8 @@ function wait_completion {
 	while [ 1 ];
 	do 	
 		ssh ${USER}@${ADDRESS} -p ${PORT} "cd $RADARGUN_DIR ; bin/master.sh -status | grep -q not"
-		rc=$?
-		if [[ $rc == 0 ]] ; 
+		RC=$?
+		if [[ ${RC} == 0 ]] ;
 		then
 			return
 		fi
@@ -170,7 +170,7 @@ function benchmark {
 	PORT=$( port ${MASTER} )
 		
 	echo ===============================================================
-	echo Starting Benchmark: ${BECHMARK_NAME}
+	echo Starting Benchmark: ${BENCHMARK_NAME}
 	echo Master: ${MASTER}
 	echo Slaves: ${SLAVES}
 	echo Benchmark file: ${BENCHMARK_FILE}
@@ -186,7 +186,7 @@ function benchmark {
 
 	start_master ${MASTER} 
 
-	for SLAVE in $SLAVES
+	for SLAVE in ${SLAVES}
 	do
 		start_slave ${SLAVE}
 	done
@@ -196,7 +196,7 @@ function benchmark {
 	
 	echo Downloading reports and logs
 	download_reports ${MASTER} ${DESTINATION_DIR}
-	for SLAVE in $SLAVES
+	for SLAVE in ${SLAVES}
 	do
 		download_logs ${SLAVE} ${DESTINATION_DIR}
 	done	
@@ -207,9 +207,9 @@ function benchmark {
 	echo ===============================================================
 }
 
-for machine in $MACHINES
+for MACHINE in ${MACHINES}
 do
-	install $machine
+	install ${MACHINE}
 done
 
 # ================================================================
