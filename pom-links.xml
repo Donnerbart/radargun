@@ -19,6 +19,9 @@
       <module>plugins/hazelcast31</module>
       <module>plugins/hazelcast32</module>
       <module>plugins/hazelcast33</module>
+      <module>plugins/hazelcast331</module>
+      <module>plugins/hazelcast333</module>
+      <module>plugins/hazelcast34</module>
       <module>plugins/infinispan4</module>
       <module>plugins/infinispan50</module>
       <module>plugins/infinispan51</module>
@@ -496,6 +499,40 @@
                              <arg value="-c"/>
                              <arg value="for FILE in `ls plugins/hazelcast331/target/distribution/plugin-hazelcast331-bin/plugin-hazelcast331/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast331/lib/; done;"/>
                          </exec>
+
+                        <!-- Hazelcast 3.3.3-->
+                        <copy todir="${distribution.artifact}/plugins/hazelcast333">
+                           <fileset dir="plugins/hazelcast333/target/distribution/plugin-hazelcast333/plugin-hazelcast333">
+                              <include name="**/*" />
+                              <exclude name="**/*.jar" />
+                           </fileset>
+                        </copy>
+                        <copy todir="${distribution.artifact}/plugin-dependencies">
+                           <fileset dir="plugins/hazelcast333/target/distribution/plugin-hazelcast333-bin/plugin-hazelcast333/lib">
+                              <include name="*.jar" />
+                           </fileset>
+                        </copy>
+                        <exec executable="bash" failonerror="true">
+                           <arg value="-c"/>
+                           <arg value="for FILE in `ls plugins/hazelcast333/target/distribution/plugin-hazelcast333-bin/plugin-hazelcast333/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast333/lib/; done;"/>
+                        </exec>
+
+                        <!-- Hazelcast 3.4-->
+                        <copy todir="${distribution.artifact}/plugins/hazelcast34">
+                           <fileset dir="plugins/hazelcast34/target/distribution/plugin-hazelcast34/plugin-hazelcast34">
+                              <include name="**/*" />
+                              <exclude name="**/*.jar" />
+                           </fileset>
+                        </copy>
+                        <copy todir="${distribution.artifact}/plugin-dependencies">
+                           <fileset dir="plugins/hazelcast34/target/distribution/plugin-hazelcast34-bin/plugin-hazelcast34/lib">
+                              <include name="*.jar" />
+                           </fileset>
+                        </copy>
+                        <exec executable="bash" failonerror="true">
+                           <arg value="-c"/>
+                           <arg value="for FILE in `ls plugins/hazelcast34/target/distribution/plugin-hazelcast34-bin/plugin-hazelcast34/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast34/lib/; done;"/>
+                        </exec>
 
                         <!-- infinispan 4 -->
                         <copy todir="${distribution.artifact}/plugins/infinispan4">
