@@ -26,6 +26,7 @@
       <module>plugins/hazelcast32</module>
       <module>plugins/hazelcast33</module>
       <module>plugins/hazelcast331</module>
+      <module>plugins/hazelcast333</module>
       <module>plugins/infinispan4</module>
       <module>plugins/infinispan50</module>
       <module>plugins/infinispan51</module>
@@ -280,6 +281,7 @@
                            <arg value="hazelcast32" />
                            <arg value="hazelcast33" />
                            <arg value="hazelcast331" />
+                           <arg value="hazelcast333" />
                            <arg value="infinispan4" />
                            <arg value="infinispan50" />
                            <arg value="infinispan51" />
@@ -305,7 +307,7 @@
                            <arg value="jdg62" />
                         </java>
 
-                        <echo message="Packaging the framework, and the following plugins: gridgain60, hazelcast2, hazelcast30, hazelcast31, hazelcast32, hazelcast33, hazelcast331, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, terracotta3" />
+                        <echo message="Packaging the framework, and the following plugins: gridgain60, hazelcast2, hazelcast30, hazelcast31, hazelcast32, hazelcast33, hazelcast331, hazelcast333, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, terracotta3" />
 
                          <copy todir="${distribution.artifact}/plugins/gridgain60">
                              <fileset dir="plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60">
@@ -350,6 +352,12 @@
 
                          <copy todir="${distribution.artifact}/plugins/hazelcast331">
                              <fileset dir="plugins/hazelcast331/target/distribution/plugin-hazelcast331-bin/plugin-hazelcast331">
+                                 <include name="**/*" />
+                             </fileset>
+                         </copy>
+
+                         <copy todir="${distribution.artifact}/plugins/hazelcast333">
+                             <fileset dir="plugins/hazelcast333/target/distribution/plugin-hazelcast333-bin/plugin-hazelcast333">
                                  <include name="**/*" />
                              </fileset>
                          </copy>
