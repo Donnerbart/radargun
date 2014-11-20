@@ -360,10 +360,9 @@
                            <arg value="jdg61" />
                            <arg value="jdg62" />
                         </java>
-                        <echo message="Packaging the framework, and the following plugins: hazelcast2, hazelcast30, hazelcast31, hazelcast32,hazelcast33, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, ehcache28, terracotta3" />
+                        <echo message="Packaging the framework, and the following plugins: hazelcast2, hazelcast30, hazelcast31, hazelcast32, hazelcast33, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, ehcache28, terracotta3" />
 
-
-                         <!-- Gridgain 1.0-->
+                         <!-- Gridgain 6.0.2 -->
                          <copy todir="${distribution.artifact}/plugins/gridgain60">
                              <fileset dir="plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60">
                                  <include name="**/*" />
@@ -380,7 +379,7 @@
                              <arg value="for FILE in `ls plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/gridgain60/lib/; done;"/>
                          </exec>
 
-                         <!-- Gridgain 6.2-->
+                         <!-- Gridgain 6.2.1 -->
                          <copy todir="${distribution.artifact}/plugins/gridgain62">
                              <fileset dir="plugins/gridgain62/target/distribution/plugin-gridgain62-bin/plugin-gridgain62">
                                  <include name="**/*" />

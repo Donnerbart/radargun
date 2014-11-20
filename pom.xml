@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
 
    <parent>
@@ -19,7 +20,7 @@
       <module>framework</module>
       <module>plugins</module>
       <module>plugins/gridgain60</module>
-      <!-- module>plugins/gridgain62</module -->
+      <module>plugins/gridgain62</module>
       <module>plugins/hazelcast2</module>
       <module>plugins/hazelcast3-base</module>
       <module>plugins/hazelcast30</module>
@@ -51,8 +52,8 @@
       <connection>scm:git:git@github.com:radargun/radargun.git</connection>
       <url>scm:git:git@github.com:radargun/radargun.git</url>
       <developerConnection>scm:git:git@github.com:radargun/radargun.git</developerConnection>
-     <tag>HEAD</tag>
-  </scm>
+      <tag>HEAD</tag>
+   </scm>
 
    <properties>
       <distribution.name>RadarGun-${project.version}</distribution.name>
@@ -96,10 +97,11 @@
                         </goals>
                         <configuration>
                            <tasks>
-                              <echo message="Packaging the infinispan70 plugin" />
+                              <echo message="Packaging the infinispan70 plugin"/>
                               <copy todir="${distribution.artifact}/plugins/infinispan70">
-                                 <fileset dir="plugins/infinispan70/target/distribution/plugin-infinispan70-bin/plugin-infinispan70">
-                                   <include name="**/*" />
+                                 <fileset
+                                       dir="plugins/infinispan70/target/distribution/plugin-infinispan70-bin/plugin-infinispan70">
+                                    <include name="**/*"/>
                                  </fileset>
                               </copy>
                            </tasks>
@@ -133,10 +135,11 @@
                         </goals>
                         <configuration>
                            <tasks>
-                              <echo message="Packaging the coherence3 plugin" />
+                              <echo message="Packaging the coherence3 plugin"/>
                               <copy todir="${distribution.artifact}/plugins/coherence3">
-                                 <fileset dir="plugins/coherence3/target/distribution/plugin-coherence3-bin/plugin-coherence3">
-                                    <include name="**/*" />
+                                 <fileset
+                                       dir="plugins/coherence3/target/distribution/plugin-coherence3-bin/plugin-coherence3">
+                                    <include name="**/*"/>
                                  </fileset>
                               </copy>
                            </tasks>
@@ -172,20 +175,20 @@
                         </goals>
                         <configuration>
                            <tasks>
-                              <echo message="Packaging the JDG 6.0.x, 6.1.x, and 6.2.x plugins" />
+                              <echo message="Packaging the JDG 6.0.x, 6.1.x, and 6.2.x plugins"/>
                               <copy todir="${distribution.artifact}/plugins/jdg60">
                                  <fileset dir="plugins/jdg60/target/distribution/plugin-jdg60-bin/plugin-jdg60">
-                                    <include name="**/*" />
+                                    <include name="**/*"/>
                                  </fileset>
                               </copy>
                               <copy todir="${distribution.artifact}/plugins/jdg61">
                                  <fileset dir="plugins/jdg61/target/distribution/plugin-jdg61-bin/plugin-jdg61">
-                                    <include name="**/*" />
+                                    <include name="**/*"/>
                                  </fileset>
                               </copy>
                               <copy todir="${distribution.artifact}/plugins/jdg62">
                                  <fileset dir="plugins/jdg62/target/distribution/plugin-jdg62-bin/plugin-jdg62">
-                                    <include name="**/*" />
+                                    <include name="**/*"/>
                                  </fileset>
                               </copy>
                            </tasks>
@@ -219,10 +222,11 @@
                         </goals>
                         <configuration>
                            <tasks>
-                              <echo message="Packaging the JGroups 3.5.x plugin" />
+                              <echo message="Packaging the JGroups 3.5.x plugin"/>
                               <copy todir="${distribution.artifact}/plugins/jgroups35">
-                                 <fileset dir="plugins/jgroups35/target/distribution/plugin-jgroups35-bin/plugin-jgroups35">
-                                    <include name="**/*" />
+                                 <fileset
+                                       dir="plugins/jgroups35/target/distribution/plugin-jgroups35-bin/plugin-jgroups35">
+                                    <include name="**/*"/>
                                  </fileset>
                               </copy>
                            </tasks>
@@ -250,9 +254,9 @@
                   </goals>
                   <configuration>
                      <tasks>
-                        <delete dir="target/distribution" />
-                        <mkdir dir="target/distribution" />
-                        <mkdir dir="${distribution.artifact}" />
+                        <delete dir="target/distribution"/>
+                        <mkdir dir="target/distribution"/>
+                        <mkdir dir="${distribution.artifact}"/>
                      </tasks>
                   </configuration>
                </execution>
@@ -265,209 +269,230 @@
                   </goals>
                   <configuration>
                      <tasks>
-                        <echo message="Generating XSD schema" />
+                        <echo message="Generating XSD schema"/>
                         <java classname="org.radargun.config.ConfigSchemaGenerator" failonerror="true">
                            <classpath>
-                              <fileset dir="framework/target/distribution/radargun-framework-bin/radargun-framework/lib">
-                                 <include name="*.jar" />
+                              <fileset
+                                    dir="framework/target/distribution/radargun-framework-bin/radargun-framework/lib">
+                                 <include name="*.jar"/>
                               </fileset>
                            </classpath>
-                           <arg value="framework/src/main/resources" />
-                           <arg value="framework/target/distribution/radargun-framework-bin/radargun-framework/lib" />
-                           <arg value="gridgain60" />
-                           <!-- arg value="gridgain62" / -->
-                           <arg value="hazelcast2" />
-                           <arg value="hazelcast30" />
-                           <arg value="hazelcast31" />
-                           <arg value="hazelcast32" />
-                           <arg value="hazelcast33" />
-                           <arg value="hazelcast333" />
-                           <arg value="hazelcast34" />
-                           <arg value="infinispan4" />
-                           <arg value="infinispan50" />
-                           <arg value="infinispan51" />
-                           <arg value="infinispan52" />
-                           <arg value="infinispan53" />
-                           <arg value="infinispan60" />
-                           <arg value="infinispan70" />
-                           <arg value="jgroups30" />
-                           <arg value="jgroups32" />
-                           <arg value="jgroups33" />
-                           <arg value="jgroups34" />
-                           <arg value="jgroups35" />
-                           <arg value="jbosscache2" />
-                           <arg value="jbosscache3" />
-                           <arg value="ehcache25" />
-                           <arg value="ehcache26" />
-                           <arg value="ehcache28" />
-                           <arg value="terracota3" />
-                           <arg value="chm" />
-                           <arg value="coherence3" />
-                           <arg value="jdg60" />
-                           <arg value="jdg61" />
-                           <arg value="jdg62" />
+                           <arg value="framework/src/main/resources"/>
+                           <arg value="framework/target/distribution/radargun-framework-bin/radargun-framework/lib"/>
+                           <arg value="gridgain60"/>
+                           <arg value="gridgain62"/>
+                           <arg value="hazelcast2"/>
+                           <arg value="hazelcast30"/>
+                           <arg value="hazelcast31"/>
+                           <arg value="hazelcast32"/>
+                           <arg value="hazelcast33"/>
+                           <arg value="hazelcast333"/>
+                           <arg value="hazelcast34"/>
+                           <arg value="infinispan4"/>
+                           <arg value="infinispan50"/>
+                           <arg value="infinispan51"/>
+                           <arg value="infinispan52"/>
+                           <arg value="infinispan53"/>
+                           <arg value="infinispan60"/>
+                           <arg value="infinispan70"/>
+                           <arg value="jgroups30"/>
+                           <arg value="jgroups32"/>
+                           <arg value="jgroups33"/>
+                           <arg value="jgroups34"/>
+                           <arg value="jgroups35"/>
+                           <arg value="jbosscache2"/>
+                           <arg value="jbosscache3"/>
+                           <arg value="ehcache25"/>
+                           <arg value="ehcache26"/>
+                           <arg value="ehcache28"/>
+                           <arg value="terracota3"/>
+                           <arg value="chm"/>
+                           <arg value="coherence3"/>
+                           <arg value="jdg60"/>
+                           <arg value="jdg61"/>
+                           <arg value="jdg62"/>
                         </java>
 
-                        <echo message="Packaging the framework, and the following plugins: gridgain60, hazelcast2, hazelcast30, hazelcast31, hazelcast32, hazelcast33, hazelcast333, hazelcast34, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, terracotta3" />
+                        <echo message="Packaging the framework, and the following plugins: gridgain60, hazelcast2, hazelcast30, hazelcast31, hazelcast32, hazelcast33, hazelcast333, hazelcast34, infinispan4, infinispan50, infinispan51, infinispan52, infinispan53, infinispan60, jbosscache2, jbosscache3, ehcache25, ehcache26, terracotta3"/>
 
-                         <copy todir="${distribution.artifact}/plugins/gridgain60">
-                             <fileset dir="plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60">
-                                 <include name="**/*" />
-                             </fileset>
-                         </copy>
-                         <!-- copy todir="${distribution.artifact}/plugins/gridgain62">
-                             <fileset dir="plugins/gridgain62/target/distribution/plugin-gridgain62-bin/plugin-gridgain62">
-                                 <include name="**/*" />
-                             </fileset>
-                         </copy -->
+                        <copy todir="${distribution.artifact}/plugins/gridgain60">
+                           <fileset
+                                 dir="plugins/gridgain60/target/distribution/plugin-gridgain60-bin/plugin-gridgain60">
+                              <include name="**/*"/>
+                           </fileset>
+                        </copy>
+
+                        <copy todir="${distribution.artifact}/plugins/gridgain62">
+                           <fileset
+                                 dir="plugins/gridgain62/target/distribution/plugin-gridgain62-bin/plugin-gridgain62">
+                              <include name="**/*"/>
+                           </fileset>
+                        </copy>
 
                         <copy todir="${distribution.artifact}/plugins/hazelcast2">
-                           <fileset dir="plugins/hazelcast2/target/distribution/plugin-hazelcast2-bin/plugin-hazelcast2">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/hazelcast2/target/distribution/plugin-hazelcast2-bin/plugin-hazelcast2">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/hazelcast3-base">
-                           <fileset dir="plugins/hazelcast3-base/target/distribution/plugin-hazelcast3-base-bin/plugin-hazelcast3-base">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/hazelcast3-base/target/distribution/plugin-hazelcast3-base-bin/plugin-hazelcast3-base">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/hazelcast30">
-                           <fileset dir="plugins/hazelcast30/target/distribution/plugin-hazelcast30-bin/plugin-hazelcast30">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/hazelcast30/target/distribution/plugin-hazelcast30-bin/plugin-hazelcast30">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
-                         <copy todir="${distribution.artifact}/plugins/hazelcast31">
-                             <fileset dir="plugins/hazelcast31/target/distribution/plugin-hazelcast31-bin/plugin-hazelcast31">
-                                 <include name="**/*" />
-                             </fileset>
-                         </copy>
+                        <copy todir="${distribution.artifact}/plugins/hazelcast31">
+                           <fileset
+                                 dir="plugins/hazelcast31/target/distribution/plugin-hazelcast31-bin/plugin-hazelcast31">
+                              <include name="**/*"/>
+                           </fileset>
+                        </copy>
 
-                         <copy todir="${distribution.artifact}/plugins/hazelcast32">
-                             <fileset dir="plugins/hazelcast32/target/distribution/plugin-hazelcast32-bin/plugin-hazelcast32">
-                                 <include name="**/*" />
-                             </fileset>
-                         </copy>
+                        <copy todir="${distribution.artifact}/plugins/hazelcast32">
+                           <fileset
+                                 dir="plugins/hazelcast32/target/distribution/plugin-hazelcast32-bin/plugin-hazelcast32">
+                              <include name="**/*"/>
+                           </fileset>
+                        </copy>
 
-                         <copy todir="${distribution.artifact}/plugins/hazelcast33">
-                             <fileset dir="plugins/hazelcast33/target/distribution/plugin-hazelcast33-bin/plugin-hazelcast33">
-                                 <include name="**/*" />
-                             </fileset>
-                         </copy>
+                        <copy todir="${distribution.artifact}/plugins/hazelcast33">
+                           <fileset
+                                 dir="plugins/hazelcast33/target/distribution/plugin-hazelcast33-bin/plugin-hazelcast33">
+                              <include name="**/*"/>
+                           </fileset>
+                        </copy>
 
-                         <copy todir="${distribution.artifact}/plugins/hazelcast333">
-                             <fileset dir="plugins/hazelcast333/target/distribution/plugin-hazelcast333-bin/plugin-hazelcast333">
-                                 <include name="**/*" />
-                             </fileset>
-                         </copy>
+                        <copy todir="${distribution.artifact}/plugins/hazelcast333">
+                           <fileset
+                                 dir="plugins/hazelcast333/target/distribution/plugin-hazelcast333-bin/plugin-hazelcast333">
+                              <include name="**/*"/>
+                           </fileset>
+                        </copy>
 
                         <copy todir="${distribution.artifact}/plugins/hazelcast34">
-                           <fileset dir="plugins/hazelcast34/target/distribution/plugin-hazelcast34-bin/plugin-hazelcast34">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/hazelcast34/target/distribution/plugin-hazelcast34-bin/plugin-hazelcast34">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
-                         <copy todir="${distribution.artifact}/plugins/infinispan4">
-                           <fileset dir="plugins/infinispan4/target/distribution/plugin-infinispan4-bin/plugin-infinispan4">
-                              <include name="**/*" />
+                        <copy todir="${distribution.artifact}/plugins/infinispan4">
+                           <fileset
+                                 dir="plugins/infinispan4/target/distribution/plugin-infinispan4-bin/plugin-infinispan4">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/infinispan50">
-                           <fileset dir="plugins/infinispan50/target/distribution/plugin-infinispan50-bin/plugin-infinispan50">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/infinispan50/target/distribution/plugin-infinispan50-bin/plugin-infinispan50">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/infinispan51">
-                           <fileset dir="plugins/infinispan51/target/distribution/plugin-infinispan51-bin/plugin-infinispan51">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/infinispan51/target/distribution/plugin-infinispan51-bin/plugin-infinispan51">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/infinispan52">
-                           <fileset dir="plugins/infinispan52/target/distribution/plugin-infinispan52-bin/plugin-infinispan52">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/infinispan52/target/distribution/plugin-infinispan52-bin/plugin-infinispan52">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/infinispan53">
-                           <fileset dir="plugins/infinispan53/target/distribution/plugin-infinispan53-bin/plugin-infinispan53">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/infinispan53/target/distribution/plugin-infinispan53-bin/plugin-infinispan53">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/infinispan60">
-                           <fileset dir="plugins/infinispan60/target/distribution/plugin-infinispan60-bin/plugin-infinispan60">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/infinispan60/target/distribution/plugin-infinispan60-bin/plugin-infinispan60">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/jgroups30">
                            <fileset dir="plugins/jgroups30/target/distribution/plugin-jgroups30-bin/plugin-jgroups30">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/jgroups32">
                            <fileset dir="plugins/jgroups32/target/distribution/plugin-jgroups32-bin/plugin-jgroups32">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/jgroups33">
                            <fileset dir="plugins/jgroups33/target/distribution/plugin-jgroups33-bin/plugin-jgroups33">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/jgroups34">
                            <fileset dir="plugins/jgroups34/target/distribution/plugin-jgroups34-bin/plugin-jgroups34">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/jbosscache3">
-                           <fileset dir="plugins/jbosscache3/target/distribution/plugin-jbosscache3-bin/plugin-jbosscache3">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/jbosscache3/target/distribution/plugin-jbosscache3-bin/plugin-jbosscache3">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/jbosscache2">
-                           <fileset dir="plugins/jbosscache2/target/distribution/plugin-jbosscache2-bin/plugin-jbosscache2">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/jbosscache2/target/distribution/plugin-jbosscache2-bin/plugin-jbosscache2">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/ehcache25">
                            <fileset dir="plugins/ehcache25/target/distribution/plugin-ehcache25-bin/plugin-ehcache25">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/ehcache26">
                            <fileset dir="plugins/ehcache26/target/distribution/plugin-ehcache26-bin/plugin-ehcache26">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
-                         <copy todir="${distribution.artifact}/plugins/ehcache28">
-                             <fileset dir="plugins/ehcache28/target/distribution/plugin-ehcache28-bin/plugin-ehcache28">
-                                 <include name="**/*" />
-                             </fileset>
-                         </copy>
+                        <copy todir="${distribution.artifact}/plugins/ehcache28">
+                           <fileset dir="plugins/ehcache28/target/distribution/plugin-ehcache28-bin/plugin-ehcache28">
+                              <include name="**/*"/>
+                           </fileset>
+                        </copy>
 
                         <copy todir="${distribution.artifact}/plugins/terracotta3">
-                           <fileset dir="plugins/terracotta3/target/distribution/plugin-terracotta3-bin/plugin-terracotta3">
-                              <include name="**/*" />
+                           <fileset
+                                 dir="plugins/terracotta3/target/distribution/plugin-terracotta3-bin/plugin-terracotta3">
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
 
                         <copy todir="${distribution.artifact}/plugins/chm">
                            <fileset dir="plugins/chm/target/distribution/plugin-chm-bin/plugin-chm">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
                      </tasks>
@@ -482,30 +507,31 @@
                   </goals>
                   <configuration>
                      <tasks>
-                        <echo message="Packaging the framework, common scripts and building archive" />
+                        <echo message="Packaging the framework, common scripts and building archive"/>
                         <copy todir="${distribution.artifact}">
                            <fileset dir="framework/target/distribution/radargun-framework-bin/radargun-framework">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
                         <copy todir="${distribution.artifact}/specific">
                            <fileset dir="jpa/target" erroronmissingdir="false">
-                              <include name="radargun-jpa-*.jar" />
+                              <include name="radargun-jpa-*.jar"/>
                            </fileset>
                         </copy>
                         <copy todir="${distribution.artifact}/bin">
                            <fileset dir="bin">
-                              <include name="**/*" />
+                              <include name="**/*"/>
                            </fileset>
                         </copy>
                         <chmod perm="ugo+rwx" type="file">
                            <fileset dir="${distribution.artifact}/bin">
-                              <include name="**/*.sh" />
-                              <include name="**/*.py" />
+                              <include name="**/*.sh"/>
+                              <include name="**/*.py"/>
                            </fileset>
                         </chmod>
                         <zip destfile="${distribution.zipfile}" basedir="target/distribution" excludes="**/bin/**">
-                           <zipfileset dir="${distribution.artifact}/bin" filemode="755" prefix="${distribution.name}/bin" />
+                           <zipfileset dir="${distribution.artifact}/bin" filemode="755"
+                                       prefix="${distribution.name}/bin"/>
                         </zip>
                      </tasks>
                   </configuration>
