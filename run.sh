@@ -24,8 +24,8 @@ MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
 YOURKIT_ENABLED=false
 JACOCO_ENABLED=false
 
-# kill_java
-KILL_JAVA=true
+# kill java switch
+KILL_JAVA=all
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
@@ -65,9 +65,14 @@ function install {
 	echo Installing Radargun on ${MACHINE}
 	echo ===============================================================
 
-	if [ "${KILL_JAVA}" = "true" ]; then
-	    ssh ${USER}@${ADDRESS} -p ${PORT} "killall -9 java"
-	fi
+    if [ "${KILL_JAVA}" = "all" ]; then
+        echo Stopping all Java processes
+        ssh ${USER}@${ADDRESS} -p ${PORT} "killall -9 java"
+    elif [ "${KILL_JAVA}" = "no_idea" ]; then
+        echo Stopping all Java processes except IDEA
+        ssh ${USER}@${ADDRESS} -p ${PORT} "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs kill -9"
+    fi
+
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
 	scp -P ${PORT} ${ARTIFACT_DIR}/${ARTIFACT_NAME}.zip ${USER}@${ADDRESS}:${TARGET_DIR}/${ARTIFACT_NAME}.zip
 	echo Unzipping ${ARTIFACT_NAME}.zip

@@ -18,4 +18,4 @@
 #MACHINES="${MACHINE1}"
 #BENCHMARK_OPTS="local local-benchmark.xml ${MACHINE1}"
 #REPORTS_DIR=reports
-#KILL_JAVA=false
+#KILL_JAVA=no_idea
