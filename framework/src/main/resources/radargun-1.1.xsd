@@ -78,6 +78,7 @@
                         <element name="product" type="rg:product"/>
                         <element name="gridgain60" type="rg:gridgain60"/>
                         <element name="gridgain62" type="rg:gridgain62"/>
+                        <element name="gridgain65" type="rg:gridgain65"/>
                         <element name="hazelcast2" type="rg:hazelcast2"/>
                         <element name="hazelcast30" type="rg:hazelcast30"/>
                         <element name="hazelcast31" type="rg:hazelcast31"/>
@@ -2067,6 +2068,11 @@ Remember to set up JVM args: "-agentpath:/path/to/libjprofilerti.so=offline,id=1
       </complexContent>
    </complexType>
    <complexType name="gridgain62">
+      <complexContent>
+         <extension base="rg:abstractProduct"/>
+      </complexContent>
+   </complexType>
+   <complexType name="gridgain65">
       <complexContent>
          <extension base="rg:abstractProduct"/>
       </complexContent>

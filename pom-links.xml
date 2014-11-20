@@ -396,6 +396,23 @@
                              <arg value="for FILE in `ls plugins/gridgain62/target/distribution/plugin-gridgain62-bin/plugin-gridgain62/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/gridgain62/lib/; done;"/>
                          </exec>
 
+                        <!-- Gridgain 6.5.1 -->
+                        <copy todir="${distribution.artifact}/plugins/gridgain65">
+                           <fileset dir="plugins/gridgain65/target/distribution/plugin-gridgain65-bin/plugin-gridgain65">
+                              <include name="**/*" />
+                              <exclude name="**/*.jar" />
+                           </fileset>
+                        </copy>
+                        <copy todir="${distribution.artifact}/plugin-dependencies">
+                           <fileset dir="plugins/gridgain65/target/distribution/plugin-gridgain65-bin/plugin-gridgain65/lib">
+                              <include name="*.jar" />
+                           </fileset>
+                        </copy>
+                        <exec executable="bash" failonerror="true">
+                           <arg value="-c"/>
+                           <arg value="for FILE in `ls plugins/gridgain65/target/distribution/plugin-gridgain65-bin/plugin-gridgain65/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/gridgain65/lib/; done;"/>
+                        </exec>
+
                          <!-- Hazelcast 2.x-->
                          <copy todir="${distribution.artifact}/plugins/hazelcast2">
                            <fileset dir="plugins/hazelcast2/target/distribution/plugin-hazelcast2-bin/plugin-hazelcast2">

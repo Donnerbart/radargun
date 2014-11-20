@@ -1,61 +1,74 @@
-<!-- Copy this file to local-benchmark.xml to use it with local-settings-example -->
-
 <bench-config xmlns="urn:radargun:benchmark:1.1">
 
-    <master bindAddress="${127.0.0.1:master.address}" port="${2103:master.port}"/>
+   <master bindAddress="${127.0.0.1:master.address}" port="${2103:master.port}"/>
 
-    <benchmark initSize="1" maxSize="${1:slaves}" increment="1">
-        <DestroyWrapper runOnAllSlaves="true"/>
-        <StartCluster staggerSlaveStartup="true" delayAfterFirstSlaveStarts="5000" delayBetweenStartingSlaves="500"/>
-        <ClusterValidation partialReplication="false"/>
-        <StressTestWarmup numRequests="100000" opsCountStatusLog="1000" numThreads="2"/>
-        <ClearCluster/>
-        <!--
-           This will average to 10000 requests per thread, although a work-stealing pattern is used so some threads may
-           do more work than others.
-         -->
-        <StressTest numRequests="1000000" opsCountStatusLog="10000" numThreads="2"/>
-        <CsvReportGeneration/>
-    </benchmark>
+   <benchmark initSize="1" maxSize="${1:slaves}" increment="1">
+      <DestroyWrapper runOnAllSlaves="true"/>
+      <StartCluster staggerSlaveStartup="true" delayAfterFirstSlaveStarts="5000" delayBetweenStartingSlaves="500"/>
+      <ClusterValidation partialReplication="false"/>
+      <StressTestWarmup numRequests="100000" opsCountStatusLog="1000" numThreads="2"/>
+      <ClearCluster/>
+      <!--
+         This will average to 10000 requests per thread, although a work-stealing pattern is used so some threads may
+         do more work than others.
+       -->
+      <StressTest numRequests="1000000" opsCountStatusLog="10000" numThreads="2"/>
+      <CsvReportGeneration/>
+   </benchmark>
 
-    <products>
-        <!-- infinispan52>
-            <config name="repl-sync.xml"/>
-        </infinispan52 -->
-        <!-- <ehcache28>
-            <config name="local.xml"/>
-        </ehcache28> -->
-        <!-- infinispan60>
-               <config name="dist-sync.xml"/>
-           </infinispan60>
-        -->
-       <hazelcast30>
-          <config name="dist-sync.xml"/>
-       </hazelcast30>
-        <hazelcast31>
-            <config name="dist-sync.xml"/>
-        </hazelcast31>
-       <hazelcast32>
-          <config name="dist-sync.xml"/>
-       </hazelcast32>
-        <hazelcast333>
-            <config name="dist-sync.xml"/>
-        </hazelcast333>
-        <hazelcast34>
-            <config name="dist-sync.xml"/>
-        </hazelcast34>
-    </products>
+   <products>
+      <!--
+      <ehcache28>
+         <config name="local.xml"/>
+      </ehcache28>
+      -->
+      <gridgain60>
+         <config name="local.xml"/>
+      </gridgain60>
+      <gridgain62>
+         <config name="local.xml"/>
+      </gridgain62>
+      <gridgain65>
+         <config name="local.xml"/>
+      </gridgain65>
 
-    <reports>
-        <!-- report name="Replicated">
-           <item product="infinispan52" config="repl-sync.xml"/>
-           <item product="jbosscache3" config="*"/>
-        </report>
-        <report name="DistVsRepl">
-           <item product="infinispan52" config="repl-sync.xml"/>
-           <item product="infinispan52" config="dist-sync.xml"/>
-        </report -->
-        <report name="All" includeAll="true"/>
-    </reports>
+      <hazelcast30>
+         <config name="dist-sync.xml"/>
+      </hazelcast30>
+      <hazelcast31>
+         <config name="dist-sync.xml"/>
+      </hazelcast31>
+      <hazelcast32>
+         <config name="dist-sync.xml"/>
+      </hazelcast32>
+      <hazelcast33>
+         <config name="dist-sync.xml"/>
+      </hazelcast33>
+      <hazelcast333>
+         <config name="dist-sync.xml"/>
+      </hazelcast333>
+      <hazelcast34>
+         <config name="dist-sync.xml"/>
+      </hazelcast34>
+
+      <infinispan52>
+         <config name="repl-sync.xml"/>
+      </infinispan52>
+      <infinispan60>
+         <config name="dist-sync.xml"/>
+      </infinispan60>
+   </products>
+
+   <reports>
+      <!-- report name="Replicated">
+         <item product="infinispan52" config="repl-sync.xml"/>
+         <item product="jbosscache3" config="*"/>
+      </report>
+      <report name="DistVsRepl">
+         <item product="infinispan52" config="repl-sync.xml"/>
+         <item product="infinispan52" config="dist-sync.xml"/>
+      </report -->
+      <report name="All" includeAll="true"/>
+   </reports>
 
 </bench-config>

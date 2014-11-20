@@ -1,0 +1,16 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="grid.cfg" class="org.gridgain.grid.GridConfiguration" scope="singleton">
+        <property name="cacheConfiguration">
+            <list>
+                <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
+                    <property name="name" value="themap"/>
+                    <property name="cacheMode" value="TRANSACTIONAL"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>
