@@ -31,31 +31,31 @@ if [ -f local-settings ]; then
 fi
 
 function address {
-	MACHINE=$1	
+	MACHINE=$1
 
-	if echo ${MACHINE}| grep ':' > /dev/null; then
+	if echo ${MACHINE} | grep ':' > /dev/null; then
 		ADDRESS=${MACHINE%:*}
 		echo ${ADDRESS}
 	else
-		echo ${MACHINE}	
-	fi 
+		echo ${MACHINE}
+	fi
 }
 
-function port {	
-	MACHINE=$1	
+function port {
+	MACHINE=$1
 
-	if echo ${MACHINE}| grep ':' > /dev/null; then
+	if echo ${MACHINE} | grep ':' > /dev/null; then
 		PORT=${MACHINE:$(expr index "$MACHINE" ":")}
 		echo ${PORT}
 	else
-		echo 22		
-	fi 	
+		echo 22
+	fi
 }
 
 function install {
 	MACHINE=$1
-	ADDRESS=$( address ${MACHINE} )	
-	PORT=$( port ${MACHINE} )
+	ADDRESS=$(address ${MACHINE})
+	PORT=$(port ${MACHINE})
 
 	echo ===============================================================
 	echo Installing Radargun on ${MACHINE}
@@ -67,12 +67,12 @@ function install {
 	echo Unzipping ${ARTIFACT_NAME}.zip
 	ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
 
-    if [ "${YOURKIT_ENABLED}" = "true" ] ; then
+    if [ "${YOURKIT_ENABLED}" = "true" ]; then
 	    echo YourKit is enabled
 	    scp -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
 	    scp -P ${PORT} environment-yourkit.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
 	    ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ~/Snapshots"
-    elif [ "${JACOCO_ENABLED}" = "true" ] ; then
+    elif [ "${JACOCO_ENABLED}" = "true" ]; then
 	    echo Jacoco is enabled
             scp -P ${PORT} jacocoagent.jar ${USER}@${ADDRESS}:/tmp/
             scp -P ${PORT} environment-jacoco.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
@@ -86,9 +86,9 @@ function install {
 }
 
 function start_master {
-	MACHINE=$1	
-	ADDRESS=$( address ${MACHINE} )	
-	PORT=$( port ${MACHINE} )
+	MACHINE=$1
+	ADDRESS=$(address ${MACHINE})
+	PORT=$(port ${MACHINE})
 
 	echo ===============================================================
 	echo Starting Radargun Master on ${MACHINE}
@@ -107,15 +107,15 @@ function start_master {
 }
 
 function start_slave {
-	MACHINE=$1	
-	ADDRESS=$( address ${MACHINE} )	
-	PORT=$( port ${MACHINE} )
+	MACHINE=$1
+	ADDRESS=$(address ${MACHINE})
+	PORT=$(port ${MACHINE})
 	
 	echo ===============================================================
 	echo Starting Radargun Slave on ${MACHINE}
 	echo ===============================================================
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR} ; bin/slave.sh -m ${MASTER}:2103"
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/slave.sh -m ${MASTER}:2103"
 
 	echo ===============================================================
 	echo Radargun Slave started on ${MACHINE}
@@ -123,44 +123,43 @@ function start_slave {
 }
 
 function wait_completion {
-	MACHINE=$1	
-	ADDRESS=$( address ${MACHINE} )	
-	PORT=$( port ${MACHINE} )
+	MACHINE=$1
+	ADDRESS=$(address ${MACHINE})
+	PORT=$(port ${MACHINE})
 	
 	while [ 1 ];
-	do 	
+	do
 		ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/master.sh -status | grep -q not"
 		RC=$?
-		if [[ ${RC} == 0 ]] ;
-		then
+		if [[ ${RC} == 0 ]]; then
 			return
 		fi
   		sleep 5;
-	done	
+	done
 }
 
 function tail_log {
-	MACHINE=$1	
-	ADDRESS=$( address ${MACHINE} )	
-	PORT=$( port ${MACHINE} )
+	MACHINE=$1
+	ADDRESS=$(address ${MACHINE})
+	PORT=$(port ${MACHINE})
 	
-	ssh  -t ${USER}@${ADDRESS} -p ${PORT} "tail -f ${RADARGUN_DIR}/radargun.log" &
+	ssh -t ${USER}@${ADDRESS} -p ${PORT} "tail -f ${RADARGUN_DIR}/radargun.log" &
 }
 
 function download_reports {
-	MASTER=$1	
+	MASTER=$1
 	DESTINATION_DIR=$2
-	ADDRESS=$( address ${MACHINE} )	
-	PORT=$( port ${MACHINE} )
+	ADDRESS=$(address ${MACHINE})
+	PORT=$(port ${MACHINE})
 		
 	scp -P ${PORT} -q -r ${USER}@${ADDRESS}:${RADARGUN_DIR}/reports ${DESTINATION_DIR}
 }
 
 function download_logs {
-	SLAVE=$1	
+	SLAVE=$1
 	DESTINATION_DIR=$2
-	ADDRESS=$( address ${SLAVE} )
-	PORT=$( port ${SLAVE} )
+	ADDRESS=$(address ${SLAVE})
+	PORT=$(port ${SLAVE})
 	
 	mkdir -p ${DESTINATION_DIR}/logs
 	scp -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.log ${DESTINATION_DIR}/logs
@@ -173,8 +172,8 @@ function benchmark {
 	SLAVES=$3
 	TIMESTAMP=$(date +%s)
 	DESTINATION_DIR=${REPORTS_DIR}/${BENCHMARK_NAME}/${TIMESTAMP}
-	ADDRESS=$( address ${MASTER} )
-	PORT=$( port ${MASTER} )
+	ADDRESS=$(address ${MASTER})
+	PORT=$(port ${MASTER})
 
 	echo ===============================================================
 	echo Starting Benchmark: ${BENCHMARK_NAME}
@@ -191,14 +190,14 @@ function benchmark {
 	
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${RADARGUN_DIR}/reports"
 
-	start_master ${MASTER} 
+	start_master ${MASTER}
 
 	for SLAVE in ${SLAVES}
 	do
 		start_slave ${SLAVE}
 	done
 
-	tail_log ${MASTER} 
+	tail_log ${MASTER}
 	wait_completion ${MASTER}
 	
 	echo Downloading reports and logs
@@ -206,7 +205,7 @@ function benchmark {
 	for SLAVE in ${SLAVES}
 	do
 		download_logs ${SLAVE} ${DESTINATION_DIR}
-	done	
+	done
 
 	echo ===============================================================
 	echo Benchmark Completed
