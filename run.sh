@@ -85,7 +85,7 @@ function install {
     # uploading target file
 
     echo Checking checksum of target file...
-	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${TARGET_DIR} && md5sum -b ${ARTIFACT_NAME}.zip > ${ARTIFACT_NAME}.md5 2>/dev/null"
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${TARGET_DIR} && rm -f ${ARTIFACT_NAME}.md5 && md5sum -b ${ARTIFACT_NAME}.zip > ${ARTIFACT_NAME}.md5 2>/dev/null"
 	scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${TARGET_DIR}/${ARTIFACT_NAME}.md5 ${ARTIFACT_DIR}
 
     DO_UPLOAD=true
@@ -97,6 +97,7 @@ function install {
         if [ $? -ne 0 ]; then
             DO_UPLOAD=true
         fi
+        rm ${ARTIFACT_NAME}.md5
         cd ${CURR}
     fi
 
