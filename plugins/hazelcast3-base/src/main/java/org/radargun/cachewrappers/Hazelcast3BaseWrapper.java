@@ -2,9 +2,7 @@ package org.radargun.cachewrappers;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.XmlConfigBuilder;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
+import com.hazelcast.core.*;
 import com.hazelcast.transaction.TransactionContext;
 import org.radargun.CacheWrapper;
 import org.radargun.features.AtomicOperationsCapable;
@@ -25,8 +23,11 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
    private final boolean trace = log.isTraceEnabled();
 
    private HazelcastInstance hazelcastInstance;
-   private IMap<Object, Object> hazelcastMap;
+   private IMap<Object, Object> nonTransactionalMap;
+   private String mapName;
+
    private ThreadLocal<TransactionContext> transactionContext = new ThreadLocal<TransactionContext>();
+   private ThreadLocal<BaseMap<Object, Object>> map = new ThreadLocal<BaseMap<Object, Object>>();
 
    /**
     * CacheWrapper
@@ -41,13 +42,16 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
       hazelcastInstance = Hazelcast.newHazelcastInstance(cfg);
       log.info("Hazelcast configuration:" + hazelcastInstance.getConfig().toString());
 
-      String mapName = getMapName(confAttributes);
-      hazelcastMap = hazelcastInstance.getMap(mapName);
+      mapName = getMapName(confAttributes);
+      nonTransactionalMap = hazelcastInstance.getMap(mapName);
+      map.set(nonTransactionalMap);
    }
 
    @Override
    public void tearDown() throws Exception {
       hazelcastInstance.getLifecycleService().shutdown();
+      transactionContext.remove();
+      map.remove();
    }
 
    @Override
@@ -58,6 +62,7 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
    @Override
    public int getNumMembers() {
       if (trace) log.trace("Cluster size=" + hazelcastInstance.getCluster().getMembers().size());
+
       if (!hazelcastInstance.getLifecycleService().isRunning())
          return -1;
       else
@@ -66,7 +71,7 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
 
    @Override
    public String getInfo() {
-      return "There are " + hazelcastMap.size() + " entries in the cache.";
+      return "There are " + map.get().size() + " entries in the cache.";
    }
 
    @Override
@@ -77,9 +82,11 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
    @Override
    public void startTransaction() {
       try {
-         TransactionContext newTransactionContext = hazelcastInstance.newTransactionContext();
-         transactionContext.set(newTransactionContext);
-         newTransactionContext.beginTransaction();
+         TransactionContext transaction = hazelcastInstance.newTransactionContext();
+         transaction.beginTransaction();
+
+         transactionContext.set(transaction);
+         map.set(transaction.getMap(mapName));
       } catch (Exception e) {
          throw new RuntimeException(e);
       }
@@ -89,7 +96,6 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
    public void endTransaction(boolean successful) {
       try {
          TransactionContext tc = transactionContext.get();
-         transactionContext.remove();
          if (successful) {
             tc.commitTransaction();
          } else {
@@ -97,17 +103,21 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
          }
       } catch (Exception e) {
          throw new RuntimeException(e);
+      } finally {
+         map.set(nonTransactionalMap);
+         transactionContext.remove();
       }
    }
 
    @Override
    public int getLocalSize() {
-      return -1; //not supported by Hazelcast, local size can be monitored through Hazelcast management center (web GUI)
+      //not supported by Hazelcast, local size can be monitored through Hazelcast management center (web GUI)
+      return -1;
    }
 
    @Override
    public int getTotalSize() {
-      return hazelcastMap.size();
+      return map.get().size();
    }
 
    /**
@@ -117,13 +127,15 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
    @Override
    public void put(String bucket, Object key, Object value) throws Exception {
       if (trace) log.trace("PUT key=" + key);
-      hazelcastMap.set(key, value);
+
+      map.get().set(key, value);
    }
 
    @Override
    public Object get(String bucket, Object key) throws Exception {
       if (trace) log.trace("GET key=" + key);
-      return hazelcastMap.get(key);
+
+      return map.get().get(key);
    }
 
    @Override
@@ -134,7 +146,8 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
    @Override
    public Object remove(String bucket, Object key) throws Exception {
       if (trace) log.trace("REMOVE key=" + key);
-      return hazelcastMap.remove(key);
+
+      return map.get().remove(key);
    }
 
    @Override
@@ -142,7 +155,11 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
       if (local) {
          log.warn("This cache cannot remove only local entries");
       }
-      hazelcastMap.clear();
+
+      BaseMap<Object, Object> localMap = map.get();
+      if (localMap instanceof IMap) {
+         ((IMap<Object, Object>) localMap).clear();
+      }
    }
 
    /**
@@ -151,21 +168,17 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
 
    @Override
    public boolean replace(String bucket, Object key, Object oldValue, Object newValue) throws Exception {
-      return hazelcastMap.replace(key, oldValue, newValue);
+      return map.get().replace(key, oldValue, newValue);
    }
 
    @Override
    public Object putIfAbsent(String bucket, Object key, Object value) throws Exception {
-      return hazelcastMap.putIfAbsent(key, value);
+      return map.get().putIfAbsent(key, value);
    }
 
    @Override
    public boolean remove(String bucket, Object key, Object oldValue) throws Exception {
-      return hazelcastMap.remove(key, oldValue);
-   }
-
-   private String getMapName(TypedProperties confAttributes) {
-      return confAttributes.containsKey("map") ? confAttributes.getProperty("map") : DEFAULT_MAP_NAME;
+      return map.get().remove(key, oldValue);
    }
 
    private InputStream getAsInputStreamFromClassLoader(String filename) {
@@ -187,5 +200,9 @@ public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapa
          }
       }
       return is;
+   }
+
+   private String getMapName(TypedProperties confAttributes) {
+      return confAttributes.containsKey("map") ? confAttributes.getProperty("map") : DEFAULT_MAP_NAME;
    }
 }
