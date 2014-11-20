@@ -67,14 +67,16 @@ function install {
 	echo ===============================================================
 
     JAVA_SUDO=""
+    JAVA_SUDO_LOG=""
     if [ "${KILL_JAVA_SUDO}" = "true" ]; then
         JAVA_SUDO="sudo "
+        JAVA_SUDO_LOG=" with sudo"
     fi
     if [ "${KILL_JAVA}" = "all" ]; then
-        echo Stopping all Java processes
+        echo Stopping all Java processes${JAVA_SUDO_LOG}
         ssh ${USER}@${ADDRESS} -p ${PORT} -t "${JAVA_SUDO}killall -9 java"
     elif [ "${KILL_JAVA}" = "no_idea" ]; then
-        echo Stopping all Java processes except IDEA
+        echo Stopping all Java processes${JAVA_SUDO_LOG} except IDEA
         ssh ${USER}@${ADDRESS} -p ${PORT} -t "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs ${JAVA_SUDO}kill -9"
     fi
 
