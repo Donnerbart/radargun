@@ -66,6 +66,8 @@ function install {
 	echo Installing Radargun on ${MACHINE}
 	echo ===============================================================
 
+    # killing Java processes
+
     JAVA_SUDO=""
     JAVA_SUDO_LOG=""
     if [ "${KILL_JAVA_SUDO}" = "true" ]; then
@@ -80,20 +82,50 @@ function install {
         ssh ${USER}@${ADDRESS} -p ${PORT} -t "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs ${JAVA_SUDO}kill -9"
     fi
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
-	scp -P ${PORT} ${ARTIFACT_DIR}/${ARTIFACT_NAME}.zip ${USER}@${ADDRESS}:${TARGET_DIR}/${ARTIFACT_NAME}.zip
-	echo Unzipping ${ARTIFACT_NAME}.zip
-	ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
+    # uploading target file
+
+    echo Checking checksum of target file...
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${TARGET_DIR} && md5sum -b ${ARTIFACT_NAME}.zip > ${ARTIFACT_NAME}.md5 2>/dev/null"
+	scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${TARGET_DIR}/${ARTIFACT_NAME}.md5 ${ARTIFACT_DIR}
+
+    DO_UPLOAD=true
+    if [ -s ${ARTIFACT_DIR}/${ARTIFACT_NAME}.md5 ]; then
+        DO_UPLOAD=false
+        CURR=$(pwd)
+        cd ${ARTIFACT_DIR}
+        md5sum --status -c ${ARTIFACT_NAME}.md5
+        if [ $? -ne 0 ]; then
+            DO_UPLOAD=true
+        fi
+        cd ${CURR}
+    fi
+
+    if [ "${DO_UPLOAD}" = true ]; then
+        echo Uploading target file...
+	    ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}.zip"
+	    scp -C -P ${PORT} ${ARTIFACT_DIR}/${ARTIFACT_NAME}.zip ${USER}@${ADDRESS}:${TARGET_DIR}/${ARTIFACT_NAME}.zip
+	else
+	    echo Target file is already uploaded!
+	fi
+
+	# unzipping target file
+
+    echo Unzipping ${ARTIFACT_NAME}.zip
+    ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
+    ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
+    ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -q ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
+
+    # upload debugger
 
     if [ "${YOURKIT_ENABLED}" = "true" ]; then
 	    echo YourKit is enabled
-	    scp -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
-	    scp -P ${PORT} environment-yourkit.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
+	    scp -C -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
+	    scp -C -P ${PORT} environment-yourkit.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
 	    ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ~/Snapshots"
     elif [ "${JACOCO_ENABLED}" = "true" ]; then
 	    echo Jacoco is enabled
-            scp -P ${PORT} jacocoagent.jar ${USER}@${ADDRESS}:/tmp/
-            scp -P ${PORT} environment-jacoco.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
+            scp -C -P ${PORT} jacocoagent.jar ${USER}@${ADDRESS}:/tmp/
+            scp -C -P ${PORT} environment-jacoco.sh ${USER}@${ADDRESS}:${RADARGUN_DIR}/bin/environment.sh
     else
 	    echo Jacoc and Yourkit are disabled
 	fi
@@ -170,7 +202,7 @@ function download_reports {
 	ADDRESS=$(address ${MACHINE})
 	PORT=$(port ${MACHINE})
 		
-	scp -P ${PORT} -q -r ${USER}@${ADDRESS}:${RADARGUN_DIR}/reports ${DESTINATION_DIR}
+	scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${RADARGUN_DIR}/reports ${DESTINATION_DIR}
 }
 
 function download_logs {
@@ -180,8 +212,8 @@ function download_logs {
 	PORT=$(port ${SLAVE})
 	
 	mkdir -p ${DESTINATION_DIR}/logs
-	scp -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.log ${DESTINATION_DIR}/logs
-	scp -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.out ${DESTINATION_DIR}/logs
+	scp -C -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.log ${DESTINATION_DIR}/logs
+	scp -C -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.out ${DESTINATION_DIR}/logs
 }
 
 function benchmark {
@@ -204,7 +236,7 @@ function benchmark {
 	mkdir -p ${DESTINATION_DIR}
 
 	echo scp ${BENCHMARK_FILE} -P ${PORT} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
-	scp -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
+	scp -C -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
 	
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${RADARGUN_DIR}/reports"
 
@@ -240,11 +272,11 @@ done
 
 if [ -n "${BENCHMARK_OPTS}" ]; then
     echo Executing benchmark ${BENCHMARK_OPTS}
-    benchmark ${BENCHMARK_OPTS}
+    benchmark ${BENCHMARK_OPTS} "${MACHINES}"
     exit 0
 fi
 
-#benchmark 1-nodes 'benchmark-1nodes.xml' "${MACHINE1}"
-#benchmark 2-nodes 'benchmark-2nodes.xml' "${MACHINE1} ${MACHINE2}"
-#benchmark 3-nodes 'benchmark-3nodes.xml' "${MACHINE1} ${MACHINE2} ${MACHINE4}"
-benchmark 4-nodes 'benchmark-4nodes.xml' "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
+#benchmark 1-nodes benchmark-1nodes.xml "${MACHINE1}"
+#benchmark 2-nodes benchmark-2nodes.xml "${MACHINE1} ${MACHINE2}"
+#benchmark 3-nodes benchmark-3nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE4}"
+benchmark 4-nodes benchmark-4nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"

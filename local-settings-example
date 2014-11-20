@@ -9,7 +9,7 @@
 #MACHINE3='212.175.226.222:3333'
 #MACHINE4='212.175.226.222:4444'
 #MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
-#BENCHMARK_OPTS="4-nodes benchmark-4nodes.xml ${MACHINE1}"
+#BENCHMARK_OPTS='4-nodes benchmark-4nodes.xml'
 #USER=hazelcast
 #KILL_JAVA_SUDO=true
 
@@ -17,6 +17,6 @@
 
 #MACHINE1='127.0.0.1'
 #MACHINES="${MACHINE1}"
-#BENCHMARK_OPTS="local local-benchmark.xml ${MACHINE1}"
+#BENCHMARK_OPTS='local local-benchmark.xml'
 #REPORTS_DIR=reports
 #KILL_JAVA=no_idea
