@@ -15,6 +15,7 @@
       <module>plugins/gridgain60</module>
       <module>plugins/gridgain62</module>
       <module>plugins/hazelcast2</module>
+      <module>plugins/hazelcast3-base</module>
       <module>plugins/hazelcast30</module>
       <module>plugins/hazelcast31</module>
       <module>plugins/hazelcast32</module>
@@ -413,6 +414,23 @@
                            <arg value="for FILE in `ls plugins/hazelcast2/target/distribution/plugin-hazelcast2-bin/plugin-hazelcast2/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast2/lib/; done;"/>
                         </exec>
 
+                        <!-- Hazelcast 3.x Base -->
+                        <copy todir="${distribution.artifact}/plugins/hazelcast3-base">
+                           <fileset dir="plugins/hazelcast3-base/target/distribution/plugin-hazelcast3-base-bin/plugin-hazelcast3-base">
+                              <include name="**/*" />
+                              <exclude name="**/*.jar" />
+                           </fileset>
+                        </copy>
+                        <copy todir="${distribution.artifact}/plugin-dependencies">
+                           <fileset dir="plugins/hazelcast3-base/target/distribution/plugin-hazelcast3-base-bin/plugin-hazelcast3-base/lib">
+                              <include name="*.jar" />
+                           </fileset>
+                        </copy>
+                        <exec executable="bash" failonerror="true">
+                           <arg value="-c"/>
+                           <arg value="for FILE in `ls plugins/hazelcast3-base/target/distribution/plugin-hazelcast3-base-bin/plugin-hazelcast3-base/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast3-base/lib/; done;"/>
+                        </exec>
+
                          <!-- Hazelcast 3.0-->
                         <copy todir="${distribution.artifact}/plugins/hazelcast30">
                            <fileset dir="plugins/hazelcast30/target/distribution/plugin-hazelcast30-bin/plugin-hazelcast30">
@@ -429,7 +447,6 @@
                            <arg value="-c"/>
                            <arg value="for FILE in `ls plugins/hazelcast30/target/distribution/plugin-hazelcast30-bin/plugin-hazelcast30/lib/`; do ln -s ../../../plugin-dependencies/$FILE ${distribution.artifact}/plugins/hazelcast30/lib/; done;"/>
                         </exec>
-
 
                          <!-- Hazelcast 3.1-->
                          <copy todir="${distribution.artifact}/plugins/hazelcast31">
