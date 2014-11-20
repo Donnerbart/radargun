@@ -13,7 +13,7 @@ import org.radargun.utils.TypedProperties;
 import java.io.InputStream;
 
 /**
- * An implementation of CacheWrapper that uses Hazelcast hazelcastInstance as an underlying implementation.
+ * An implementation of CacheWrapper that uses Hazelcast instance as an underlying implementation.
  */
 public class Hazelcast3BaseWrapper implements CacheWrapper, AtomicOperationsCapable {
 
