@@ -29,4 +29,5 @@ core/src/main/resources/schema
 deploy
 install
 local-settings
+local-benchmark.xml
 reports

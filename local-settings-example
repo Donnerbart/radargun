@@ -11,6 +11,7 @@
 #MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
 #BENCHMARK_OPTS="4-nodes benchmark-4nodes.xml ${MACHINE1}"
 #USER=hazelcast
+#KILL_JAVA_SUDO=true
 
 # local settings
 

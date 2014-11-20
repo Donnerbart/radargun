@@ -26,6 +26,7 @@ JACOCO_ENABLED=false
 
 # kill java switch
 KILL_JAVA=all
+KILL_JAVA_SUDO=false
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
@@ -65,12 +66,16 @@ function install {
 	echo Installing Radargun on ${MACHINE}
 	echo ===============================================================
 
+    JAVA_SUDO=""
+    if [ "${KILL_JAVA_SUDO}" = "true" ]; then
+        JAVA_SUDO="sudo "
+    fi
     if [ "${KILL_JAVA}" = "all" ]; then
         echo Stopping all Java processes
-        ssh ${USER}@${ADDRESS} -p ${PORT} "killall -9 java"
+        ssh ${USER}@${ADDRESS} -p ${PORT} -t "${JAVA_SUDO}killall -9 java"
     elif [ "${KILL_JAVA}" = "no_idea" ]; then
         echo Stopping all Java processes except IDEA
-        ssh ${USER}@${ADDRESS} -p ${PORT} "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs kill -9"
+        ssh ${USER}@${ADDRESS} -p ${PORT} -t "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs ${JAVA_SUDO}kill -9"
     fi
 
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
