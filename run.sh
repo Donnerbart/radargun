@@ -19,16 +19,20 @@ MACHINE2='192.168.2.102'
 MACHINE3='192.168.2.103'
 MACHINE4='192.168.2.104'
 MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
-MASTER=${MACHINE1}
 
 # only one can be enabled
 YOURKIT_ENABLED=false
 JACOCO_ENABLED=false
 
+# kill_java
+KILL_JAVA=true
+
 # override settings with local-settings file
 if [ -f local-settings ]; then
     source local-settings
 fi
+
+MASTER=${MACHINE1}
 
 function address {
 	MACHINE=$1
@@ -61,7 +65,9 @@ function install {
 	echo Installing Radargun on ${MACHINE}
 	echo ===============================================================
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "killall -9 java"
+	if [ "${KILL_JAVA}" = "true" ]; then
+	    ssh ${USER}@${ADDRESS} -p ${PORT} "killall -9 java"
+	fi
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
 	scp -P ${PORT} ${ARTIFACT_DIR}/${ARTIFACT_NAME}.zip ${USER}@${ADDRESS}:${TARGET_DIR}/${ARTIFACT_NAME}.zip
 	echo Unzipping ${ARTIFACT_NAME}.zip

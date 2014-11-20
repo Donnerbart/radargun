@@ -2,11 +2,20 @@
 
 # copy this file to local-settings to override default values in run.sh
 
-MACHINE1='127.0.0.1'
-MACHINES="${MACHINE1}"
-MASTER=${MACHINE1}
+# remote settings
 
-BENCHMARK_OPTS="local local-benchmark.xml ${MACHINE1}"
-REPORTS_DIR=reports
+#MACHINE1='212.175.226.222:1111'
+#MACHINE2='212.175.226.222:2222'
+#MACHINE3='212.175.226.222:3333'
+#MACHINE4='212.175.226.222:4444'
+#MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
+#BENCHMARK_OPTS="4-nodes benchmark-4nodes.xml ${MACHINE1}"
+#USER=hazelcast
 
-USER=$(whoami)
+# local settings
+
+#MACHINE1='127.0.0.1'
+#MACHINES="${MACHINE1}"
+#BENCHMARK_OPTS="local local-benchmark.xml ${MACHINE1}"
+#REPORTS_DIR=reports
+#KILL_JAVA=false
