@@ -234,6 +234,7 @@ function benchmark {
 	echo ===============================================================
 
 	mkdir -p ${DESTINATION_DIR}
+	ln -s ${DESTINATION_DIR} ${REPORTS_DIR}/latest
 
 	echo scp ${BENCHMARK_FILE} -P ${PORT} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
 	scp -C -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
@@ -256,6 +257,8 @@ function benchmark {
 	do
 		download_logs ${SLAVE} ${DESTINATION_DIR}
 	done
+
+	zip -r ${REPORTS_DIR}/latest.zip ${REPORTS_DIR}/latest/
 
 	echo ===============================================================
 	echo Benchmark Completed
