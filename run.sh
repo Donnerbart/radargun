@@ -234,6 +234,7 @@ function benchmark {
 	echo ===============================================================
 
 	mkdir -p ${DESTINATION_DIR}
+	rm -rf ${REPORTS_DIR}/latest
 	ln -s ${DESTINATION_DIR} ${REPORTS_DIR}/latest
 
 	echo scp ${BENCHMARK_FILE} -P ${PORT} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
