@@ -15,8 +15,8 @@
 
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="Infinispan 6.0 - distributed">
-         <setup plugin="infinispan60" file="dist-sync.xml"/>
+      <config name="Infinispan 7.0 - distributed">
+         <setup plugin="infinispan70" file="dist-sync.xml"/>
       </config>
    </configurations>
 

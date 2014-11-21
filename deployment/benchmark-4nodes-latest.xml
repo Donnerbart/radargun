@@ -18,8 +18,8 @@
       <config name="Hazelcast 3.4 - distributed">
          <setup plugin="hazelcast34" file="dist-sync.xml"/>
       </config>
-      <config name="Infinispan 6.0 - distributed">
-         <setup plugin="infinispan60" file="dist-sync.xml"/>
+      <config name="Infinispan 7.0 - distributed">
+         <setup plugin="infinispan70" file="dist-sync.xml"/>
       </config>
    </configurations>
 

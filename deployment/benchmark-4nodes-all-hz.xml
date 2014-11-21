@@ -18,8 +18,11 @@
       <config name="Hazelcast 2 - distributed">
          <setup plugin="hazelcast2" file="dist-sync.xml"/>
       </config>
-      <config name="Hazelcast 3 - distributed">
-         <setup plugin="hazelcast3" file="dist-sync.xml"/>
+      <config name="Hazelcast 3.2 - distributed">
+         <setup plugin="hazelcast32" file="dist-sync.xml"/>
+      </config>
+      <config name="Hazelcast 3.3 - distributed">
+         <setup plugin="hazelcast33" file="dist-sync.xml"/>
       </config>
       <config name="Hazelcast 3.4 - distributed">
          <setup plugin="hazelcast34" file="dist-sync.xml"/>
