@@ -9,16 +9,16 @@
 
 #ETH0_IP=`/sbin/ifconfig eth0 | grep inet | sed -e 's/^\s*//' -e 's/Bcast.*//' -e 's/inet addr://'`
 ETH0_IP=$( ip addr list eth0 |grep "inet " |cut -d' ' -f6|cut -d/ -f1 )
-echo $ETH0_IP
+echo ${ETH0_IP}
 
 export BIND_ADDRESS=${ETH0_IP}
-echo BIND_ADDRESS = $BIND_ADDRESS
+echo BIND_ADDRESS = ${BIND_ADDRESS}
 
 JG_FLAGS="-Dorg.jboss.resolver.warning=true -Dresolve.dns=false -Djgroups.timer.num_threads=4"
 #Yourkit settings
 #JVM_OPTS="-server -Xmx1024M -Xms1024M  -agentpath:/tmp/libyjpagent.so=sampling,onexit=snapshot"
 #Jacoco settings
-JVM_OPTS="-server -Xmx1024M -Xms1024M   -javaagent:/tmp/jacocoagent.jar=destfile=/tmp/jacoco.exec"
+JVM_OPTS="-server -Xmx1024M -Xms1024M -XX:PermSize=256M -XX:MaxPermSize=256M -javaagent:/tmp/jacocoagent.jar=destfile=/tmp/jacoco.exec"
 
 JVM_OPTS="$JVM_OPTS $JG_FLAGS"
 JPROFILER_HOME=${HOME}/jprofiler6
