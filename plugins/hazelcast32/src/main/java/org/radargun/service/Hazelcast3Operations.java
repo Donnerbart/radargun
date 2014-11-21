@@ -12,7 +12,7 @@ import com.hazelcast.core.TransactionalMap;
  */
 public class Hazelcast3Operations extends HazelcastOperations {
 
-   public Hazelcast3Operations(Hazelcast32Service service) {
+   public Hazelcast3Operations(HazelcastService service) {
       super(service);
    }
 
