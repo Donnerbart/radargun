@@ -47,7 +47,7 @@
 
       <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache ('testCache') -->
       <repeat from="10" to="30" inc="10">
-         <basic-operations-test test-name="stress-test" amend-test="true"
+         <basic-operations-test test-name="stress-test" amend-test="true" use-transactions="IF_TRANSACTIONAL"
                                 duration="1m" num-threads-per-node="${repeat.counter}">
             <key-selector>
                <concurrent-keys total-entries="10000"/>
