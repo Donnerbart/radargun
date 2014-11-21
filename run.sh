@@ -259,6 +259,7 @@ function benchmark {
 	done
 
 	cd ${REPORTS_DIR}
+	rm -rf latest.zip
 	zip -r latest.zip ./latest/
 
 	echo ===============================================================
