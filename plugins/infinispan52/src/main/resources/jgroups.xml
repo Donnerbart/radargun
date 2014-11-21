@@ -1,31 +1,12 @@
-<!--
-  ~ JBoss, Home of Professional Open Source.
-  ~ Copyright 2013, Red Hat Middleware LLC, and individual contributors
-  ~ as indicated by the @author tags. See the copyright.txt file in the
-  ~ distribution for a full listing of individual contributors.
-  ~
-  ~ This is free software; you can redistribute it and/or modify it
-  ~ under the terms of the GNU Lesser General Public License as
-  ~ published by the Free Software Foundation; either version 2.1 of
-  ~ the License, or (at your option) any later version.
-  ~
-  ~ This software is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-  ~ Lesser General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU Lesser General Public
-  ~ License along with this software; if not, write to the Free
-  ~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-  ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
-  -->
 <config xmlns="urn:org:jgroups"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-   <!-- UDP
-        loopback="false"
+   <UDP
+        bind_addr="${jgroups.udp.bind_addr:localhost}"
+        bind_port="${jgroups.udp.bind_port:52000}"
+        loopback="true"
         port_range="200"
-        mcast_addr="${jgroups.udp.mcast_addr:224.0.2.128}"
-        mcast_port="${jgroups.udp.mcast_port:54327}"
+        mcast_addr="${jgroups.udp.mcast_addr:234.99.54.14}"
+        mcast_port="${jgroups.udp.mcast_port:45688}"
         tos="8"
         ucast_recv_buf_size="20m"
         ucast_send_buf_size="640k"
@@ -54,13 +35,7 @@
         oob_thread_pool.queue_enabled="false"
         oob_thread_pool.queue_max_size="100"
         oob_thread_pool.rejection_policy="Discard"
-        / -->
-
- <UDP mcast_addr="224.0.2.128" mcast_port="54327"
-               ip_ttl="8" ip_mcast="true"
-               mcast_send_buf_size="800000" mcast_recv_buf_size="150000"
-               ucast_send_buf_size="800000" ucast_recv_buf_size="150000"
-               loopback="false"/>
+        />
 
    <PING timeout="3000" num_initial_members="3"/>
    <MERGE2 max_interval="30000" min_interval="10000"/>

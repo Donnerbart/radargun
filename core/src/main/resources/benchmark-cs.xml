@@ -1,0 +1,87 @@
+<!-- RadarGun 2.0 benchmark -->
+<benchmark xmlns="urn:radargun:benchmark:2.0">
+
+   <!-- Specifies where should the master open socket  -->
+   <master bindAddress="${master.address:127.0.0.1}" port="${master.port:2103}"/>
+
+   <!-- List of cluster configurations where the benchmark should run-->
+   <clusters>
+      <cluster size="2">
+         <group name="server" size="1" />
+         <group name="client" size="1" />
+      </cluster>
+   </clusters>
+
+   <!-- List of configurations of the services -->
+   <configurations>
+      <config name="Infinispan 6.0 - HotRod">
+         <!-- Configuration for the server group -->
+         <setup group="server"
+                plugin="infinispan60" service="server"
+                file="server.xml">
+            <!-- Properties are evaluated on each slave individually, therefore you can
+                 e.g. specify different bind address for each server in args -->
+            <!-- Home directory for the Infinispan Server -->
+            <property name="home">${env.ISPN_HOME}</property>
+            <!-- Additional arguments passed to ${env.ISPN_HOME}/bin/standalone.sh -->
+            <property name="args">-DudpGroup=224.0.0.1</property>
+         </setup>
+         <!-- Configuration for the HotRod client -->
+         <setup group="client"
+                plugin="infinispan60" service="hotrod">
+            <!-- Clients are not paired with servers automatically - we have to explicitly provide the address -->
+            <property name="servers">127.0.0.1:11222</property>
+         </setup>
+      </config>
+      <config name="Infinispan 6.0 - Memcached">
+         <!-- Configuration for the server group - this is identical to HotRod -->
+         <setup group="server"
+                plugin="infinispan60" service="server"
+                file="server.xml">
+            <property name="home">${env.ISPN_HOME}</property>
+            <property name="args">-DudpGroup=224.0.0.1</property>
+         </setup>
+         <!-- Configuration for the HotRod client -->
+         <setup group="client"
+                plugin="spymemcached">
+            <!-- Memcached clients can't find other servers automatically - always specify all servers -->
+            <property name="servers">127.0.0.1:11211</property>
+         </setup>
+      </config>
+   </configurations>
+
+   <!-- Sequence of stages executed on the cluster -->
+   <scenario>
+      <jvm-monitor-start />
+      <!-- Start services on all nodes -->
+      <service-start />
+
+      <load-data groups="client" num-entries="10000"/>
+
+      <!-- Warmup executed only on the slave 1 = client -->
+      <basic-operations-test groups="client" test-name="warmup" num-threads-per-node="10">
+         <key-selector>
+            <concurrent-keys num-entries-per-thread="100" />
+         </key-selector>
+      </basic-operations-test>
+
+      <!-- Stress test executed only on the slave 1 = client -->
+      <basic-operations-test slaves="1" duration="60s" num-threads-per-node="10">
+         <key-selector>
+            <concurrent-keys num-entries-per-thread="1000" />
+         </key-selector>
+      </basic-operations-test>
+
+      <!-- Stop services on all nodes: in cleanup this would happen anyway -->
+      <service-stop />
+   </scenario>
+
+   <!-- How the statistics are reported -->
+   <reports>
+      <!-- Produce CSV statistics report -->
+      <reporter type="csv" />
+      <!-- Produce HTML statistics report -->
+      <reporter type="html" />
+   </reports>
+
+</benchmark>
