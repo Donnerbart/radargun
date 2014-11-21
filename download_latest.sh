@@ -48,10 +48,17 @@ if [ -f "latest.zip" ]; then
     rm latest.zip
 fi
 
-scp -C -P ${PORT} -r ${USER}@${ADDRESS}:${REPORTS_DIR}/latest.zip .
+echo Downloading latest reports...
+scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${REPORTS_DIR}/latest.zip .
+echo Done!
 
 if [ -f "latest.zip" ]; then
+    echo Unpacking latest reports...
     unzip latest.zip
+    echo Done!
+
+    exit 0
 else
     echo Could not download latest reports!
+    exit 1
 fi
