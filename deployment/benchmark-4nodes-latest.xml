@@ -49,23 +49,14 @@
       <load-data num-entries="10000"/>
 
       <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache ('testCache') -->
-      <repeat name="without-transactions" times="1" from="10" to="30" inc="10">
-         <basic-operations-test test-name="stress-test" amend-test="true" use-transactions="NEVER"
+      <repeat from="10" to="30" inc="10">
+         <basic-operations-test test-name="without-transactions" amend-test="true" use-transactions="NEVER"
                                 duration="1m" num-threads-per-node="${repeat.counter}">
             <key-selector>
                <concurrent-keys total-entries="10000"/>
             </key-selector>
          </basic-operations-test>
-      </repeat>
-
-      <!-- Remove all data from the default cache -->
-      <clear-cache/>
-      <!-- Again, preload the cache with data -->
-      <load-data num-entries="10000"/>
-
-      <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache ('testCache') -->
-      <repeat name="with-transactions" times="1" from="10" to="30" inc="10">
-         <basic-operations-test test-name="stress-test" amend-test="true" use-transactions="ALWAYS"
+         <basic-operations-test test-name="with-transactions" amend-test="true" use-transactions="ALWAYS"
                                 duration="1m" num-threads-per-node="${repeat.counter}">
             <key-selector>
                <concurrent-keys total-entries="10000"/>
