@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>plugin-hazelcast33</artifactId>
-    <name>Hazelcast 3.3.3 plugin for RadarGun</name>
+    <name>Hazelcast 3.3.x plugin for RadarGun</name>
 
     <repositories>
         <repository>
