@@ -15,7 +15,7 @@
 
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="Hazelcast 3.4 - distributed">
+      <config name="Hazelcast 3.4.x - distributed">
          <setup plugin="hazelcast34" file="dist-sync.xml"/>
       </config>
       <config name="Infinispan 7.0 - distributed">
