@@ -15,8 +15,23 @@
 
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="JBoss Cache 3.x - distributed">
-         <setup plugin="jbosscache3" file="mvcc-repl-sync.xml"/>
+      <config name="Infinispan 5.0.x - distributed">
+         <setup plugin="infinispan50" file="dist-sync.xml"/>
+      </config>
+      <config name="Infinispan 5.1.x - distributed">
+         <setup plugin="infinispan51" file="dist-sync.xml"/>
+      </config>
+      <config name="Infinispan 5.2.x - distributed">
+         <setup plugin="infinispan52" file="dist-sync.xml"/>
+      </config>
+      <config name="Infinispan 5.3.x - distributed">
+         <setup plugin="infinispan53" file="dist-sync.xml"/>
+      </config>
+      <config name="Infinispan 6.0.x - distributed">
+         <setup plugin="infinispan60" file="dist-sync.xml"/>
+      </config>
+      <config name="Infinispan 7.0.x - distributed">
+         <setup plugin="infinispan70" file="dist-sync.xml"/>
       </config>
    </configurations>
 
