@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-TARGET_DIR=reports
+TARGET_DIR=./reports
 REPORTS_DIR=/tmp/reports
 
 USER=$(whoami)
@@ -37,19 +37,21 @@ function port {
 	fi
 }
 
-function download_latest_report {
-	MACHINE=$1
-	DESTINATION_DIR=$2
-	ADDRESS=$(address ${MACHINE})
-	PORT=$(port ${MACHINE})
-
-	scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${REPORTS_DIR}/latest.zip ${DESTINATION_DIR}
-}
+ADDRESS=$(address ${MASTER})
+PORT=$(port ${MASTER})
 
 cd ${TARGET_DIR}
-rm -rf latest
-rm latest.zip
+if [ -d "latest" ]; then
+    rm -rf latest
+fi
+if [ -f "latest.zip" ]; then
+    rm latest.zip
+fi
 
-download_latest_report ${MASTER} ${TARGET_DIR}
+scp -C -P ${PORT} -r ${USER}@${ADDRESS}:${REPORTS_DIR}/latest.zip .
 
-unzip latest.zip
+if [ -f "latest.zip" ]; then
+    unzip latest.zip
+else
+    echo Could not download latest reports!
+fi

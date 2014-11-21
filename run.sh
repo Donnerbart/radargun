@@ -258,7 +258,8 @@ function benchmark {
 		download_logs ${SLAVE} ${DESTINATION_DIR}
 	done
 
-	zip -r ${REPORTS_DIR}/latest.zip ${REPORTS_DIR}/latest/
+	cd ${REPORTS_DIR}
+	zip -r latest.zip ./latest/
 
 	echo ===============================================================
 	echo Benchmark Completed
