@@ -15,9 +15,6 @@
 
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="EHCache 2.6 - distributed">
-         <setup plugin="ehcache26" file="dist-sync.xml"/>
-      </config>
       <config name="Hazelcast 3.4 - distributed">
          <setup plugin="hazelcast34" file="dist-sync.xml"/>
       </config>
