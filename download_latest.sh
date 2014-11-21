@@ -6,10 +6,7 @@ TARGET_DIR=reports
 REPORTS_DIR=/tmp/reports
 
 USER=$(whoami)
-
-TESTNAME='local'
 MACHINE1='192.168.2.101'
-BENCHMARK_OPTS=''
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
@@ -46,11 +43,13 @@ function download_latest_report {
 	ADDRESS=$(address ${MACHINE})
 	PORT=$(port ${MACHINE})
 
-    #ssh -t ${USER}@${ADDRESS} -p ${PORT} "cd ${REPORTS_DIR} && zip -r latest.zip latest/"
 	scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${REPORTS_DIR}/latest.zip ${DESTINATION_DIR}
 }
 
+cd ${TARGET_DIR}
+rm -rf latest
+rm latest.zip
+
 download_latest_report ${MASTER} ${TARGET_DIR}
 
-cd ${TARGET_DIR}
 unzip latest.zip
