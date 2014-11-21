@@ -196,13 +196,13 @@ function tail_log {
 	ssh -t ${USER}@${ADDRESS} -p ${PORT} "tail -f ${RADARGUN_DIR}/radargun.log" &
 }
 
-function download_reports {
+function download_results {
 	MASTER=$1
 	DESTINATION_DIR=$2
 	ADDRESS=$(address ${MACHINE})
 	PORT=$(port ${MACHINE})
 		
-	scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${RADARGUN_DIR}/reports ${DESTINATION_DIR}
+	scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${RADARGUN_DIR}/results ${DESTINATION_DIR}
 }
 
 function download_logs {
@@ -252,8 +252,8 @@ function benchmark {
 	tail_log ${MASTER}
 	wait_completion ${MASTER}
 	
-	echo Downloading reports and logs
-	download_reports ${MASTER} ${DESTINATION_DIR}
+	echo Downloading results and logs
+	download_results ${MASTER} ${DESTINATION_DIR}
 	for SLAVE in ${SLAVES}
 	do
 		download_logs ${SLAVE} ${DESTINATION_DIR}
