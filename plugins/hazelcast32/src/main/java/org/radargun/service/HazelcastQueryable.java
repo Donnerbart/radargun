@@ -26,9 +26,9 @@ import org.radargun.utils.Projections;
  */
 public class HazelcastQueryable implements Queryable {
    private static final Log log = LogFactory.getLog(HazelcastQueryable.class);
-   protected final Hazelcast3Service service;
+   protected final Hazelcast32Service service;
 
-   public HazelcastQueryable(Hazelcast3Service service) {
+   public HazelcastQueryable(Hazelcast32Service service) {
       this.service = service;
    }
 

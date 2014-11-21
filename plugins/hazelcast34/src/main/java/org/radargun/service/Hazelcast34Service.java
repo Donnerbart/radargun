@@ -9,7 +9,7 @@ import org.radargun.traits.Transactional;
  * @author Maido Kaara
  */
 @Service(doc = "Hazelcast")
-public class Hazelcast3Service extends HazelcastService {
+public class Hazelcast34Service extends HazelcastService {
    @ProvidesTrait
    @Override
    public Transactional createTransactional() {

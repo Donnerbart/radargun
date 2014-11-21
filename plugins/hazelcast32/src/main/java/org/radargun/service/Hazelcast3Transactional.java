@@ -12,11 +12,11 @@ import org.radargun.traits.Transactional;
  * @author Radim Vansa &lt;rvansa@redhat.com&gt;
  */
 public class Hazelcast3Transactional implements Transactional {
-   protected final Hazelcast3Service service;
+   protected final Hazelcast32Service service;
    private static final Log log = LogFactory.getLog(Hazelcast3Transactional.class);
    private static final boolean trace = log.isTraceEnabled();
 
-   public Hazelcast3Transactional(Hazelcast3Service service) {
+   public Hazelcast3Transactional(Hazelcast32Service service) {
       this.service = service;
    }
 
