@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.hazelcast.core.IMap;
-import com.hazelcast.query.PagingPredicate;
 import com.hazelcast.query.Predicate;
 import com.hazelcast.query.Predicates;
 import org.radargun.logging.Log;
@@ -24,11 +23,11 @@ import org.radargun.utils.Projections;
 /**
  * @author Radim Vansa &lt;rvansa@redhat.com&gt;
  */
-public class HazelcastQueryable implements Queryable {
-   private static final Log log = LogFactory.getLog(HazelcastQueryable.class);
+public class Hazelcast3Queryable implements Queryable {
+   private static final Log log = LogFactory.getLog(Hazelcast3Queryable.class);
    protected final HazelcastService service;
 
-   public HazelcastQueryable(HazelcastService service) {
+   public Hazelcast3Queryable(HazelcastService service) {
       this.service = service;
    }
 
@@ -45,8 +44,6 @@ public class HazelcastQueryable implements Queryable {
    private class HazelcastQueryBuilder implements QueryBuilder {
       private final IMap map;
       private Predicate predicate;
-      private Comparator comparator;
-      private int limit = -1;
       private int offset = 0;
       private String[] projection;
 
@@ -136,11 +133,6 @@ public class HazelcastQueryable implements Queryable {
 
       @Override
       public QueryBuilder orderBy(String attribute, SortOrder order) {
-         if (order == SortOrder.DESCENDING) {
-            comparator = new InverseComparator(attribute);
-         } else {
-            comparator = new RegularComparator(attribute);
-         }
          return this;
       }
 
@@ -160,21 +152,12 @@ public class HazelcastQueryable implements Queryable {
 
       @Override
       public QueryBuilder limit(long limit) {
-         this.limit = (int) limit;
          return this;
       }
 
       @Override
       public Query build() {
-         Predicate finalPredicate;
-         if (comparator == null) {
-            if (limit < 0) finalPredicate = predicate;
-            else finalPredicate = new PagingPredicate(predicate, limit);
-         } else {
-            if (limit < 0) finalPredicate = new PagingPredicate(predicate, comparator, Integer.MAX_VALUE);
-            else finalPredicate = new PagingPredicate(predicate, comparator, limit);
-         }
-         return new HazelcastQuery(map, finalPredicate, offset, projection);
+         return new HazelcastQuery(map, predicate, offset, projection);
       }
    }
 

@@ -141,12 +141,14 @@
          </activation>
          <modules>
             <module>plugins/hazelcast2</module>
+            <module>plugins/hazelcast30</module>
+            <module>plugins/hazelcast31</module>
             <module>plugins/hazelcast32</module>
             <module>plugins/hazelcast33</module>
             <module>plugins/hazelcast34</module>
          </modules>
          <properties>
-            <plugins.hazelcast>hazelcast2,hazelcast32,hazelcast33,hazelcast34</plugins.hazelcast>
+            <plugins.hazelcast>hazelcast2,hazelcast30,hazelcast31,hazelcast32,hazelcast33,hazelcast34</plugins.hazelcast>
          </properties>
       </profile>
       <profile>
