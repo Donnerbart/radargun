@@ -20,14 +20,12 @@
       <gridgain65>
          <config name="dist-sync.xml"/>
       </gridgain65>
-
       <hazelcast333>
          <config name="dist-sync.xml"/>
       </hazelcast333>
       <hazelcast34>
          <config name="dist-sync.xml"/>
       </hazelcast34>
-
       <infinispan60>
          <config name="dist-sync.xml"/>
       </infinispan60>
