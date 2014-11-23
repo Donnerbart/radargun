@@ -1,6 +1,5 @@
 package org.radargun.service;
 
-import com.sun.xml.internal.ws.util.VersionUtil;
 import org.radargun.Service;
 import org.radargun.traits.ProvidesTrait;
 import org.radargun.traits.Queryable;
@@ -8,6 +7,7 @@ import org.radargun.traits.Transactional;
 
 /**
  * An implementation of CacheWrapper that uses Hazelcast instance as an underlying implementation.
+ *
  * @author Maido Kaara
  */
 @Service(doc = "Hazelcast")
