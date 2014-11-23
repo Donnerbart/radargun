@@ -15,20 +15,17 @@ public class Hazelcast30Service extends HazelcastService {
    @ProvidesTrait
    @Override
    public Transactional createTransactional() {
-      log.info("Hazelcast 3.0.x build info: " + VersionUtil.getValidVersionString());
       return new Hazelcast3Transactional(this);
    }
 
    @ProvidesTrait
    @Override
    public HazelcastOperations createOperations() {
-      log.info("Hazelcast 3.0.x build info: " + VersionUtil.getValidVersionString());
       return new Hazelcast3Operations(this);
    }
 
    @ProvidesTrait
    public Queryable createQueryable() {
-      log.info("Hazelcast 3.0.x build info: " + VersionUtil.getValidVersionString());
       return new Hazelcast3Queryable(this);
    }
 }
