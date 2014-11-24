@@ -12,9 +12,11 @@ import org.radargun.traits.Transactional;
  * @author Radim Vansa &lt;rvansa@redhat.com&gt;
  */
 public class Hazelcast3Transactional implements Transactional {
-   protected final HazelcastService service;
+   private static final String DEFAULT_CACHE_NAME = "transactional";
    private static final Log log = LogFactory.getLog(Hazelcast3Transactional.class);
    private static final boolean trace = log.isTraceEnabled();
+
+   protected final HazelcastService service;
 
    public Hazelcast3Transactional(HazelcastService service) {
       this.service = service;
@@ -22,7 +24,7 @@ public class Hazelcast3Transactional implements Transactional {
 
    @Override
    public Configuration getConfiguration(String cache) {
-      return Configuration.TRANSACTIONS_ENABLED;
+      return (DEFAULT_CACHE_NAME.equals(cache)) ? Configuration.TRANSACTIONAL : Configuration.NON_TRANSACTIONAL;
    }
 
    @Override
@@ -32,6 +34,7 @@ public class Hazelcast3Transactional implements Transactional {
 
    private class Tx implements Transactional.Transaction {
       private final TransactionContext transactionContext;
+
       private boolean started = false;
 
       public Tx() {
@@ -40,15 +43,10 @@ public class Hazelcast3Transactional implements Transactional {
 
       @Override
       public <T> T wrap(T resource) {
-         if (resource == null) {
-            return null;
-         } else if (resource instanceof Hazelcast3Operations.Cache) {
-            String cacheName = ((Hazelcast3Operations.Cache) resource).map.getName();
-            if (!started) begin();
-            return (T) new Hazelcast3Operations.Cache(transactionContext.getMap(cacheName));
-         } else {
-            throw new IllegalArgumentException(String.valueOf(resource));
+         if (!started) {
+            begin();
          }
+         return (T) new Hazelcast3Operations.Cache(transactionContext.getMap(DEFAULT_CACHE_NAME));
       }
 
       @Override

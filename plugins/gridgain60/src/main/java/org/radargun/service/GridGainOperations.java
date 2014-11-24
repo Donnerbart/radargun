@@ -14,7 +14,6 @@ public class GridGainOperations implements BasicOperations, ConditionalOperation
 
    @Override
    public <K, V> GridGainCache<K, V> getCache(String cacheName) {
-      service.log.info("GridGainOperations.getCache(" + cacheName + ")");
       if (cacheName == null)
       {
          cacheName = service.mapName;

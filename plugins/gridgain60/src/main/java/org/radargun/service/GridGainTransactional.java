@@ -1,14 +1,16 @@
 package org.radargun.service;
 
 import org.gridgain.grid.GridException;
+import org.gridgain.grid.cache.GridCache;
+import org.gridgain.grid.cache.GridCacheTx;
 import org.radargun.traits.Transactional;
 
 /**
- * Provides transactional operations for Hazelcast
- *
- * @author Radim Vansa &lt;rvansa@redhat.com&gt;
+ * Provides transactional operations for GridGain
  */
 public class GridGainTransactional implements Transactional {
+   private static final String DEFAULT_CACHE_NAME = "transactional";
+
    protected final GridGainService service;
 
    public GridGainTransactional(GridGainService service) {
@@ -17,7 +19,7 @@ public class GridGainTransactional implements Transactional {
 
    @Override
    public Configuration getConfiguration(String cacheName) {
-      return Configuration.TRANSACTIONS_ENABLED;
+      return (DEFAULT_CACHE_NAME.equals(cacheName)) ? Configuration.TRANSACTIONAL : Configuration.NON_TRANSACTIONAL;
    }
 
    @Override
@@ -26,31 +28,24 @@ public class GridGainTransactional implements Transactional {
    }
 
    protected class Tx implements Transaction {
-      private final org.gridgain.grid.cache.GridCacheTx tx;
+      private final GridCache cache;
+      private final GridGainOperations.Cache<?, ?> wrapper;
+
+      private GridCacheTx tx;
 
       public Tx() {
-         this.tx = service.cache.txStart();
+         cache = service.grid.cache(DEFAULT_CACHE_NAME);
+         wrapper = new GridGainOperations.Cache<Object, Object>(cache);
       }
 
       @Override
       public <T> T wrap(T resource) {
-         service.log.info("GridGainTransactional.wrap() with " + resource.getClass().getName());
-         /*
-         if (resource == null) {
-            return null;
-         } else if (resource instanceof GridGainOperations.Cache) {
-            if (((GridGainOperations.Cache) resource).map.tx() != null) {
-               return resource;
-            }
-         } else {
-            throw new IllegalArgumentException(String.valueOf(resource));
-         }
-         */
-         return resource;
+         return (T) wrapper;
       }
 
       @Override
       public void begin() {
+         tx = cache.txStart();
       }
 
       @Override
