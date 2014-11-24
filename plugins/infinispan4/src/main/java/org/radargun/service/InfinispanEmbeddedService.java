@@ -52,8 +52,8 @@ public class InfinispanEmbeddedService {
    @Property(name = "file", doc = "File used as a configuration for this service.", deprecatedName = "config")
    protected String configFile;
 
-   @Property(name = "cache", doc = "Name of the main cache. Default is 'testCache'")
-   protected String cacheName = "testCache";
+   @Property(name = "cache", doc = "Name of the main cache. Default is 'default'")
+   protected String cacheName = "default";
 
    @Property(doc = "Threads per node - for EvenConsistentHash.")
    private int threadsPerNode = -1;

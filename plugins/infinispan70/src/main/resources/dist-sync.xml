@@ -14,6 +14,7 @@
       <jmx>
          <property name="enabled">true</property>
       </jmx>
+      
       <distributed-cache name="default" mode="SYNC" remote-timeout="60000" statistics="true" l1-lifespan="-1"
                          owners="2" segments="512">
          <transaction transaction-manager-lookup="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"

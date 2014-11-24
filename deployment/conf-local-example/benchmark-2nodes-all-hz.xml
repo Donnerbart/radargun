@@ -44,7 +44,7 @@
 
       <!-- Preload the cache with data -->
       <load-data num-entries="5000"/>
-      <!-- 5 threads will execute total of 100,000 random requests against the default cache ('testCache')-->
+      <!-- 5 threads will execute total of 100,000 random requests against the default cache -->
       <!-- As the test is called 'warmup', performance statistics won't be reported -->
       <basic-operations-test test-name="warmup" num-requests="1000" num-threads-per-node="5">
          <key-selector>
@@ -57,7 +57,7 @@
       <!-- Again, preload the cache with data -->
       <load-data num-entries="10000"/>
 
-      <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache ('testCache') -->
+      <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache -->
       <repeat from="10" to="30" inc="10">
          <basic-operations-test test-name="without-transactions" amend-test="true" use-transactions="NEVER"
                                 duration="10s" num-threads-per-node="${repeat.counter}">

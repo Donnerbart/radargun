@@ -25,6 +25,8 @@
       </clustering>
    </default>
 
+   <namedCache name="default" />
+
    <namedCache name="transactional">
       <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
                    transactionMode="TRANSACTIONAL"/>
@@ -38,6 +40,4 @@
          <hash numOwners="2" numSegments="40"/>
       </clustering>
    </namedCache>
-
-   <namedCache name="testCache"/>
 </infinispan>
