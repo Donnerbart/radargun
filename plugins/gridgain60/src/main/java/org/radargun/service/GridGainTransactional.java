@@ -34,6 +34,7 @@ public class GridGainTransactional implements Transactional {
 
       @Override
       public <T> T wrap(T resource) {
+         service.log.info("GridGainTransactional.wrap() with " + resource.getClass().getName());
          /*
          if (resource == null) {
             return null;
