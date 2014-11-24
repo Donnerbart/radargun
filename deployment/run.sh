@@ -233,9 +233,10 @@ function benchmark {
 	echo Output dir: ${DESTINATION_DIR}
 	echo ===============================================================
 
+	LATEST="${REPORTS_DIR}/latest"
 	mkdir -p ${DESTINATION_DIR}
-	rm -rf ${REPORTS_DIR}/latest
-	ln -s ${DESTINATION_DIR} ${REPORTS_DIR}/latest
+	rm -rf ${LATEST}
+	ln -s $(readlink -mv ${DESTINATION_DIR}) ${LATEST}
 
 	echo scp ${BENCHMARK_FILE} -P ${PORT} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
 	scp -C -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
@@ -285,4 +286,4 @@ fi
 #benchmark 1-nodes benchmark-1nodes.xml "${MACHINE1}"
 #benchmark 2-nodes benchmark-2nodes.xml "${MACHINE1} ${MACHINE2}"
 #benchmark 3-nodes benchmark-3nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE4}"
-benchmark 4-nodes benchmark-4nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
+#benchmark 4-nodes benchmark-4nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
