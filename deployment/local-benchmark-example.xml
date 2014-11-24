@@ -1,74 +1,53 @@
-<bench-config xmlns="urn:radargun:benchmark:1.1">
+<!-- RadarGun 2.0 benchmark -->
+<benchmark xmlns="urn:radargun:benchmark:2.0">
 
-   <master bindAddress="${127.0.0.1:master.address}" port="${2103:master.port}"/>
+   <!-- The  benchmark will be executed within single JVM -->
+   <local/>
 
-   <benchmark initSize="1" maxSize="${1:slaves}" increment="1">
-      <DestroyWrapper runOnAllSlaves="true"/>
-      <StartCluster staggerSlaveStartup="true" delayAfterFirstSlaveStarts="5000" delayBetweenStartingSlaves="500"/>
-      <ClusterValidation partialReplication="false"/>
-      <StressTestWarmup numRequests="100000" opsCountStatusLog="1000" numThreads="2"/>
-      <ClearCluster/>
-      <!--
-         This will average to 10000 requests per thread, although a work-stealing pattern is used so some threads may
-         do more work than others.
-       -->
-      <StressTest numRequests="1000000" opsCountStatusLog="10000" numThreads="2"/>
-      <CsvReportGeneration/>
-   </benchmark>
+   <!-- List of configurations of the services -->
+   <configurations>
+      <config name="Infinispan 6.0 - local">
+         <setup plugin="infinispan60" file="local.xml" />
+      </config>
+   </configurations>
 
-   <products>
-      <!--
-      <ehcache28>
-         <config name="local.xml"/>
-      </ehcache28>
-      -->
-      <gridgain60>
-         <config name="local.xml"/>
-      </gridgain60>
-      <gridgain62>
-         <config name="local.xml"/>
-      </gridgain62>
-      <gridgain65>
-         <config name="local.xml"/>
-      </gridgain65>
+   <!-- Sequence of stages executed on the cluster -->
+   <scenario>
+      <!-- Start services on all nodes -->
+      <service-start />
+      <!-- Begin monitoring of CPU, memory usage and GC -->
+      <jvm-monitor-start />
 
-      <hazelcast30>
-         <config name="dist-sync.xml"/>
-      </hazelcast30>
-      <hazelcast31>
-         <config name="dist-sync.xml"/>
-      </hazelcast31>
-      <hazelcast32>
-         <config name="dist-sync.xml"/>
-      </hazelcast32>
-      <hazelcast33>
-         <config name="dist-sync.xml"/>
-      </hazelcast33>
-      <hazelcast333>
-         <config name="dist-sync.xml"/>
-      </hazelcast333>
-      <hazelcast34>
-         <config name="dist-sync.xml"/>
-      </hazelcast34>
+      <!-- Preload the cache with data -->
+      <load-data num-entries="5000"/>
 
-      <infinispan52>
-         <config name="repl-sync.xml"/>
-      </infinispan52>
-      <infinispan60>
-         <config name="dist-sync.xml"/>
-      </infinispan60>
-   </products>
+      <!-- 5 threads will execute total of 10,000,000 random requests against the default cache ('testCache')-->
+      <!-- As the test is called 'warmup', performance statistics won't be reported -->
+      <basic-operations-test test-name="warmup"
+                             num-requests="10000000" num-threads-per-node="5">
+         <key-selector>
+            <concurrent-keys total-entries="5000" />
+         </key-selector>
+      </basic-operations-test>
 
+      <!-- 10 will execute random requests for 1 minute against the default cache ('testCache') -->
+      <basic-operations-test test-name="stress-test"
+                             duration="1m" num-threads-per-node="10">
+         <key-selector>
+            <concurrent-keys total-entries="5000"/>
+         </key-selector>
+      </basic-operations-test>
+
+      <!-- Stop JVM monitoring -->
+      <jvm-monitor-stop />
+   </scenario>
+
+   <!-- How the statistics are reported -->
    <reports>
-      <!-- report name="Replicated">
-         <item product="infinispan52" config="repl-sync.xml"/>
-         <item product="jbosscache3" config="*"/>
-      </report>
-      <report name="DistVsRepl">
-         <item product="infinispan52" config="repl-sync.xml"/>
-         <item product="infinispan52" config="dist-sync.xml"/>
-      </report -->
-      <report name="All" includeAll="true"/>
+      <!-- Produce CSV statistics report -->
+      <reporter type="csv"/>
+      <!-- Produce HTML statistics report -->
+      <reporter type="html"/>
    </reports>
 
-</bench-config>
+</benchmark>

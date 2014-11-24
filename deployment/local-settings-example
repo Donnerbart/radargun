@@ -31,14 +31,34 @@
 #BENCHMARK_OPTS='4-nodes benchmark-4nodes-latest-hz.xml'
 #BENCHMARK_OPTS='4-nodes benchmark-4nodes-latest-infinispan.xml'
 
-##########################
-##### local settings #####
-##########################
+#########################
+##### local 1-nodes #####
+#########################
 
 #REPORTS_DIR=reports
 #KILL_JAVA=no_idea
 
 #MACHINE1='127.0.0.1'
+#MACHINE2=''
+#MACHINE3=''
+#MACHINE4=''
 
 #MACHINES="${MACHINE1}"
 #BENCHMARK_OPTS='local local-benchmark.xml'
+
+#########################
+##### local 2-nodes #####
+#########################
+
+#REPORTS_DIR=./reports
+#KILL_JAVA=no_idea
+#KILL_JAVA_SUDO=false
+
+#MACHINE1='172.16.16.206'
+#MACHINE2='172.16.16.203'
+#MACHINE3=''
+#MACHINE4=''
+
+#MACHINES="${MACHINE1} ${MACHINE2}"
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-infinispan.xml'
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-latest.xml'
