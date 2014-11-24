@@ -31,7 +31,7 @@ public class Hazelcast3Transactional implements Transactional {
    }
 
    private class Tx implements Transactional.Transaction {
-      private TransactionContext transactionContext;
+      private final TransactionContext transactionContext;
       private boolean started = false;
 
       public Tx() {
