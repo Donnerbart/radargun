@@ -2,18 +2,16 @@
 
 cd "$(dirname "$0")"
 
-TARGET_DIR=./reports
-REPORTS_DIR=/tmp/reports
+DOWNLOAD_TARGET=./reports
+DOWNLOAD_REMOTE_REPORTS_DIR=/tmp/reports
 
-USER=$(whoami)
-MACHINE1='192.168.2.101'
+DOWNLOAD_USER=$(whoami)
+DOWNLOAD_HOST='192.168.2.101'
 
 # override settings with local-settings file
-if [ -f local-settings ]; then
-    source local-settings
+if [ -f conf-local/local-settings ]; then
+    source conf-local/local-settings
 fi
-
-MASTER=${MACHINE1}
 
 function address {
 	MACHINE=$1
@@ -37,10 +35,10 @@ function port {
 	fi
 }
 
-ADDRESS=$(address ${MASTER})
-PORT=$(port ${MASTER})
+ADDRESS=$(address ${DOWNLOAD_HOST})
+PORT=$(port ${DOWNLOAD_HOST})
 
-cd ${TARGET_DIR}
+cd ${DOWNLOAD_TARGET}
 if [ -d "latest" ]; then
     rm -rf latest
 fi
@@ -49,7 +47,7 @@ if [ -f "latest.zip" ]; then
 fi
 
 echo Downloading latest reports...
-scp -C -P ${PORT} -q -r ${USER}@${ADDRESS}:${REPORTS_DIR}/latest.zip .
+scp -C -P ${PORT} -q -r ${DOWNLOAD_USER}@${ADDRESS}:${DOWNLOAD_REMOTE_REPORTS_DIR}/latest.zip .
 echo Done!
 
 if [ -f "latest.zip" ]; then

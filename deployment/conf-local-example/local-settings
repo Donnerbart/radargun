@@ -1,18 +1,15 @@
 #!/bin/bash
 
-########################
-##### instructions #####
-########################
+##################################
+##### remote download_latest #####
+##################################
 
-# copy this file to local-settings to override default values in run.sh
-# define ${MACHINE1...n}
-# define ${MACHINES}
-# define ${BENCHMARK_OPTS} (name + config file)
-# ${MACHINES} will be used for the defined ${BENCHMARK_OPTS} (no need to add them here)
+DOWNLOAD_USER=hazelcast
+DOWNLOAD_HOST='212.175.226.222:1111'
 
-###########################
-##### remote settings #####
-###########################
+##########################
+##### remote cluster #####
+##########################
 
 #USER=hazelcast
 #KILL_JAVA_SUDO=true
@@ -26,14 +23,11 @@
 #BENCHMARK_OPTS='2-nodes benchmark-2nodes.xml'
 
 #MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
-#BENCHMARK_OPTS='4-nodes benchmark-4nodes-all-hz.xml'
-#BENCHMARK_OPTS='4-nodes benchmark-4nodes-latest.xml'
-#BENCHMARK_OPTS='4-nodes benchmark-4nodes-latest-hz.xml'
-#BENCHMARK_OPTS='4-nodes benchmark-4nodes-latest-infinispan.xml'
+#BENCHMARK_OPTS='4-nodes benchmark-4nodes.xml'
 
-#########################
-##### local 1-nodes #####
-#########################
+##########################
+##### local settings #####
+##########################
 
 #REPORTS_DIR=reports
 #KILL_JAVA=no_idea
@@ -44,21 +38,21 @@
 #MACHINE4=''
 
 #MACHINES="${MACHINE1}"
-#BENCHMARK_OPTS='local conf-local/local-benchmark.xml'
+#BENCHMARK_OPTS='local local-benchmark.xml'
 
 #########################
-##### local 2-nodes #####
+##### local cluster #####
 #########################
 
 #REPORTS_DIR=./reports
 #KILL_JAVA=no_idea
 #KILL_JAVA_SUDO=false
-
+#
 #MACHINE1='172.16.16.206'
 #MACHINE2='172.16.16.203'
 #MACHINE3=''
 #MACHINE4=''
-
+#
 #MACHINES="${MACHINE1} ${MACHINE2}"
 #BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-gridgain.xml'
 #BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-hz.xml'

@@ -29,8 +29,8 @@ KILL_JAVA=all
 KILL_JAVA_SUDO=false
 
 # override settings with local-settings file
-if [ -f local-settings ]; then
-    source local-settings
+if [ -f conf-local/local-settings ]; then
+    source conf-local/local-settings
 fi
 
 MASTER=${MACHINE1}
