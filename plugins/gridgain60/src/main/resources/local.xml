@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+   <bean id="grid.cfg" class="org.gridgain.grid.GridConfiguration" scope="singleton">
+      <property name="cacheConfiguration">
+         <list>
+            <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
+               <property name="name" value="themap"/>
+               <property name="cacheMode">
+                  <util:constant static-field="org.gridgain.grid.cache.GridCacheMode.LOCAL"/>
+               </property>
+               <property name="swapEnabled" value="false"/>
+               <property name="backups" value="0"/>
+               <property name="queryIndexEnabled" value="false"/>
+               <property name="atomicityMode">
+                  <util:constant static-field="org.gridgain.grid.cache.GridCacheAtomicityMode.ATOMIC"/>
+               </property>
+               <!-- //cfg.setAtomicityMode(GridCacheAtomicityMode.ATOMIC);
+                              cfg.setAtomicityMode(GridCacheAtomicityMode.TRANSACTIONAL);
+                              cfg.setQueryIndexEnabled(false);
+                              cfg.setStartSize(1000000); -->
+
+            </bean>
+         </list>
+      </property>
+   </bean>
+</beans>

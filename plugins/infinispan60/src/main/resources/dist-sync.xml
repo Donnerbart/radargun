@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:infinispan:config:6.0">
+<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:infinispan:config:6.0 http://www.infinispan.org/schemas/infinispan-config-6.0.xsd"
+            xmlns="urn:infinispan:config:6.0">
    <global>
       <transport clusterName="default">
          <properties>
@@ -10,17 +12,18 @@
    </global>
 
    <default>
-      <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"/>
+      <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                   transactionMode="TRANSACTIONAL"/>
       <locking concurrencyLevel="1000" useLockStriping="false"/>
 
-      <unsafe unreliableReturnValues="true" />
+      <unsafe unreliableReturnValues="true"/>
 
-      <clustering mode="distribution" >
+      <clustering mode="distribution">
          <sync replTimeout="60000"/>
-         <l1 enabled="false" />
+         <l1 enabled="false"/>
          <hash numOwners="2" numSegments="40"/>
       </clustering>
    </default>
 
-   <namedCache name="testCache" />
+   <namedCache name="testCache"/>
 </infinispan>

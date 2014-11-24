@@ -15,12 +15,14 @@
 
    <!-- List of configurations of the services -->
    <configurations>
+      <!--
       <config name="Infinispan 5.2.x - distributed">
          <setup plugin="infinispan52" file="dist-sync.xml"/>
       </config>
       <config name="Infinispan 5.3.x - distributed">
          <setup plugin="infinispan53" file="dist-sync.xml"/>
       </config>
+      -->
       <config name="Infinispan 6.0.x - distributed">
          <setup plugin="infinispan60" file="dist-sync.xml"/>
       </config>
@@ -59,7 +61,7 @@
                <concurrent-keys total-entries="10000"/>
             </key-selector>
          </basic-operations-test>
-         <basic-operations-test test-name="with-transactions" amend-test="true" use-transactions="ALWAYS"
+         <basic-operations-test test-name="with-transactions" amend-test="true" use-transactions="IF_TRANSACTIONAL"
                                 duration="1m" num-threads-per-node="${repeat.counter}">
             <key-selector>
                <concurrent-keys total-entries="10000"/>

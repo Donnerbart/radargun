@@ -15,11 +15,17 @@
 
    <!-- List of configurations of the services -->
    <configurations>
+      <config name="GridGain 6.5.x - distributed">
+         <setup plugin="gridgain65" file="dist-sync.xml"/>
+      </config>
       <config name="Hazelcast 3.3.x - distributed">
          <setup plugin="hazelcast33" file="dist-sync.xml"/>
       </config>
       <config name="Hazelcast 3.4.x - distributed">
          <setup plugin="hazelcast34" file="dist-sync.xml"/>
+      </config>
+      <config name="Infinispan 6.0.x - distributed">
+         <setup plugin="infinispan60" file="dist-sync.xml"/>
       </config>
       <config name="Infinispan 7.0.x - distributed">
          <setup plugin="infinispan70" file="dist-sync.xml"/>
@@ -56,7 +62,7 @@
                <concurrent-keys total-entries="10000"/>
             </key-selector>
          </basic-operations-test>
-         <basic-operations-test test-name="with-transactions" amend-test="true" use-transactions="ALWAYS"
+         <basic-operations-test test-name="with-transactions" amend-test="true" use-transactions="IF_TRANSACTIONAL"
                                 duration="1m" num-threads-per-node="${repeat.counter}">
             <key-selector>
                <concurrent-keys total-entries="10000"/>
