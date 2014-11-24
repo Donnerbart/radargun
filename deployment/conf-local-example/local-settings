@@ -47,12 +47,12 @@ DOWNLOAD_HOST='212.175.226.222:1111'
 #REPORTS_DIR=./reports
 #KILL_JAVA=no_idea
 #KILL_JAVA_SUDO=false
-#
+
 #MACHINE1='172.16.16.206'
 #MACHINE2='172.16.16.203'
 #MACHINE3=''
 #MACHINE4=''
-#
+
 #MACHINES="${MACHINE1} ${MACHINE2}"
 #BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-gridgain.xml'
 #BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-hz.xml'
