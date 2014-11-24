@@ -31,5 +31,4 @@ deploy
 install
 deployment/conf-local
 deployment/local-settings
-deployment/local-benchmark.xml
 deployment/reports

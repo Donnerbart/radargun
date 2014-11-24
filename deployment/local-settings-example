@@ -44,7 +44,7 @@
 #MACHINE4=''
 
 #MACHINES="${MACHINE1}"
-#BENCHMARK_OPTS='local local-benchmark.xml'
+#BENCHMARK_OPTS='local conf-local/local-benchmark.xml'
 
 #########################
 ##### local 2-nodes #####
@@ -60,5 +60,7 @@
 #MACHINE4=''
 
 #MACHINES="${MACHINE1} ${MACHINE2}"
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-gridgain.xml'
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-hz.xml'
 #BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-infinispan.xml'
 #BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-latest.xml'
