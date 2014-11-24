@@ -8,13 +8,19 @@
       <stack-file name="jgroupsStack" path="default-configs/default-jgroups-udp.xml"/>
    </jgroups>
 
-   <cache-container name="default" default-cache="testCache">
+   <cache-container name="default" default-cache="default">
       <transport stack="jgroupsStack" lock-timeout="600000" cluster="default"/>
       <serialization/>
       <jmx>
          <property name="enabled">true</property>
       </jmx>
-      <distributed-cache name="testCache" mode="SYNC" remote-timeout="60000" statistics="true" l1-lifespan="-1"
+      <distributed-cache name="default" mode="SYNC" remote-timeout="60000" statistics="true" l1-lifespan="-1"
+                         owners="2" segments="512">
+         <transaction transaction-manager-lookup="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                      mode="NONE"/>
+      </distributed-cache>
+
+      <distributed-cache name="transactional" mode="SYNC" remote-timeout="60000" statistics="true" l1-lifespan="-1"
                          owners="2" segments="512">
          <transaction transaction-manager-lookup="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
                       mode="FULL_XA"/>

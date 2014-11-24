@@ -30,5 +30,5 @@ core/src/main/resources/schema
 deploy
 install
 deployment/conf-local
-deployment/local-settings
 deployment/reports
+deployment/local-settings

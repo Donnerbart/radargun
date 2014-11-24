@@ -13,7 +13,7 @@
 
    <default>
       <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
-                   transactionMode="TRANSACTIONAL"/>
+                   transactionMode="NON_TRANSACTIONAL"/>
       <locking concurrencyLevel="1000" useLockStriping="false"/>
 
       <unsafe unreliableReturnValues="true"/>
@@ -24,6 +24,20 @@
          <hash numOwners="2" numSegments="40"/>
       </clustering>
    </default>
+
+   <namedCache name="transactional">
+      <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                   transactionMode="TRANSACTIONAL"/>
+      <locking concurrencyLevel="1000" useLockStriping="false"/>
+
+      <unsafe unreliableReturnValues="true"/>
+
+      <clustering mode="distribution">
+         <sync replTimeout="60000"/>
+         <l1 enabled="false"/>
+         <hash numOwners="2" numSegments="40"/>
+      </clustering>
+   </namedCache>
 
    <namedCache name="testCache"/>
 </infinispan>

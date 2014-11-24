@@ -34,6 +34,17 @@ public class GridGainTransactional implements Transactional {
 
       @Override
       public <T> T wrap(T resource) {
+         /*
+         if (resource == null) {
+            return null;
+         } else if (resource instanceof GridGainOperations.Cache) {
+            if (((GridGainOperations.Cache) resource).map.tx() != null) {
+               return resource;
+            }
+         } else {
+            throw new IllegalArgumentException(String.valueOf(resource));
+         }
+         */
          return resource;
       }
 
@@ -47,6 +58,11 @@ public class GridGainTransactional implements Transactional {
             tx.commit();
          } catch (GridException e) {
             throw new RuntimeException(e);
+         } finally {
+            try {
+               tx.close();
+            } catch (GridException ignored) {
+            }
          }
       }
 
@@ -56,6 +72,11 @@ public class GridGainTransactional implements Transactional {
             tx.rollback();
          } catch (GridException e) {
             throw new RuntimeException(e);
+         } finally {
+            try {
+               tx.close();
+            } catch (GridException ignored) {
+            }
          }
       }
    }

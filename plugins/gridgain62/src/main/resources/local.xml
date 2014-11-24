@@ -9,7 +9,7 @@
       <property name="cacheConfiguration">
          <list>
             <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
-               <property name="name" value="themap"/>
+               <property name="name" value="default"/>
                <property name="cacheMode">
                   <util:constant static-field="org.gridgain.grid.cache.GridCacheMode.LOCAL"/>
                </property>
