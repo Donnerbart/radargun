@@ -41,8 +41,8 @@ PORT=$(port ${DOWNLOAD_HOST})
 mkdir -p ${DOWNLOAD_TARGET}
 cd ${DOWNLOAD_TARGET}
 
-if [ -d "latest" ]; then
-    rm -rf latest
+if [ -d "latest-remote" ]; then
+    rm -rf latest-remote
 fi
 if [ -f "latest-remote.zip" ]; then
     rm latest-remote.zip
