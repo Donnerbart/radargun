@@ -1,21 +1,21 @@
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="Hazelcast 2">
+      <config name="Hazelcast 2.6">
          <setup plugin="hazelcast2" file="hazelcast.xml"/>
       </config>
-      <config name="Hazelcast 3.0.x">
+      <config name="Hazelcast 3.0">
          <setup plugin="hazelcast30" file="hazelcast.xml"/>
       </config>
-      <config name="Hazelcast 3.1.x">
+      <config name="Hazelcast 3.1">
          <setup plugin="hazelcast31" file="hazelcast.xml"/>
       </config>
-      <config name="Hazelcast 3.2.x">
+      <config name="Hazelcast 3.2">
          <setup plugin="hazelcast32" file="hazelcast.xml"/>
       </config>
-      <config name="Hazelcast 3.3.x">
+      <config name="Hazelcast 3.3">
          <setup plugin="hazelcast33" file="hazelcast.xml"/>
       </config>
-      <config name="Hazelcast 3.4.x">
+      <config name="Hazelcast 3.4">
          <setup plugin="hazelcast34" file="hazelcast.xml"/>
       </config>
    </configurations>

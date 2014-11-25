@@ -1,17 +1,17 @@
    <!-- List of configurations of the services -->
    <configurations>
       <!--
-      <config name="Infinispan 5.2.x">
+      <config name="Infinispan 5.2">
          <setup plugin="infinispan52" file="hazelcast.xml"/>
       </config>
-      <config name="Infinispan 5.3.x">
+      <config name="Infinispan 5.3">
          <setup plugin="infinispan53" file="hazelcast.xml"/>
       </config>
       -->
-      <config name="Infinispan 6.0.x">
+      <config name="Infinispan 6.0">
          <setup plugin="infinispan60" file="hazelcast.xml"/>
       </config>
-      <config name="Infinispan 7.0.x">
+      <config name="Infinispan 7.0">
          <setup plugin="infinispan70" file="hazelcast.xml"/>
       </config>
    </configurations>
