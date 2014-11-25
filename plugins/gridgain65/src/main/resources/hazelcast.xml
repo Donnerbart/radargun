@@ -11,7 +11,7 @@
             <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
                <property name="name" value="default"/>
                <property name="atomicityMode" value="ATOMIC"/>
-               <property name="writeSynchronizationMode" value="FULL_SYNC"/>
+               <property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
                <property name="cacheMode">
                   <util:constant static-field="org.gridgain.grid.cache.GridCacheMode.PARTITIONED"/>
                </property>
@@ -22,7 +22,7 @@
                <property name="defaultTxConcurrency" value="PESSIMISTIC"/>
                <property name="defaultTxIsolation" value="REPEATABLE_READ"/>
                <property name="defaultTxTimeout" value="3000"/>
-               <property name="writeSynchronizationMode" value="FULL_SYNC"/>
+               <property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
                <property name="cacheMode">
                   <util:constant static-field="org.gridgain.grid.cache.GridCacheMode.PARTITIONED"/>
                </property>
