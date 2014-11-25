@@ -263,12 +263,27 @@ function download_logs {
 	scp -C -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.out ${DESTINATION_DIR}/logs
 }
 
+function benchmark_header {
+    MASTER=${MACHINES[0]}
+    NUMBER_OF_SLAVES=${#MACHINES[@]}
+	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
+
+	echo ===============================================================
+	echo Running Benchmark: ${BENCHMARK_NAME}
+	echo Master: ${MASTER}
+	echo Slaves: "${MACHINES[@]}"
+	echo Benchmark configuration: ${CONFIGURATION}
+	echo Benchmark scenario: ${SCENARIO}
+	echo Duration: ${DURATION}
+	echo Number of threads: ${NUMBER_OF_THREADS}
+	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
+	echo ===============================================================
+}
+
 function benchmark {
     MASTER=${MACHINES[0]}
     NUMBER_OF_SLAVES=${#MACHINES[@]}
 	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
-	BENCHMARK_CONF_NAME=$1
-	BENCHMARK_SCENARIO_NAME=$2
 	TIMESTAMP=$(date +%s)
 	DESTINATION_DIR=${REPORTS_DIR}/${BENCHMARK_NAME}/${TIMESTAMP}
 
@@ -276,19 +291,13 @@ function benchmark {
 	echo Starting Benchmark: ${BENCHMARK_NAME}
 	echo Master: ${MASTER}
 	echo Slaves: "${MACHINES[@]}"
-	echo Benchmark configuration: ${BENCHMARK_CONF_NAME}
-	echo Benchmark scenario: ${BENCHMARK_SCENARIO_NAME}
+	echo Benchmark configuration: ${CONFIGURATION}
+	echo Benchmark scenario: ${SCENARIO}
 	echo Duration: ${DURATION}
 	echo Number of threads: ${NUMBER_OF_THREADS}
 	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
 	echo Output dir: ${DESTINATION_DIR}
 	echo ===============================================================
-
-    # install on all slaves
-    for MACHINE in "${MACHINES[@]}"
-    do
-        install ${MACHINE}
-    done
 
     # parse master network configuration
   	ADDRESS=$(address ${MASTER})
@@ -308,8 +317,8 @@ function benchmark {
 	    | sed -e "s/{MASTER}/${MASTER}/g" \
 	    | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" \
 	    >> ${BENCHMARK_FILE}
-	cat benchmark-configurations/${BENCHMARK_CONF_NAME}.xml >> ${BENCHMARK_FILE}
-	cat benchmark-scenarios/${BENCHMARK_SCENARIO_NAME}.xml \
+	cat benchmark-configurations/${CONFIGURATION}.xml >> ${BENCHMARK_FILE}
+	cat benchmark-scenarios/${SCENARIO}.xml \
 	    | sed -e "s/{DURATION}/${DURATION}/g" \
 	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
 	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
@@ -356,7 +365,13 @@ function benchmark {
 
 START_TIME=$(date +%s)
 
-benchmark ${CONFIGURATION} ${SCENARIO}
+# install on all slaves
+for MACHINE in "${MACHINES[@]}"
+do
+    install ${MACHINE}
+done
+
+benchmark
 
 END_TIME=$(date +%s)
 
