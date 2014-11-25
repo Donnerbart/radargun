@@ -40,17 +40,19 @@
       <jvm-monitor-start/>
 
       <!-- Preload the cache with data -->
-      <load-data num-entries="5000" cache-selector="all:default" />
-      <load-data num-entries="5000" cache-selector="all:transactional" />
+      <load-data num-entries="5000" cache-selector="all:default"/>
+      <load-data num-entries="5000" cache-selector="all:transactional"/>
 
       <!-- 5 threads will execute total of 100,000 random requests against the default cache -->
       <!-- As the test is called 'warmup', performance statistics won't be reported -->
-      <basic-operations-test test-name="warmup" num-requests="100000" num-threads-per-node="5" cache-selector="all:default">
+      <basic-operations-test test-name="warmup" num-requests="100000" num-threads-per-node="5"
+                             cache-selector="all:default">
          <key-selector>
             <concurrent-keys total-entries="5000"/>
          </key-selector>
       </basic-operations-test>
-      <basic-operations-test test-name="warmup" num-requests="100000" num-threads-per-node="5" cache-selector="all:transactional">
+      <basic-operations-test test-name="warmup" num-requests="100000" num-threads-per-node="5"
+                             cache-selector="all:transactional">
          <key-selector>
             <concurrent-keys total-entries="5000"/>
          </key-selector>
@@ -64,16 +66,18 @@
       <load-data num-entries="10000" cache-selector="all:transactional"/>
 
       <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache -->
-      <repeat from="10" to="30" inc="10">
+      <!-- <repeat from="10" to="30" inc="10"> -->
+      <repeat times="3">
+         <!-- num-threads-per-node="${repeat.counter}" -->
          <basic-operations-test test-name="without-transactions" amend-test="true" use-transactions="NEVER"
-                                duration="1m" num-threads-per-node="${repeat.counter}">
+                                duration="10s" num-threads-per-node="40">
             <cache-selector>all:default</cache-selector>
             <key-selector>
                <concurrent-keys total-entries="10000"/>
             </key-selector>
          </basic-operations-test>
          <basic-operations-test test-name="with-transactions" amend-test="true" use-transactions="IF_TRANSACTIONAL"
-                                duration="1m" num-threads-per-node="${repeat.counter}">
+                                duration="10s" num-threads-per-node="40">
             <cache-selector>all:transactional</cache-selector>
             <key-selector>
                <concurrent-keys total-entries="10000"/>
@@ -90,7 +94,24 @@
       <!-- Produce CSV statistics report -->
       <reporter type="csv"/>
       <!-- Produce HTML statistics report -->
-      <reporter type="html"/>
+      <reporter type="html">
+         <report>
+            <html xmlns="urn:radargun:reporters:reporter-default:2.0"
+                  target-dir="reports/html-default"/>
+         </report>
+         <report>
+            <html xmlns="urn:radargun:reporters:reporter-default:2.0"
+                  target-dir="reports/html-separate">
+               <test-report separate-cluster-charts="true"/>
+            </html>
+         </report>
+         <report>
+            <html xmlns="urn:radargun:reporters:reporter-default:2.0"
+                  target-dir="reports/html-combined">
+               <test-report combined-tests="[without-transactions, with-transactions]"/>
+            </html>
+         </report>
+      </reporter>
       <!-- Store Java-serialized version of the results that can be used to re-run the report -->
       <reporter type="serialized"/>
    </reports>

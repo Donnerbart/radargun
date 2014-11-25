@@ -58,15 +58,19 @@
       <load-data num-entries="10000"/>
 
       <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache -->
-      <repeat from="10" to="30" inc="10">
+      <!-- <repeat from="10" to="30" inc="10"> -->
+      <repeat times="3">
+         <!-- num-threads-per-node="${repeat.counter}" -->
          <basic-operations-test test-name="without-transactions" amend-test="true" use-transactions="NEVER"
-                                duration="10s" num-threads-per-node="${repeat.counter}">
+                                duration="10s" num-threads-per-node="40">
+            <cache-selector>all:default</cache-selector>
             <key-selector>
                <concurrent-keys total-entries="10000"/>
             </key-selector>
          </basic-operations-test>
          <basic-operations-test test-name="with-transactions" amend-test="true" use-transactions="IF_TRANSACTIONAL"
-                                duration="10s" num-threads-per-node="${repeat.counter}">
+                                duration="10s" num-threads-per-node="40">
+            <cache-selector>all:transactional</cache-selector>
             <key-selector>
                <concurrent-keys total-entries="10000"/>
             </key-selector>
