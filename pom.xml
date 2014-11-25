@@ -562,6 +562,7 @@
                                              prefix="${distribution.name}/bin"/>
                                  <zipfileset dir="${distribution.artifact}/plugins/process/bin" filemode="755"
                                              prefix="${distribution.name}/plugins/process/bin"/>
+                                 <zipfileset dir="${distribution.artifact}/plugins/process/bin" filemode="755" prefix="${distribution.name}/plugins/process/bin"/>
                               </zip>
                            </ac:else>
                         </ac:if>
