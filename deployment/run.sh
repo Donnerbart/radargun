@@ -2,8 +2,6 @@
 
 cd "$(dirname "$0")"
 
-START_TIME=$(date +%s)
-
 RADARGUN_VERSION=2.0.0-SNAPSHOT
 TARGET_DIR=/tmp
 REPORTS_DIR=/tmp/reports
@@ -12,19 +10,11 @@ ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
 ARTIFACT_DIR=../target/distribution/
 RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
 
-USER=$(whoami)
-BENCHMARK_OPTS=""
-
-# the machines that make up the test cluster, this should include the master
-MACHINE1='192.168.2.101'
-MACHINE2='192.168.2.102'
-MACHINE3='192.168.2.103'
-MACHINE4='192.168.2.104'
-MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
-
 # only one can be enabled
 YOURKIT_ENABLED=false
 JACOCO_ENABLED=false
+
+USER=$(whoami)
 
 # kill java switch
 KILL_JAVA=all
@@ -32,12 +22,49 @@ KILL_JAVA_SUDO=false
 
 SKIP_UNZIP_IF_UPLOAD_SKIPPED=false
 
+# the machines that make up the test cluster, this should include the master
+MACHINES=('192.168.2.101' '192.168.2.102' '192.168.2.103' '192.168.2.104')
+
+# benchmark configuration
+CONFIGURATION=latest
+SCENARIO=atomic
+DURATION=1m
+NUMBER_OF_THREADS=40
+
 # override settings with local-settings file
-if [ -f conf-local/local-settings ]; then
-    source conf-local/local-settings
+if [ -f local-settings ]; then
+    source local-settings
 fi
 
-MASTER=${MACHINE1}
+### read in any command-line params
+while ! [ -z $1 ]
+do
+  case "$1" in
+     "--configuration")
+      CONFIGURATION="$2"
+      shift
+      ;;
+     "--scenario")
+      SCENARIO="$2"
+      shift
+      ;;
+     "--duration")
+      DURATION="$2"
+      shift
+      ;;
+     "--threads")
+      NUMBER_OF_THREADS="$2"
+      shift
+      ;;
+    *)
+      echo "Warning: unknown argument ${1}"
+      ;;
+  esac
+  shift
+done
+
+MASTER=${MACHINES[0]}
+NUMBER_OF_SLAVES=${#MACHINES[@]}
 
 function address {
 	MACHINE=$1
@@ -222,9 +249,9 @@ function download_logs {
 }
 
 function benchmark {
-	BENCHMARK_NAME=$1
-	BENCHMARK_FILE=$2
-	SLAVES=$3
+	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
+	BENCHMARK_CONF_NAME=$1
+	BENCHMARK_SCENARIO_NAME=$2
 	TIMESTAMP=$(date +%s)
 	DESTINATION_DIR=${REPORTS_DIR}/${BENCHMARK_NAME}/${TIMESTAMP}
 	ADDRESS=$(address ${MASTER})
@@ -233,15 +260,25 @@ function benchmark {
 	echo ===============================================================
 	echo Starting Benchmark: ${BENCHMARK_NAME}
 	echo Master: ${MASTER}
-	echo Slaves: ${SLAVES}
-	echo Benchmark file: ${BENCHMARK_FILE}
+	echo Slaves: "${MACHINES[@]}"
+	echo Benchmark configuration file: ${BENCHMARK_CONF_NAME}
 	echo Output dir: ${DESTINATION_DIR}
 	echo ===============================================================
 
+    # create latest symlink
 	LATEST="${REPORTS_DIR}/latest"
 	mkdir -p ${DESTINATION_DIR}
 	rm -rf ${LATEST}
 	ln -s $(readlink -mv ${DESTINATION_DIR}) ${LATEST}
+
+	# create dynamic benchmark file
+	BENCHMARK_FILE=tmp_benchmark.xml
+	rm -rf ${BENCHMARK_FILE}
+	touch ${BENCHMARK_FILE}
+	cat benchmark-xml/benchmark-header.xml | sed -e "s/{MASTER}/${MASTER}/g" | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" >> ${BENCHMARK_FILE}
+	cat benchmark-configurations/${BENCHMARK_CONF_NAME}.xml >> ${BENCHMARK_FILE}
+	cat benchmark-scenarios/${BENCHMARK_SCENARIO_NAME}.xml | sed -e "s/{DURATION}/${DURATION}/g" | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" >> ${BENCHMARK_FILE}
+	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
 
 	echo scp ${BENCHMARK_FILE} -P ${PORT} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
 	scp -C -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
@@ -250,7 +287,7 @@ function benchmark {
 
 	start_master ${MASTER}
 
-	for SLAVE in ${SLAVES}
+	for SLAVE in "${MACHINES[@]}"
 	do
 		start_slave ${SLAVE}
 	done
@@ -260,7 +297,7 @@ function benchmark {
 	
 	echo Downloading results and logs
 	download_results ${MASTER} ${DESTINATION_DIR}
-	for SLAVE in ${SLAVES}
+	for SLAVE in "${MACHINES[@]}"
 	do
 		download_logs ${SLAVE} ${DESTINATION_DIR}
 	done
@@ -275,23 +312,17 @@ function benchmark {
 	echo ===============================================================
 }
 
-for MACHINE in ${MACHINES}
+# ================================================================
+
+START_TIME=$(date +%s)
+
+for MACHINE in "${MACHINES[@]}"
 do
 	install ${MACHINE}
 done
 
-# ================================================================
-
-if [ -n "${BENCHMARK_OPTS}" ]; then
-    echo Executing benchmark ${BENCHMARK_OPTS}
-    benchmark ${BENCHMARK_OPTS} "${MACHINES}"
-else
-    echo Executing default benchmark
-    #benchmark 1-nodes benchmark-1nodes.xml "${MACHINE1}"
-    #benchmark 2-nodes benchmark-2nodes.xml "${MACHINE1} ${MACHINE2}"
-    #benchmark 3-nodes benchmark-3nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE4}"
-    #benchmark 4-nodes benchmark-4nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
-fi
+echo Executing benchmark ${CONFIGURATION} ${SCENARIO} on ${NUMBER_OF_SLAVES} slaves
+benchmark ${CONFIGURATION} ${SCENARIO}
 
 END_TIME=$(date +%s)
 

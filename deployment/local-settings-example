@@ -1,0 +1,55 @@
+#!/bin/bash
+
+###########################
+##### global settings #####
+###########################
+
+#SKIP_UNZIP_IF_UPLOAD_SKIPPED=true
+
+##################################
+##### remote download_latest #####
+##################################
+
+#DOWNLOAD_USER=hazelcast
+#DOWNLOAD_HOST='212.175.226.222:1111'
+
+##########################
+##### remote cluster #####
+##########################
+
+#USER=hazelcast
+#KILL_JAVA_SUDO=false
+#MACHINES=('212.175.226.222:1111' '212.175.226.222:2222' '212.175.226.222:3333' '212.175.226.222:4444')
+
+##########################
+##### local settings #####
+##########################
+
+#REPORTS_DIR=reports
+#KILL_JAVA=no_idea
+#MACHINES=('127.0.0.1')
+
+#########################
+##### local cluster #####
+#########################
+
+#REPORTS_DIR=./reports
+#KILL_JAVA=no_idea
+#KILL_JAVA_SUDO=false
+#MACHINES=('172.16.16.206' '172.16.16.203')
+
+###################################
+##### benchmark configuration #####
+###################################
+
+#CONFIGURATION=all-hz
+#CONFIGURATION=all-gridgain
+#CONFIGURATION=all-infinispan
+#CONFIGURATION=latest
+
+#SCENARIO=all
+#SCENARIO=atomic
+#SCENARIO=transaction
+
+#DURATION=10s
+#NUMBER_OF_THREADS=40

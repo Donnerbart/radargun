@@ -1,0 +1,15 @@
+<!-- RadarGun 2.0 benchmark -->
+<benchmark xmlns="urn:radargun:benchmark:2.0">
+
+   <!-- Specifies where should the master open socket  -->
+   <master bindAddress="${master.address:{MASTER}}" port="${master.port:2103}"/>
+
+   <!-- List of cluster configurations where the benchmark should run-->
+   <clusters>
+      <!-- Equivalent to <cluster size="2" /><cluster size="3" /><cluster size="4" /> -->
+      <scale from="{SLAVE_NUMBER}" to="${slaves:{SLAVE_NUMBER}}" inc="1">
+         <!-- No groups defined within the cluster -->
+         <cluster/>
+      </scale>
+   </clusters>
+

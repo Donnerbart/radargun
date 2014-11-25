@@ -1,0 +1,7 @@
+   <!-- List of configurations of the services -->
+   <configurations>
+      <config name="Hazelcast 3.4.x">
+         <setup plugin="hazelcast34" file="hazelcast.xml"/>
+      </config>
+   </configurations>
+

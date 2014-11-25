@@ -1,0 +1,11 @@
+   <!-- How the statistics are reported -->
+   <reports>
+      <!-- Produce CSV statistics report -->
+      <reporter type="csv"/>
+      <!-- Produce HTML statistics report -->
+      <reporter type="html"/>
+      <!-- Store Java-serialized version of the results that can be used to re-run the report -->
+      <reporter type="serialized"/>
+   </reports>
+
+</benchmark>

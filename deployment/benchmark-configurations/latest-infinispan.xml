@@ -1,0 +1,7 @@
+   <!-- List of configurations of the services -->
+   <configurations>
+      <config name="Infinispan 7.0.x">
+         <setup plugin="infinispan70" file="hazelcast.xml"/>
+      </config>
+   </configurations>
+
