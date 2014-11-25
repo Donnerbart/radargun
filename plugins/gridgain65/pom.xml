@@ -21,14 +21,9 @@
       </dependency>
 
       <dependency>
-         <groupId>org.radargun</groupId>
-         <artifactId>plugin-hazelcast2</artifactId>
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
          <groupId>org.gridgain</groupId>
          <artifactId>gridgain-datagrid</artifactId>
-         <version>6.0.2</version>
+         <version>6.5.1</version>
       </dependency>
    </dependencies>
 
