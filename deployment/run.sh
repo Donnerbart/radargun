@@ -2,6 +2,8 @@
 
 cd "$(dirname "$0")"
 
+START_TIME=$(date +%s)
+
 RADARGUN_VERSION=2.0.0-SNAPSHOT
 TARGET_DIR=/tmp
 REPORTS_DIR=/tmp/reports
@@ -144,7 +146,7 @@ function start_master {
 	echo Starting Radargun Master on ${MACHINE}
 	echo ===============================================================
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/master.sh -c benchmark.xml"
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/master.sh -c benchmark.xml -d 5005"
 	
 	# nasty hack to give server time to startup
 	echo "Waiting for master to be started"
@@ -280,10 +282,16 @@ done
 if [ -n "${BENCHMARK_OPTS}" ]; then
     echo Executing benchmark ${BENCHMARK_OPTS}
     benchmark ${BENCHMARK_OPTS} "${MACHINES}"
-    exit 0
+else
+    echo Executing default benchmark
+    #benchmark 1-nodes benchmark-1nodes.xml "${MACHINE1}"
+    #benchmark 2-nodes benchmark-2nodes.xml "${MACHINE1} ${MACHINE2}"
+    #benchmark 3-nodes benchmark-3nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE4}"
+    #benchmark 4-nodes benchmark-4nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
 fi
 
-#benchmark 1-nodes benchmark-1nodes.xml "${MACHINE1}"
-#benchmark 2-nodes benchmark-2nodes.xml "${MACHINE1} ${MACHINE2}"
-#benchmark 3-nodes benchmark-3nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE4}"
-#benchmark 4-nodes benchmark-4nodes.xml "${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
+END_TIME=$(date +%s)
+
+echo ===============================================================
+echo Total runtime: $(echo "${END_TIME} - ${START_TIME}" | bc) seconds
+echo ===============================================================
