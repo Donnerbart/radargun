@@ -2,7 +2,5 @@
 
 cd "$(dirname "$0")"
 
-TARGET_DIR=./reports
-
-cd ${TARGET_DIR}
+cd reports
 (firefox latest/results/html/index.html &> /dev/null) &

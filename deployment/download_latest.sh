@@ -38,21 +38,25 @@ function port {
 ADDRESS=$(address ${DOWNLOAD_HOST})
 PORT=$(port ${DOWNLOAD_HOST})
 
+mkdir -p ${DOWNLOAD_TARGET}
 cd ${DOWNLOAD_TARGET}
+
 if [ -d "latest" ]; then
     rm -rf latest
 fi
-if [ -f "latest.zip" ]; then
-    rm latest.zip
+if [ -f "latest-remote.zip" ]; then
+    rm latest-remote.zip
 fi
 
 echo Downloading latest reports...
-scp -C -P ${PORT} -q -r ${DOWNLOAD_USER}@${ADDRESS}:${DOWNLOAD_REMOTE_REPORTS_DIR}/latest.zip .
+scp -C -P ${PORT} -q -r ${DOWNLOAD_USER}@${ADDRESS}:${DOWNLOAD_REMOTE_REPORTS_DIR}/latest.zip ./latest-remote.zip
 echo Done!
 
-if [ -f "latest.zip" ]; then
+if [ -f "latest-remote.zip" ]; then
     echo Unpacking latest reports...
-    unzip latest.zip
+    mkdir -p latest-remote
+    cd latest-remote
+    unzip ../latest-remote.zip
     echo Done!
 
     exit 0

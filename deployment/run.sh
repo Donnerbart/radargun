@@ -31,7 +31,7 @@ CONFIGURATION=latest
 SCENARIO=atomic
 DURATION=1m
 NUMBER_OF_THREADS=40
-NUMBER_OF_ITERATIONS=3
+NUMBER_OF_ITERATIONS=1
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
@@ -350,7 +350,8 @@ function benchmark {
 	# zip latest.zip
 	cd ${REPORTS_DIR}
 	rm -rf latest.zip
-	zip -r latest.zip ./latest/
+	cd ./latest/
+	zip -r ${REPORTS_DIR}/latest.zip .
 
 	echo ===============================================================
 	echo Benchmark Completed
