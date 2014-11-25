@@ -22,7 +22,13 @@
 
       <dependency>
          <groupId>org.gridgain</groupId>
-         <artifactId>gridgain-platform</artifactId>
+         <artifactId>gridgain-datagrid</artifactId>
+         <version>6.2.1</version>
+         <type>pom</type>
+      </dependency>
+      <dependency>
+         <groupId>org.gridgain</groupId>
+         <artifactId>gridgain-indexing</artifactId>
          <version>6.2.1</version>
          <type>pom</type>
       </dependency>
