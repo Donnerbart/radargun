@@ -301,7 +301,7 @@ function benchmark {
 	ln -s $(readlink -mv ${DESTINATION_DIR}) ${LATEST}
 
 	# create dynamic benchmark file
-	BENCHMARK_FILE=tmp_benchmark.xml
+	BENCHMARK_FILE=benchmark-xml/benchmark-tmp.xml
 	rm -rf ${BENCHMARK_FILE}
 	touch ${BENCHMARK_FILE}
 	cat benchmark-xml/benchmark-header.xml \

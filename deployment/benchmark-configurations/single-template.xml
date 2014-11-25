@@ -1,0 +1,7 @@
+   <!-- List of configurations of the services -->
+   <configurations>
+      <config name="{NAME}">
+         <setup plugin="{PLUGIN}" file="hazelcast.xml"/>
+      </config>
+   </configurations>
+

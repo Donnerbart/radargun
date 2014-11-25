@@ -29,6 +29,7 @@ core/src/main/resources/schema
 *.*~
 deploy
 install
+deployment/benchmark-configurations/configuration-tmp.xml
+deployment/benchmark-xml/benchmark-tmp.xml
 deployment/reports
 deployment/local-settings
-deployment/tmp_benchmark.xml
