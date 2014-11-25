@@ -31,4 +31,3 @@ deploy
 install
 deployment/conf-local
 deployment/reports
-deployment/local-settings
