@@ -15,8 +15,8 @@
 
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="Infinispan 7.0.x - distributed">
-         <setup plugin="infinispan70" file="dist-sync.xml"/>
+      <config name="Infinispan 7.0.x">
+         <setup plugin="infinispan70" file="hazelcast.xml"/>
       </config>
    </configurations>
 

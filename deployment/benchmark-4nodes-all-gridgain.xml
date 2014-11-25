@@ -15,14 +15,14 @@
 
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="Gridgain 6.0.x - distributed">
-         <setup plugin="gridgain60" file="dist-sync.xml"/>
+      <config name="Gridgain 6.0.x">
+         <setup plugin="gridgain60" file="hazelcast.xml"/>
       </config>
-      <config name="Gridgain 6.2.x - distributed">
-         <setup plugin="gridgain62" file="dist-sync.xml"/>
+      <config name="Gridgain 6.2.x">
+         <setup plugin="gridgain62" file="hazelcast.xml"/>
       </config>
-      <config name="Gridgain 6.5.x - distributed">
-         <setup plugin="gridgain65" file="dist-sync.xml"/>
+      <config name="Gridgain 6.5.x">
+         <setup plugin="gridgain65" file="hazelcast.xml"/>
       </config>
    </configurations>
 

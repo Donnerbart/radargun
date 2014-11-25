@@ -6,7 +6,7 @@
 
     <!-- List of configurations of the services -->
     <configurations>
-        <config name="Infinispan 6.0 - local">
+        <config name="Infinispan 6.0">
             <setup plugin="infinispan60" file="local.xml" />
         </config>
     </configurations>

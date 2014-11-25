@@ -15,20 +15,20 @@
 
    <!-- List of configurations of the services -->
    <configurations>
-      <config name="GridGain 6.5.x - distributed">
-         <setup plugin="gridgain65" file="dist-sync.xml"/>
+      <config name="GridGain 6.5.x">
+         <setup plugin="gridgain65" file="hazelcast.xml"/>
       </config>
-      <config name="Hazelcast 3.3.x - distributed">
-         <setup plugin="hazelcast33" file="dist-sync.xml"/>
+      <config name="Hazelcast 3.3.x">
+         <setup plugin="hazelcast33" file="hazelcast.xml"/>
       </config>
-      <config name="Hazelcast 3.4.x - distributed">
-         <setup plugin="hazelcast34" file="dist-sync.xml"/>
+      <config name="Hazelcast 3.4.x">
+         <setup plugin="hazelcast34" file="hazelcast.xml"/>
       </config>
-      <config name="Infinispan 6.0.x - distributed">
-         <setup plugin="infinispan60" file="dist-sync.xml"/>
+      <config name="Infinispan 6.0.x">
+         <setup plugin="infinispan60" file="hazelcast.xml"/>
       </config>
-      <config name="Infinispan 7.0.x - distributed">
-         <setup plugin="infinispan70" file="dist-sync.xml"/>
+      <config name="Infinispan 7.0.x">
+         <setup plugin="infinispan70" file="hazelcast.xml"/>
       </config>
    </configurations>
 
