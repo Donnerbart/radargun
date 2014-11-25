@@ -42,6 +42,9 @@ fi
 while ! [ -z $1 ]
 do
     case "$1" in
+        "--single-plugin")
+            CONFIGURATION="single-template"
+            ;;
         "--configuration")
             CONFIGURATION="$2"
             shift
