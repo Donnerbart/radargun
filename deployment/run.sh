@@ -43,7 +43,7 @@ while ! [ -z $1 ]
 do
     case "$1" in
         "--single-plugin")
-            CONFIGURATION="single-template"
+            CONFIGURATION="configuration-tmp"
             ;;
         "--configuration")
             CONFIGURATION="$2"
