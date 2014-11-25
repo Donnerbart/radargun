@@ -271,8 +271,6 @@ function benchmark {
 	BENCHMARK_SCENARIO_NAME=$2
 	TIMESTAMP=$(date +%s)
 	DESTINATION_DIR=${REPORTS_DIR}/${BENCHMARK_NAME}/${TIMESTAMP}
-	ADDRESS=$(address ${MASTER})
-	PORT=$(port ${MASTER})
 
 	echo ===============================================================
 	echo Starting Benchmark: ${BENCHMARK_NAME}
@@ -291,6 +289,10 @@ function benchmark {
     do
         install ${MACHINE}
     done
+
+    # parse master network configuration
+  	ADDRESS=$(address ${MASTER})
+    PORT=$(port ${MASTER})
 
     # create latest symlink
 	LATEST="${REPORTS_DIR}/latest"
@@ -314,21 +316,22 @@ function benchmark {
 	    >> ${BENCHMARK_FILE}
 	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
 
-	echo scp ${BENCHMARK_FILE} -P ${PORT} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
+	# start master
 	scp -C -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
-	
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${RADARGUN_DIR}/reports"
-
 	start_master ${MASTER}
 
+	# start slaves
 	for SLAVE in "${MACHINES[@]}"
 	do
 		start_slave ${SLAVE} ${MASTER}
 	done
 
+	# wait for benchmark completion
 	tail_log ${MASTER}
 	wait_completion ${MASTER}
 	
+	# download results
 	echo Downloading results and logs
 	download_results ${MASTER} ${DESTINATION_DIR}
 	for SLAVE in "${MACHINES[@]}"
@@ -336,6 +339,7 @@ function benchmark {
 		download_logs ${SLAVE} ${DESTINATION_DIR}
 	done
 
+	# zip latest.zip
 	cd ${REPORTS_DIR}
 	rm -rf latest.zip
 	zip -r latest.zip ./latest/
