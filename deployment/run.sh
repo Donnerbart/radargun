@@ -190,7 +190,7 @@ function start_master {
 	echo Starting Radargun Master on ${MACHINE}
 	echo ===============================================================
 
-	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/master.sh -c benchmark.xml -d 5005"
+	ssh ${USER}@${ADDRESS} -p ${PORT} "cd ${RADARGUN_DIR}; bin/master.sh -c benchmark.xml"
 	
 	# nasty hack to give server time to startup
 	echo "Waiting for master to be started"
