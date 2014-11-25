@@ -183,13 +183,13 @@ public abstract class ReportDocument extends HtmlDocument {
       for (Map.Entry<Report, List<Aggregation>> entry : reportAggregationMap.entrySet()) {
          for (Aggregation aggregation : entry.getValue()) {
             OperationStats operationStats = aggregation.totalStats.getOperationsStats().get(operation);
-            if (operationStats == null)
+            if (operationStats == null) {
                return false;
-
+            }
             String categoryName = entry.getKey().getConfiguration().name;
-            if (subCategory != null)
+            if (subCategory != null) {
                categoryName = String.format("%s, %s", categoryName, subCategory);
-
+            }
             double subCategoryNumeric;
             String subCategoryValue;
             if (maxIterations > 1) {
@@ -200,26 +200,34 @@ public abstract class ReportDocument extends HtmlDocument {
                subCategoryValue = String.format("Size %.0f", subCategoryNumeric);
             }
             switch (statisticType) {
-            case MEAN_AND_DEV: {
-               MeanAndDev meanAndDev = operationStats.getRepresentation(MeanAndDev.class);
-               if (meanAndDev == null) return false;
-               chart.addValue(toMillis(meanAndDev.mean), toMillis(meanAndDev.dev), categoryName, subCategoryNumeric,
-                     subCategoryValue);
-               break;
-            }
-            case OPERATION_THROUGHPUT: {
-               OperationThroughput throughput = operationStats.getRepresentation(OperationThroughput.class,
-                     aggregation.totalThreads, aggregation.totalStats.getEnd() - aggregation.totalStats.getBegin());
-               if (throughput == null) return false;
-               chart.addValue(toMillis(throughput.actual), 0, categoryName, subCategoryNumeric, subCategoryValue);
-            }
-            case DATA_THROUGHPUT: {
-               DataThroughput dataThroughput = operationStats.getRepresentation(DataThroughput.class,
-                     aggregation.totalThreads, aggregation.totalStats.getEnd() - aggregation.totalStats.getBegin());
-               if (dataThroughput == null) return false;
-               chart.addValue(dataThroughput.meanThroughput / (1024.0 * 1024.0), dataThroughput.deviation
-                     / (1024.0 * 1024.0), categoryName, subCategoryNumeric, subCategoryValue);
-            }
+               case MEAN_AND_DEV: {
+                  MeanAndDev meanAndDev = operationStats.getRepresentation(MeanAndDev.class);
+                  if (meanAndDev == null) {
+                     return false;
+                  }
+                  chart.addValue(toMillis(meanAndDev.mean), toMillis(meanAndDev.dev), categoryName, subCategoryNumeric,
+                        subCategoryValue);
+                  break;
+               }
+               case OPERATION_THROUGHPUT: {
+                  OperationThroughput throughput = operationStats.getRepresentation(OperationThroughput.class,
+                        aggregation.totalThreads, aggregation.totalStats.getEnd() - aggregation.totalStats.getBegin());
+                  if (throughput == null) {
+                     return false;
+                  }
+                  chart.addValue(toMillis(throughput.actual), 0, categoryName, subCategoryNumeric, subCategoryValue);
+                  break;
+               }
+               case DATA_THROUGHPUT: {
+                  DataThroughput dataThroughput = operationStats.getRepresentation(DataThroughput.class,
+                        aggregation.totalThreads, aggregation.totalStats.getEnd() - aggregation.totalStats.getBegin());
+                  if (dataThroughput == null) {
+                     return false;
+                  }
+                  chart.addValue(dataThroughput.meanThroughput / (1024.0 * 1024.0), dataThroughput.deviation
+                        / (1024.0 * 1024.0), categoryName, subCategoryNumeric, subCategoryValue);
+                  break;
+               }
             }
          }
       }
