@@ -1,0 +1,55 @@
+#!/bin/bash
+
+##################################
+##### remote download_latest #####
+##################################
+
+DOWNLOAD_USER=hazelcast
+DOWNLOAD_HOST='212.175.226.222:1111'
+
+##########################
+##### remote cluster #####
+##########################
+
+#USER=hazelcast
+#KILL_JAVA_SUDO=false
+
+#MACHINE1='212.175.226.222:1111'
+#MACHINE2='212.175.226.222:2222'
+#MACHINE3='212.175.226.222:3333'
+#MACHINE4='212.175.226.222:4444'
+
+#MACHINES="${MACHINE1} ${MACHINE2}"
+#BENCHMARK_OPTS='2-nodes benchmark-2nodes.xml'
+
+#MACHINES="${MACHINE1} ${MACHINE2} ${MACHINE3} ${MACHINE4}"
+#BENCHMARK_OPTS='4-nodes benchmark-4nodes.xml'
+
+##########################
+##### local settings #####
+##########################
+
+#REPORTS_DIR=reports
+#KILL_JAVA=no_idea
+
+#MACHINE1='127.0.0.1'
+
+#MACHINES="${MACHINE1}"
+#BENCHMARK_OPTS='local local-benchmark.xml'
+
+#########################
+##### local cluster #####
+#########################
+
+#REPORTS_DIR=./reports
+#KILL_JAVA=no_idea
+#KILL_JAVA_SUDO=false
+
+#MACHINE1='172.16.16.206'
+#MACHINE2='172.16.16.203'
+
+#MACHINES="${MACHINE1} ${MACHINE2}"
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-gridgain.xml'
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-hz.xml'
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-all-infinispan.xml'
+#BENCHMARK_OPTS='2-nodes conf-local/benchmark-2nodes-latest.xml'

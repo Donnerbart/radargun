@@ -11,9 +11,14 @@
     </parent>
 
     <artifactId>plugin-gridgain60</artifactId>
-    <name>Gridgain 6.0 for RadarGun</name>
+    <name>Gridgain 6.0.x for RadarGun</name>
 
     <dependencies>
+       <dependency>
+          <groupId>org.radargun</groupId>
+          <artifactId>plugin-hazelcast2</artifactId>
+          <version>${project.version}</version>
+       </dependency>
         <dependency>
             <groupId>org.gridgain</groupId>
             <artifactId>gridgain-datagrid</artifactId>

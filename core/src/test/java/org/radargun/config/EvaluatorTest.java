@@ -1,0 +1,92 @@
+package org.radargun.config;
+
+import static org.testng.Assert.assertEquals;
+
+import org.testng.annotations.Test;
+
+/**
+ * @author Mircea Markus &lt;Mircea.Markus@jboss.com&gt;
+ * @author Radim Vansa &lt;rvansa@redhat.com&gt;
+ */
+@Test
+public class EvaluatorTest {
+   public void testWithDefaultNoReplacement() {
+      assertEvals("${custom.property:aDefaultVal}", "aDefaultVal");
+   }
+
+   public void testWithDefaultAndReplacement(){
+      System.setProperty("org.radargun.testWithDefaultAndReplacement", "nonDefaultValue");
+      assertEvals("${org.radargun.testWithDefaultAndReplacement:aDefaultVal}", "nonDefaultValue");
+   }
+
+   @Test(expectedExceptions = IllegalArgumentException.class)
+   public void testFailureOnNonDefault() {
+      Evaluator.parseString("${org.radargun.testFailureOnNonDefault}");
+   }
+
+   public void testNoDefaultAndExisting() {
+      System.setProperty("org.radargun.testNoDefaultAndExisting", "nonDefaultValue");
+      assertEvals("${org.radargun.testNoDefaultAndExisting}", "nonDefaultValue");
+   }
+
+   public void testConcatWithVar() {
+      System.setProperty("org.radargun.testConcatWithVar", "foo");
+      assertEvals("${org.radargun.testConcatWithVar}yyy", "fooyyy");
+      assertEvals("xxx${org.radargun.testConcatWithVar}", "xxxfoo");
+      assertEvals("xxx${org.radargun.testConcatWithVar}yyy", "xxxfooyyy");
+   }
+
+   public void testSimpleExpression() {
+      assertEvals("#{1 + 2 * 3 - 1}", "6");
+      assertEvals("#{ (1+2 )*3}", "9");
+      assertEvals("#{ 9 / 3 + 1}", "4");
+      assertEvals("#{7 % 2 + 1}", "2");
+      assertEvals("#{2,5..8,10}", "2, 5, 6, 7, 8, 10");
+   }
+
+   public void testConcatWithExpression() {
+      assertEvals("xxx#{1 + 2}yyy", "xxx3yyy");
+      assertEvals("#{1 + 2}yyy", "3yyy");
+      assertEvals("xxx#{1 + 2}", "xxx3");
+   }
+
+   public void testExpressionWithVar() {
+      System.setProperty("org.radargun.testExpressionWithVar", "2");
+      assertEvals("#{ 1 + ${ org.radargun.testExpressionWithVar } * ${org.radargun.noProperty: 3}}", "7");
+   }
+
+   public void testColons() {
+      System.setProperty("org.radargun.testColons", "xxx");
+      assertEvals("fo:o${org.radargun.testColons}bar:${org.radargun.testColons:yyy}bar:${org.radargun.noProperty:zzz}bar:foo",
+            "fo:oxxxbar:xxxbar:zzzbar:foo");
+   }
+
+   public void testNegative() {
+      System.setProperty("org.radargun.testNegative", "2");
+      assertEvals("#{ -1 }", "-1");
+      assertEvals("#{ - 2 }", "-2");
+      assertEvals("#{ 0 - 3 }", "-3");
+      assertEvals("#{ 5+ -4 }", "1");
+      assertEvals("#{ 6 + (-5) }", "1");
+      assertEvals("#{${org.radargun.testNegative} - 1}", "1");
+   }
+
+   public void testMinMax() {
+      assertEvals("#{ max(1, 2, 3) }", "3");
+      assertEvals("#{ min 2, 1, 3 }", "1");
+      // warning should be emitted
+      assertEvals("#{ max 2 }", "2");
+   }
+
+   public void testCeilFloorAbs() {
+      assertEvals("#{ ceil(0.6) }", "1");
+      assertEvals("#{ floor 42.1 }", "42");
+      assertEvals("#{ abs(-123) }", "123");
+      assertEvals("#{ 5 * abs(5) }", "25");
+      assertEvals("#{ 6 * abs(-6.5) }", "39.0");
+   }
+
+   private static void assertEvals(String expression, String expected) {
+      assertEquals(Evaluator.parseString(expression), expected);
+   }
+}

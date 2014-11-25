@@ -28,7 +28,6 @@
    </executor-service>
 
    <map name="default">
-      <statistics-enabled>false</statistics-enabled>
       <backup-count>1</backup-count>
       <async-backup-count>0</async-backup-count>
       <time-to-live-seconds>0</time-to-live-seconds>
