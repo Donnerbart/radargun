@@ -75,8 +75,11 @@ done
 
 cd "$(dirname "$0")"
 
+TARGET_DIR=$(readlink -mv ${TARGET_DIR})
+REPORTS_DIR=$(readlink -mv ${REPORTS_DIR})
+ARTIFACT_DIR=$(readlink -mv ../target/distribution/)
+
 ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
-ARTIFACT_DIR=../target/distribution/
 RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
 
 #####################
