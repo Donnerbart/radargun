@@ -9,8 +9,8 @@ DOWNLOAD_USER=$(whoami)
 DOWNLOAD_HOST='192.168.2.101'
 
 # override settings with local-settings file
-if [ -f conf-local/local-settings ]; then
-    source conf-local/local-settings
+if [ -f local-settings ]; then
+    source local-settings
 fi
 
 function address {
