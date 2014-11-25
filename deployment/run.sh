@@ -162,7 +162,6 @@ function install {
     fi
 
     # upload debugger
-
     if [ "${YOURKIT_ENABLED}" = "true" ]; then
 	    echo YourKit is enabled
 	    scp -C -P ${PORT} libyjpagent.so ${USER}@${ADDRESS}:/tmp/
