@@ -1,28 +1,29 @@
 #!/bin/bash
 
-cd "$(dirname "$0")"
+#########################
+##### configuration #####
+#########################
 
 RADARGUN_VERSION=2.0.0-SNAPSHOT
+
 TARGET_DIR=/tmp
 REPORTS_DIR=/tmp/reports
-
-ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
-ARTIFACT_DIR=../target/distribution/
-RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
 
 # only one can be enabled
 YOURKIT_ENABLED=false
 JACOCO_ENABLED=false
 
+# ssh username
 USER=$(whoami)
 
 # kill java switch
 KILL_JAVA=all
 KILL_JAVA_SUDO=false
 
+# skip unzip if file will not be uploaded
 SKIP_UNZIP_IF_UPLOAD_SKIPPED=false
 
-# the machines that make up the test cluster, this should include the master
+# the machines that make up the test cluster, the first one is used as master
 MACHINES=('192.168.2.101' '192.168.2.102' '192.168.2.103' '192.168.2.104')
 
 # benchmark configuration
@@ -30,41 +31,54 @@ CONFIGURATION=latest
 SCENARIO=atomic
 DURATION=1m
 NUMBER_OF_THREADS=40
+NUMBER_OF_ITERATIONS=3
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
     source local-settings
 fi
 
-### read in any command-line params
+# read in any command-line params
 while ! [ -z $1 ]
 do
-  case "$1" in
-     "--configuration")
-      CONFIGURATION="$2"
-      shift
-      ;;
-     "--scenario")
-      SCENARIO="$2"
-      shift
-      ;;
-     "--duration")
-      DURATION="$2"
-      shift
-      ;;
-     "--threads")
-      NUMBER_OF_THREADS="$2"
-      shift
-      ;;
-    *)
-      echo "Warning: unknown argument ${1}"
-      ;;
-  esac
-  shift
+    case "$1" in
+        "--configuration")
+            CONFIGURATION="$2"
+            shift
+            ;;
+        "--scenario")
+            SCENARIO="$2"
+            shift
+            ;;
+        "--duration")
+            DURATION="$2"
+            shift
+            ;;
+        "--threads")
+            NUMBER_OF_THREADS="$2"
+            shift
+            ;;
+        "--iterations")
+            NUMBER_OF_ITERATIONS="$2"
+            shift
+            ;;
+        *)
+            echo "Warning: unknown argument ${1}"
+            exit 1
+            ;;
+    esac
+    shift
 done
 
-MASTER=${MACHINES[0]}
-NUMBER_OF_SLAVES=${#MACHINES[@]}
+cd "$(dirname "$0")"
+
+ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
+ARTIFACT_DIR=../target/distribution/
+RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
+
+#####################
+##### functions #####
+#####################
 
 function address {
 	MACHINE=$1
@@ -190,6 +204,7 @@ function start_master {
 
 function start_slave {
 	MACHINE=$1
+	MASTER=$2
 	ADDRESS=$(address ${MACHINE})
 	PORT=$(port ${MACHINE})
 	
@@ -249,6 +264,8 @@ function download_logs {
 }
 
 function benchmark {
+    MASTER=${MACHINES[0]}
+    NUMBER_OF_SLAVES=${#MACHINES[@]}
 	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
 	BENCHMARK_CONF_NAME=$1
 	BENCHMARK_SCENARIO_NAME=$2
@@ -261,9 +278,19 @@ function benchmark {
 	echo Starting Benchmark: ${BENCHMARK_NAME}
 	echo Master: ${MASTER}
 	echo Slaves: "${MACHINES[@]}"
-	echo Benchmark configuration file: ${BENCHMARK_CONF_NAME}
+	echo Benchmark configuration: ${BENCHMARK_CONF_NAME}
+	echo Benchmark scenario: ${BENCHMARK_SCENARIO_NAME}
+	echo Duration: ${DURATION}
+	echo Number of threads: ${NUMBER_OF_THREADS}
+	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
 	echo Output dir: ${DESTINATION_DIR}
 	echo ===============================================================
+
+    # install on all slaves
+    for MACHINE in "${MACHINES[@]}"
+    do
+        install ${MACHINE}
+    done
 
     # create latest symlink
 	LATEST="${REPORTS_DIR}/latest"
@@ -275,9 +302,16 @@ function benchmark {
 	BENCHMARK_FILE=tmp_benchmark.xml
 	rm -rf ${BENCHMARK_FILE}
 	touch ${BENCHMARK_FILE}
-	cat benchmark-xml/benchmark-header.xml | sed -e "s/{MASTER}/${MASTER}/g" | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" >> ${BENCHMARK_FILE}
+	cat benchmark-xml/benchmark-header.xml \
+	    | sed -e "s/{MASTER}/${MASTER}/g" \
+	    | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" \
+	    >> ${BENCHMARK_FILE}
 	cat benchmark-configurations/${BENCHMARK_CONF_NAME}.xml >> ${BENCHMARK_FILE}
-	cat benchmark-scenarios/${BENCHMARK_SCENARIO_NAME}.xml | sed -e "s/{DURATION}/${DURATION}/g" | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" >> ${BENCHMARK_FILE}
+	cat benchmark-scenarios/${BENCHMARK_SCENARIO_NAME}.xml \
+	    | sed -e "s/{DURATION}/${DURATION}/g" \
+	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
+	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
+	    >> ${BENCHMARK_FILE}
 	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
 
 	echo scp ${BENCHMARK_FILE} -P ${PORT} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
@@ -289,7 +323,7 @@ function benchmark {
 
 	for SLAVE in "${MACHINES[@]}"
 	do
-		start_slave ${SLAVE}
+		start_slave ${SLAVE} ${MASTER}
 	done
 
 	tail_log ${MASTER}
@@ -312,16 +346,12 @@ function benchmark {
 	echo ===============================================================
 }
 
-# ================================================================
+#####################
+##### benchmark #####
+#####################
 
 START_TIME=$(date +%s)
 
-for MACHINE in "${MACHINES[@]}"
-do
-	install ${MACHINE}
-done
-
-echo Executing benchmark ${CONFIGURATION} ${SCENARIO} on ${NUMBER_OF_SLAVES} slaves
 benchmark ${CONFIGURATION} ${SCENARIO}
 
 END_TIME=$(date +%s)

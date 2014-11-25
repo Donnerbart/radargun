@@ -24,7 +24,7 @@
 
       <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache -->
       <!-- <repeat from="10" to="30" inc="10"> -->
-      <repeat times="3">
+      <repeat times="{NUMBER_OF_ITERATIONS}">
          <!-- num-threads-per-node="${repeat.counter}" -->
          <basic-operations-test test-name="atomic" amend-test="true" use-transactions="NEVER"
                                 duration="{DURATION}" num-threads-per-node="{NUMBER_OF_THREADS}">
