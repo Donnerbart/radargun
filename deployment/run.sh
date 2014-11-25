@@ -364,6 +364,8 @@ function benchmark {
 
 START_TIME=$(date +%s)
 
+benchmark_header
+
 # install on all slaves
 for MACHINE in "${MACHINES[@]}"
 do
