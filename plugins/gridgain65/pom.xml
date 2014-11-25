@@ -22,8 +22,8 @@
 
       <dependency>
          <groupId>org.gridgain</groupId>
-         <artifactId>gridgain-datagrid</artifactId>
-         <version>6.5.1</version>
+         <artifactId>gridgain-platform</artifactId>
+         <version>6.5.5</version>
          <type>pom</type>
       </dependency>
    </dependencies>
