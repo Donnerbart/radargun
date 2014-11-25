@@ -30,6 +30,8 @@ JACOCO_ENABLED=false
 KILL_JAVA=all
 KILL_JAVA_SUDO=false
 
+SKIP_UNZIP_IF_UPLOAD_SKIPPED=false
+
 # override settings with local-settings file
 if [ -f conf-local/local-settings ]; then
     source conf-local/local-settings
@@ -112,10 +114,11 @@ function install {
 	fi
 
 	# unzipping target file
-
-    echo Unzipping ${ARTIFACT_NAME}.zip
-    ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
-    ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -qo ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
+    if [ "${DO_UPLOAD}" = true ] || [ "${SKIP_UNZIP_IF_UPLOAD_SKIPPED}" = false ]; then
+        echo Unzipping ${ARTIFACT_NAME}.zip
+        ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
+        ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -qo ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
+    fi
 
     # upload debugger
 
