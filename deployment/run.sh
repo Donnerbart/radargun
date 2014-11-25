@@ -163,7 +163,7 @@ function install {
         ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}"
         ssh ${USER}@${ADDRESS} -p ${PORT}  "unzip -qo ${TARGET_DIR}/${ARTIFACT_NAME}.zip -d ${TARGET_DIR}"
     else
-        ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}/results"
+        ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}/results; rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}/*.log; rm -fr ${TARGET_DIR}/${ARTIFACT_NAME}/*.out"
     fi
 
     # upload debugger
