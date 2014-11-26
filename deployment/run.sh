@@ -398,8 +398,6 @@ function benchmark {
 ##### benchmark #####
 #####################
 
-START_TIME=$(date +%s)
-
 benchmark_header
 
 create_config
@@ -411,6 +409,8 @@ fi
 if [ "${DRY}" = true ]; then
     exit 0
 fi
+
+START_TIME=$(date +%s)
 
 # install on all slaves
 for MACHINE in "${MACHINES[@]}"
