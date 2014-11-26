@@ -30,7 +30,7 @@
                                 duration="{DURATION}" num-threads-per-node="{NUMBER_OF_THREADS}">
             <cache-selector>all:default</cache-selector>
             <key-selector>
-               <concurrent-keys total-entries="10000"/>
+               <concurrent-keys total-entries="{KEY_TOTAL_ENTRIES}" num-entries-per-thread="{KEY_NUM_ENTRIES_PER_THREAD}"/>
             </key-selector>
          </basic-operations-test>
       </repeat>

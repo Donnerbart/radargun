@@ -32,6 +32,8 @@ SCENARIO=atomic
 DURATION=1m
 NUMBER_OF_THREADS=40
 NUMBER_OF_ITERATIONS=1
+KEY_TOTAL_ENTRIES=10000
+KEY_NUM_ENTRIES_PER_THREAD=0
 
 SHOW_CONFIG=false
 DRY=false
@@ -88,6 +90,14 @@ do
             ;;
         "--iterations")
             NUMBER_OF_ITERATIONS="$2"
+            shift
+            ;;
+        "--key-total-entries")
+            KEY_TOTAL_ENTRIES="$2"
+            shift
+            ;;
+        "--key-num-entries-per-thread")
+            KEY_NUM_ENTRIES_PER_THREAD="$2"
             shift
             ;;
         *)
@@ -311,6 +321,8 @@ function create_config {
 	    | sed -e "s/{DURATION}/${DURATION}/g" \
 	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
 	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
+	    | sed -e "s/{KEY_TOTAL_ENTRIES}/${KEY_TOTAL_ENTRIES}/g" \
+	    | sed -e "s/{KEY_NUM_ENTRIES_PER_THREAD}/${KEY_NUM_ENTRIES_PER_THREAD}/g" \
 	    >> ${BENCHMARK_FILE}
 	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
 }
