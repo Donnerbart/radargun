@@ -21,7 +21,7 @@ KILL_JAVA=all
 KILL_JAVA_SUDO=false
 
 # skip unzip if file will not be uploaded
-SKIP_UNZIP_IF_UPLOAD_SKIPPED=false
+SKIP_UNZIP_IF_UPLOAD_SKIPPED=true
 
 # the machines that make up the test cluster, the first one is used as master
 MACHINES=('192.168.2.101' '192.168.2.102' '192.168.2.103' '192.168.2.104')
