@@ -422,6 +422,8 @@ benchmark
 
 END_TIME=$(date +%s)
 
+benchmark_header
+
 echo ===============================================================
 echo Total runtime: $(echo "${END_TIME} - ${START_TIME}" | bc) seconds
 echo ===============================================================
