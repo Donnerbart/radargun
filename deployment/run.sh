@@ -29,11 +29,14 @@ MACHINES=('192.168.2.101' '192.168.2.102' '192.168.2.103' '192.168.2.104')
 # benchmark configuration
 CONFIGURATION=latest
 SCENARIO=atomic
+
 DURATION=1m
 NUMBER_OF_THREADS=40
 NUMBER_OF_ITERATIONS=1
+
 KEY_TOTAL_ENTRIES=10000
 KEY_NUM_ENTRIES_PER_THREAD=0
+VALUE_ENTRY_SIZE=1000
 
 SHOW_CONFIG=false
 DRY=false
@@ -100,6 +103,10 @@ do
         "--key-num-entries-per-thread")
             KEY_TOTAL_ENTRIES=0
             KEY_NUM_ENTRIES_PER_THREAD="$2"
+            shift
+            ;;
+        "--value-entry-size")
+            VALUE_ENTRY_SIZE="$2"
             shift
             ;;
         *)
@@ -325,6 +332,7 @@ function create_config {
 	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
 	    | sed -e "s/{KEY_TOTAL_ENTRIES}/${KEY_TOTAL_ENTRIES}/g" \
 	    | sed -e "s/{KEY_NUM_ENTRIES_PER_THREAD}/${KEY_NUM_ENTRIES_PER_THREAD}/g" \
+	    | sed -e "s/{VALUE_ENTRY_SIZE}/${VALUE_ENTRY_SIZE}/g" \
 	    >> ${BENCHMARK_FILE}
 	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
 }

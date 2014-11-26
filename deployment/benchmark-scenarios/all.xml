@@ -41,6 +41,7 @@
             <key-selector>
                <concurrent-keys total-entries="{KEY_TOTAL_ENTRIES}" num-entries-per-thread="{KEY_NUM_ENTRIES_PER_THREAD}"/>
             </key-selector>
+            <entry-size>{VALUE_ENTRY_SIZE}</entry-size>
          </basic-operations-test>
          <basic-operations-test test-name="transactions" amend-test="true" use-transactions="IF_TRANSACTIONAL"
                                 duration="{DURATION}" num-threads-per-node="{NUMBER_OF_THREADS}">
@@ -48,6 +49,7 @@
             <key-selector>
                <concurrent-keys total-entries="{KEY_TOTAL_ENTRIES}" num-entries-per-thread="{KEY_NUM_ENTRIES_PER_THREAD}"/>
             </key-selector>
+            <entry-size>{VALUE_ENTRY_SIZE}</entry-size>
          </basic-operations-test>
       </repeat>
 
