@@ -94,9 +94,11 @@ do
             ;;
         "--key-total-entries")
             KEY_TOTAL_ENTRIES="$2"
+            KEY_NUM_ENTRIES_PER_THREAD=0
             shift
             ;;
         "--key-num-entries-per-thread")
+            KEY_TOTAL_ENTRIES=0
             KEY_NUM_ENTRIES_PER_THREAD="$2"
             shift
             ;;
