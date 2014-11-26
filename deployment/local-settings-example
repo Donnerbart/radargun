@@ -6,12 +6,11 @@
 
 #SKIP_UNZIP_IF_UPLOAD_SKIPPED=true
 
-##################################
-##### remote download_latest #####
-##################################
-
 #DOWNLOAD_USER=hazelcast
 #DOWNLOAD_HOST='212.175.226.222:1111'
+
+#SSH_USER=hazelcast
+#SSH_MACHINES=('212.175.226.222:1111' '212.175.226.222:2222' '212.175.226.222:3333' '212.175.226.222:4444')
 
 ##########################
 ##### remote cluster #####
