@@ -16,19 +16,13 @@
    <dependencies>
       <dependency>
          <groupId>org.radargun</groupId>
-         <artifactId>plugin-gridgain60</artifactId>
+         <artifactId>plugin-gridgain62</artifactId>
          <version>${project.version}</version>
       </dependency>
 
       <dependency>
          <groupId>org.gridgain</groupId>
          <artifactId>gridgain-datagrid</artifactId>
-         <version>6.5.1</version>
-         <type>pom</type>
-      </dependency>
-      <dependency>
-         <groupId>org.gridgain</groupId>
-         <artifactId>gridgain-indexing</artifactId>
          <version>6.5.1</version>
          <type>pom</type>
       </dependency>

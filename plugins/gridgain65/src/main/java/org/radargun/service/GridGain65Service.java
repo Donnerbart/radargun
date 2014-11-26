@@ -9,7 +9,7 @@ import org.radargun.traits.Transactional;
  * An implementation of CacheWrapper that uses Gridgain GridCache as an underlying implementation.
  */
 @Service(doc = "GridGain")
-public class GridGain65Service extends GridGainService {
+public class GridGain65Service extends GridGain62Service {
 
    @ProvidesTrait
    @Override
