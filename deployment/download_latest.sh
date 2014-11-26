@@ -35,6 +35,9 @@ function port {
 	fi
 }
 
+DOWNLOAD_TARGET=$(readlink -mv ${DOWNLOAD_TARGET})
+DOWNLOAD_REMOTE_REPORTS_DIR=$(readlink -mv ${DOWNLOAD_REMOTE_REPORTS_DIR})
+
 ADDRESS=$(address ${DOWNLOAD_HOST})
 PORT=$(port ${DOWNLOAD_HOST})
 
