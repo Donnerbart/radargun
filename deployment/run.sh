@@ -33,6 +33,9 @@ DURATION=1m
 NUMBER_OF_THREADS=40
 NUMBER_OF_ITERATIONS=1
 
+SHOW_CONFIG=false
+DRY=false
+
 # override settings with local-settings file
 if [ -f local-settings ]; then
     source local-settings
@@ -42,6 +45,12 @@ fi
 while ! [ -z $1 ]
 do
     case "$1" in
+        "--show-config")
+            SHOW_CONFIG=true
+            ;;
+        "--dry")
+            DRY=true
+            ;;
         "--single-plugin")
             CONFIGURATION="configuration-tmp"
             if ! [ -e benchmark-configurations/${CONFIGURATION}.xml ]; then
@@ -97,6 +106,9 @@ ARTIFACT_DIR=$(readlink -mv ../target/distribution/)
 
 ARTIFACT_NAME=RadarGun-${RADARGUN_VERSION}
 RADARGUN_DIR=${TARGET_DIR}/${ARTIFACT_NAME}
+BENCHMARK_FILE=benchmark-xml/benchmark-tmp.xml
+
+NUMBER_OF_SLAVES=${#MACHINES[@]}
 
 #####################
 ##### functions #####
@@ -286,9 +298,25 @@ function download_logs {
 	scp -C -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.out ${DESTINATION_DIR}/logs
 }
 
+function create_config {
+	# create dynamic benchmark file
+	rm -rf ${BENCHMARK_FILE}
+	touch ${BENCHMARK_FILE}
+	cat benchmark-xml/benchmark-header.xml \
+	    | sed -e "s/{MASTER}/${MASTER}/g" \
+	    | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" \
+	    >> ${BENCHMARK_FILE}
+	cat benchmark-configurations/${CONFIGURATION}.xml >> ${BENCHMARK_FILE}
+	cat benchmark-scenarios/${SCENARIO}.xml \
+	    | sed -e "s/{DURATION}/${DURATION}/g" \
+	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
+	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
+	    >> ${BENCHMARK_FILE}
+	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
+}
+
 function benchmark_header {
     MASTER=${MACHINES[0]}
-    NUMBER_OF_SLAVES=${#MACHINES[@]}
 	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
 
 	echo ===============================================================
@@ -305,7 +333,6 @@ function benchmark_header {
 
 function benchmark {
     MASTER=${MACHINES[0]}
-    NUMBER_OF_SLAVES=${#MACHINES[@]}
 	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
 	TIMESTAMP=$(date +%s)
 	DESTINATION_DIR=${REPORTS_DIR}/${BENCHMARK_NAME}/${TIMESTAMP}
@@ -331,22 +358,6 @@ function benchmark {
 	mkdir -p ${DESTINATION_DIR}
 	rm -rf ${LATEST}
 	ln -s $(readlink -mv ${DESTINATION_DIR}) ${LATEST}
-
-	# create dynamic benchmark file
-	BENCHMARK_FILE=benchmark-xml/benchmark-tmp.xml
-	rm -rf ${BENCHMARK_FILE}
-	touch ${BENCHMARK_FILE}
-	cat benchmark-xml/benchmark-header.xml \
-	    | sed -e "s/{MASTER}/${MASTER}/g" \
-	    | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" \
-	    >> ${BENCHMARK_FILE}
-	cat benchmark-configurations/${CONFIGURATION}.xml >> ${BENCHMARK_FILE}
-	cat benchmark-scenarios/${SCENARIO}.xml \
-	    | sed -e "s/{DURATION}/${DURATION}/g" \
-	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
-	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
-	    >> ${BENCHMARK_FILE}
-	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
 
 	# start master
 	scp -C -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
@@ -390,6 +401,16 @@ function benchmark {
 START_TIME=$(date +%s)
 
 benchmark_header
+
+create_config
+
+if [ "${SHOW_CONFIG}" = true ]; then
+    less benchmark-xml/benchmark-tmp.xml
+fi
+
+if [ "${DRY}" = true ]; then
+    exit 0
+fi
 
 # install on all slaves
 for MACHINE in "${MACHINES[@]}"
