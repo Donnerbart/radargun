@@ -44,13 +44,29 @@ do
     case "$1" in
         "--single-plugin")
             CONFIGURATION="configuration-tmp"
+            if ! [ -e benchmark-configurations/${CONFIGURATION}.xml ]; then
+                echo "Can't find configuration file: benchmark-configurations/${CONFIGURATION}.xml"
+                exit 1
+            fi
             ;;
         "--configuration")
             CONFIGURATION="$2"
+            if [ "single-template" = "${CONFIGURATION}" ]; then
+                echo "Can't use template file as configuration!"
+                exit 1
+            fi
+            if ! [ -e benchmark-configurations/${CONFIGURATION}.xml ]; then
+                echo "Can't find configuration file: benchmark-configurations/${CONFIGURATION}.xml"
+                exit 1
+            fi
             shift
             ;;
         "--scenario")
             SCENARIO="$2"
+            if ! [ -e benchmark-scenarios/${SCENARIO}.xml ]; then
+                echo "Can't find configuration file: benchmark-scenarios/${SCENARIO}.xml"
+                exit 1
+            fi
             shift
             ;;
         "--duration")
