@@ -133,6 +133,43 @@ NUMBER_OF_SLAVES=${#MACHINES[@]}
 ##### functions #####
 #####################
 
+function create_config {
+	# create dynamic benchmark file
+	rm -rf ${BENCHMARK_FILE}
+	touch ${BENCHMARK_FILE}
+	cat benchmark-xml/benchmark-header.xml \
+	    | sed -e "s/{MASTER}/${MASTER}/g" \
+	    | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" \
+	    >> ${BENCHMARK_FILE}
+	cat benchmark-configurations/${CONFIGURATION}.xml >> ${BENCHMARK_FILE}
+	cat benchmark-scenarios/${SCENARIO}.xml \
+	    | sed -e "s/{DURATION}/${DURATION}/g" \
+	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
+	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
+	    | sed -e "s/{KEY_TOTAL_ENTRIES}/${KEY_TOTAL_ENTRIES}/g" \
+	    | sed -e "s/{KEY_NUM_ENTRIES_PER_THREAD}/${KEY_NUM_ENTRIES_PER_THREAD}/g" \
+	    | sed -e "s/{VALUE_ENTRY_SIZE}/${VALUE_ENTRY_SIZE}/g" \
+	    >> ${BENCHMARK_FILE}
+	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
+}
+
+function benchmark_info {
+	echo ===============================================================
+	echo =================== Benchmark configuration ===================
+	echo ===============================================================
+	echo Master: ${MACHINES[0]}
+	echo Slaves: ${MACHINES[@]}
+	echo Benchmark configuration: ${CONFIGURATION}
+	echo Benchmark scenario: ${SCENARIO}
+	echo Duration: ${DURATION}
+	echo Number of threads: ${NUMBER_OF_THREADS}
+	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
+	echo Key generator total-entries: ${KEY_TOTAL_ENTRIES}
+	echo Key generator num-entries-per-thread: ${KEY_NUM_ENTRIES_PER_THREAD}
+	echo Value generator entry-size: ${VALUE_ENTRY_SIZE}
+	echo ===============================================================
+}
+
 function address {
 	MACHINE=$1
 
@@ -317,42 +354,6 @@ function download_logs {
 	scp -C -P ${PORT} -q ${USER}@${ADDRESS}:${RADARGUN_DIR}/*.out ${DESTINATION_DIR}/logs
 }
 
-function create_config {
-	# create dynamic benchmark file
-	rm -rf ${BENCHMARK_FILE}
-	touch ${BENCHMARK_FILE}
-	cat benchmark-xml/benchmark-header.xml \
-	    | sed -e "s/{MASTER}/${MASTER}/g" \
-	    | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" \
-	    >> ${BENCHMARK_FILE}
-	cat benchmark-configurations/${CONFIGURATION}.xml >> ${BENCHMARK_FILE}
-	cat benchmark-scenarios/${SCENARIO}.xml \
-	    | sed -e "s/{DURATION}/${DURATION}/g" \
-	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
-	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
-	    | sed -e "s/{KEY_TOTAL_ENTRIES}/${KEY_TOTAL_ENTRIES}/g" \
-	    | sed -e "s/{KEY_NUM_ENTRIES_PER_THREAD}/${KEY_NUM_ENTRIES_PER_THREAD}/g" \
-	    | sed -e "s/{VALUE_ENTRY_SIZE}/${VALUE_ENTRY_SIZE}/g" \
-	    >> ${BENCHMARK_FILE}
-	cat benchmark-xml/benchmark-footer.xml >> ${BENCHMARK_FILE}
-}
-
-function benchmark_header {
-    MASTER=${MACHINES[0]}
-	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
-
-	echo ===============================================================
-	echo Running Benchmark: ${BENCHMARK_NAME}
-	echo Master: ${MASTER}
-	echo Slaves: "${MACHINES[@]}"
-	echo Benchmark configuration: ${CONFIGURATION}
-	echo Benchmark scenario: ${SCENARIO}
-	echo Duration: ${DURATION}
-	echo Number of threads: ${NUMBER_OF_THREADS}
-	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
-	echo ===============================================================
-}
-
 function benchmark {
     MASTER=${MACHINES[0]}
 	BENCHMARK_NAME="${NUMBER_OF_SLAVES}-nodes"
@@ -361,13 +362,6 @@ function benchmark {
 
 	echo ===============================================================
 	echo Starting Benchmark: ${BENCHMARK_NAME}
-	echo Master: ${MASTER}
-	echo Slaves: "${MACHINES[@]}"
-	echo Benchmark configuration: ${CONFIGURATION}
-	echo Benchmark scenario: ${SCENARIO}
-	echo Duration: ${DURATION}
-	echo Number of threads: ${NUMBER_OF_THREADS}
-	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
 	echo Output dir: ${DESTINATION_DIR}
 	echo ===============================================================
 
@@ -420,7 +414,7 @@ function benchmark {
 ##### benchmark #####
 #####################
 
-benchmark_header
+benchmark_info
 
 create_config
 
@@ -444,7 +438,7 @@ benchmark
 
 END_TIME=$(date +%s)
 
-benchmark_header
+benchmark_info
 
 echo ===============================================================
 echo Total runtime: $(echo "${END_TIME} - ${START_TIME}" | bc) seconds
