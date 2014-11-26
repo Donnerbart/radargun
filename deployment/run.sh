@@ -138,7 +138,7 @@ function create_config {
 	rm -rf ${BENCHMARK_FILE}
 	touch ${BENCHMARK_FILE}
 	cat benchmark-xml/benchmark-header.xml \
-	    | sed -e "s/{MASTER}/${MASTER}/g" \
+	    | sed -e "s/{MASTER}/${MACHINES[0]}/g" \
 	    | sed -e "s/{SLAVE_NUMBER}/${NUMBER_OF_SLAVES}/g" \
 	    >> ${BENCHMARK_FILE}
 	cat benchmark-configurations/${CONFIGURATION}.xml >> ${BENCHMARK_FILE}
