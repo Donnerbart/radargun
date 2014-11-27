@@ -13,18 +13,21 @@
                <property name="atomicityMode" value="ATOMIC"/>
                <property name="swapEnabled" value="false"/>
                <property name="queryIndexEnabled" value="false"/>
+               <property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
             </bean>
             <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
                <property name="name" value="transactional"/>
                <property name="cacheMode" value="PARTITIONED"/>
                <property name="atomicityMode" value="TRANSACTIONAL"/>
+               <property name="swapEnabled" value="false"/>
+               <property name="queryIndexEnabled" value="false"/>
+               <property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
                <!--
                <property name="defaultTxConcurrency" value="OPTIMISTIC"/>
                <property name="defaultTxIsolation" value="REPEATABLE_READ"/>
                <property name="defaultTxTimeout" value="3000"/>
                -->
                <!--
-               <property name="writeSynchronizationMode" value="FULL_ASYNC"/>
                <property name="backups" value="1"/>
                -->
             </bean>
