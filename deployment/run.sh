@@ -34,6 +34,11 @@ DURATION=1m
 NUMBER_OF_THREADS=40
 NUMBER_OF_ITERATIONS=1
 
+GET_RATIO=4
+PUT_RATIO=1
+
+LOAD_DATA_NUM_ENTRIES=10000
+
 KEY_TOTAL_ENTRIES=10000
 KEY_NUM_ENTRIES_PER_THREAD=0
 VALUE_ENTRY_SIZE=1000
@@ -95,6 +100,18 @@ do
             NUMBER_OF_ITERATIONS="$2"
             shift
             ;;
+        "--get-ratio")
+            GET_RATIO="$2"
+            shift
+            ;;
+        "--put-ratio")
+            PUT_RATIO="$2"
+            shift
+            ;;
+        "--load-data-num-entries")
+            LOAD_DATA_NUM_ENTRIES="$2"
+            shift
+            ;;
         "--key-total-entries")
             KEY_TOTAL_ENTRIES="$2"
             KEY_NUM_ENTRIES_PER_THREAD=0
@@ -146,6 +163,9 @@ function create_config {
 	    | sed -e "s/{DURATION}/${DURATION}/g" \
 	    | sed -e "s/{NUMBER_OF_THREADS}/${NUMBER_OF_THREADS}/g" \
 	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
+	    | sed -e "s/{GET_RATIO}/${GET_RATIO}/g" \
+	    | sed -e "s/{PUT_RATIO}/${PUT_RATIO}/g" \
+	    | sed -e "s/{LOAD_DATA_NUM_ENTRIES}/${LOAD_DATA_NUM_ENTRIES}/g" \
 	    | sed -e "s/{KEY_TOTAL_ENTRIES}/${KEY_TOTAL_ENTRIES}/g" \
 	    | sed -e "s/{KEY_NUM_ENTRIES_PER_THREAD}/${KEY_NUM_ENTRIES_PER_THREAD}/g" \
 	    | sed -e "s/{VALUE_ENTRY_SIZE}/${VALUE_ENTRY_SIZE}/g" \
@@ -164,6 +184,9 @@ function benchmark_info {
 	echo Duration: ${DURATION}
 	echo Number of threads: ${NUMBER_OF_THREADS}
 	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
+	echo GET ratio: ${GET_RATIO}
+	echo PUT ratio: ${PUT_RATIO}
+	echo Load-data num-entries: ${LOAD_DATA_NUM_ENTRIES}
 	echo Key generator total-entries: ${KEY_TOTAL_ENTRIES}
 	echo Key generator num-entries-per-thread: ${KEY_NUM_ENTRIES_PER_THREAD}
 	echo Value generator entry-size: ${VALUE_ENTRY_SIZE}
