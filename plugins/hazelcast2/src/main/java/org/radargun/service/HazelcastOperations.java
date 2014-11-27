@@ -45,7 +45,7 @@ public class HazelcastOperations implements BasicOperations, ConditionalOperatio
 
       @Override
       public void put(K key, V value) {
-         map.put(key, value);
+         map.set(key, value);
       }
 
       @Override
