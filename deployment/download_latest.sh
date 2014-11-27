@@ -2,8 +2,8 @@
 
 cd "$(dirname "$0")"
 
-DOWNLOAD_TARGET=./reports
-DOWNLOAD_REMOTE_REPORTS_DIR=/tmp/reports
+DOWNLOAD_SOURCE_DIR=/tmp/reports
+DOWNLOAD_TARGET_DIR=./reports
 
 DOWNLOAD_USER=$(whoami)
 DOWNLOAD_HOST='192.168.2.101'
@@ -12,6 +12,34 @@ DOWNLOAD_HOST='192.168.2.101'
 if [ -f local-settings ]; then
     source local-settings
 fi
+
+# read in any command-line params
+while ! [ -z $1 ]
+do
+    case "$1" in
+        "--user")
+            DOWNLOAD_USER="$2"
+            shift
+            ;;
+        "--host")
+            DOWNLOAD_HOST="$2"
+            shift
+            ;;
+        "--source")
+            DOWNLOAD_SOURCE_DIR="$2"
+            shift
+            ;;
+        "--target")
+            DOWNLOAD_TARGET_DIR="$2"
+            shift
+            ;;
+        *)
+            echo "Warning: unknown argument ${1}"
+            exit 1
+            ;;
+    esac
+    shift
+done
 
 function address {
 	MACHINE=$1
@@ -35,14 +63,14 @@ function port {
 	fi
 }
 
-DOWNLOAD_TARGET=$(readlink -mv ${DOWNLOAD_TARGET})
-DOWNLOAD_REMOTE_REPORTS_DIR=$(readlink -mv ${DOWNLOAD_REMOTE_REPORTS_DIR})
+DOWNLOAD_TARGET_DIR=$(readlink -mv ${DOWNLOAD_TARGET_DIR})
+DOWNLOAD_SOURCE_DIR=$(readlink -mv ${DOWNLOAD_SOURCE_DIR})
 
 ADDRESS=$(address ${DOWNLOAD_HOST})
 PORT=$(port ${DOWNLOAD_HOST})
 
-mkdir -p ${DOWNLOAD_TARGET}
-cd ${DOWNLOAD_TARGET}
+mkdir -p ${DOWNLOAD_TARGET_DIR}
+cd ${DOWNLOAD_TARGET_DIR}
 
 if [ -d "latest-remote" ]; then
     rm -rf latest-remote
@@ -52,7 +80,7 @@ if [ -f "latest-remote.zip" ]; then
 fi
 
 echo Downloading latest reports...
-scp -C -P ${PORT} -q -r ${DOWNLOAD_USER}@${ADDRESS}:${DOWNLOAD_REMOTE_REPORTS_DIR}/latest.zip ./latest-remote.zip
+scp -C -P ${PORT} -q -r ${DOWNLOAD_USER}@${ADDRESS}:${DOWNLOAD_SOURCE_DIR}/latest.zip ./latest-remote.zip
 echo Done!
 
 if [ -f "latest-remote.zip" ]; then
