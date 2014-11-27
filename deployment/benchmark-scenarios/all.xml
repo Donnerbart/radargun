@@ -6,13 +6,13 @@
       <jvm-monitor-start/>
 
       <!-- Preload the cache with data -->
-      <load-data num-entries="5000" cache-selector="all:default"/>
+      <load-data num-entries="5000" cache-selector="all:testCache"/>
       <load-data num-entries="5000" cache-selector="all:transactional"/>
 
       <!-- 5 threads will execute total of 100,000 random requests against the default cache -->
       <!-- As the test is called 'warmup', performance statistics won't be reported -->
       <basic-operations-test test-name="warmup" num-requests="100000" num-threads-per-node="5"
-                             cache-selector="all:default">
+                             cache-selector="all:testCache">
          <key-selector>
             <concurrent-keys total-entries="5000"/>
          </key-selector>
@@ -28,7 +28,7 @@
       <clear-cache cache-name="default"/>
       <clear-cache cache-name="transactional"/>
       <!-- Again, preload the cache with data -->
-      <load-data num-entries="{LOAD_DATA_NUM_ENTRIES}" cache-selector="all:default"/>
+      <load-data num-entries="{LOAD_DATA_NUM_ENTRIES}" cache-selector="all:testCache"/>
       <load-data num-entries="{LOAD_DATA_NUM_ENTRIES}" cache-selector="all:transactional"/>
 
       <!-- 10, 20 and 30 threads will execute random request for 1 minute against the default cache -->
@@ -38,7 +38,7 @@
          <basic-operations-test test-name="atomic" amend-test="true" use-transactions="NEVER"
                                 duration="{DURATION}" num-threads-per-node="{NUMBER_OF_THREADS}"
                                 get-ratio="{GET_RATIO}" put-ratio="{PUT_RATIO}">
-            <cache-selector>all:default</cache-selector>
+            <cache-selector>all:testCache</cache-selector>
             <key-selector>
                <concurrent-keys total-entries="{KEY_TOTAL_ENTRIES}" num-entries-per-thread="{KEY_NUM_ENTRIES_PER_THREAD}"/>
             </key-selector>

@@ -27,7 +27,7 @@
       <pool-size>16</pool-size>
    </executor-service>
 
-   <map name="default">
+   <map name="testCache">
       <backup-count>1</backup-count>
       <async-backup-count>0</async-backup-count>
       <time-to-live-seconds>0</time-to-live-seconds>

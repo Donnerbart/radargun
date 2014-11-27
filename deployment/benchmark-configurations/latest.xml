@@ -9,11 +9,11 @@
       <config name="Hazelcast 3.4">
          <setup plugin="hazelcast34" file="hazelcast.xml"/>
       </config>
-      <!--
+      <!-- -->
       <config name="Infinispan 6.0">
          <setup plugin="infinispan60" file="hazelcast.xml"/>
       </config>
-      -->
+      <!-- -->
       <config name="Infinispan 7.0">
          <setup plugin="infinispan70" file="hazelcast.xml"/>
       </config>

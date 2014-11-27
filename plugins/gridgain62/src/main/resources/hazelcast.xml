@@ -8,7 +8,7 @@
       <property name="cacheConfiguration">
          <list>
             <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
-               <property name="name" value="default"/>
+               <property name="name" value="testCache"/>
                <property name="cacheMode" value="PARTITIONED"/>
                <property name="atomicityMode" value="ATOMIC"/>
                <property name="swapEnabled" value="false"/>

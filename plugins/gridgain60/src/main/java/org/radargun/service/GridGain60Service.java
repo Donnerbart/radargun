@@ -30,7 +30,7 @@ public class GridGain60Service implements Lifecycle, Clustered {
    private String config;
 
    @Property(name = "cache", doc = "Name of the map ~ cache", deprecatedName = "map")
-   protected String mapName = "default";
+   protected String mapName = "testCache";
 
    @ProvidesTrait
    public GridGain60Service getSelf() {
