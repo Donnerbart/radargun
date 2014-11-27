@@ -6,9 +6,9 @@ import org.radargun.traits.BasicOperations;
 import org.radargun.traits.ConditionalOperations;
 
 public class GridGainOperations implements BasicOperations, ConditionalOperations {
-   protected final GridGainService service;
+   protected final GridGain60Service service;
 
-   public GridGainOperations(GridGainService service) {
+   public GridGainOperations(GridGain60Service service) {
       this.service = service;
    }
 

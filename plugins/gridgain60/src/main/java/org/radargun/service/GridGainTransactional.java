@@ -11,9 +11,9 @@ import org.radargun.traits.Transactional;
 public class GridGainTransactional implements Transactional {
    private static final String DEFAULT_CACHE_NAME = "transactional";
 
-   protected final GridGainService service;
+   protected final GridGain60Service service;
 
-   public GridGainTransactional(GridGainService service) {
+   public GridGainTransactional(GridGain60Service service) {
       this.service = service;
    }
 

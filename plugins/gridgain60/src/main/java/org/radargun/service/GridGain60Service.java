@@ -19,7 +19,7 @@ import java.io.InputStream;
  * An implementation of CacheWrapper that uses Gridgain GridCache as an underlying implementation.
  */
 @Service(doc = "GridGain")
-public class GridGainService implements Lifecycle, Clustered {
+public class GridGain60Service implements Lifecycle, Clustered {
 
    protected final Log log = LogFactory.getLog(getClass());
 
@@ -33,7 +33,7 @@ public class GridGainService implements Lifecycle, Clustered {
    protected String mapName = "default";
 
    @ProvidesTrait
-   public GridGainService getSelf() {
+   public GridGain60Service getSelf() {
       return this;
    }
 

@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-                           http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
    <bean id="grid.cfg" class="org.gridgain.grid.GridConfiguration" scope="singleton">
       <property name="cacheConfiguration">
          <list>
             <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
                <property name="name" value="default"/>
+               <property name="cacheMode" value="PARTITIONED"/>
                <property name="atomicityMode" value="ATOMIC"/>
-               <property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
-               <property name="cacheMode">
-                  <util:constant static-field="org.gridgain.grid.cache.GridCacheMode.PARTITIONED"/>
-               </property>
+               <property name="swapEnabled" value="false"/>
+               <property name="queryIndexEnabled" value="false"/>
             </bean>
             <bean class="org.gridgain.grid.cache.GridCacheConfiguration">
                <property name="name" value="transactional"/>
+               <property name="cacheMode" value="PARTITIONED"/>
                <property name="atomicityMode" value="TRANSACTIONAL"/>
-               <property name="defaultTxConcurrency" value="PESSIMISTIC"/>
+               <!--
+               <property name="defaultTxConcurrency" value="OPTIMISTIC"/>
                <property name="defaultTxIsolation" value="REPEATABLE_READ"/>
                <property name="defaultTxTimeout" value="3000"/>
-               <property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
-               <property name="cacheMode">
-                  <util:constant static-field="org.gridgain.grid.cache.GridCacheMode.PARTITIONED"/>
-               </property>
+               -->
+               <!--
+               <property name="writeSynchronizationMode" value="FULL_ASYNC"/>
+               <property name="backups" value="1"/>
+               -->
             </bean>
          </list>
       </property>

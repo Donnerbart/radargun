@@ -11,9 +11,9 @@ import java.util.Collections;
 import java.util.Map;
 
 public class GridGainCacheInfo implements CacheInformation {
-   protected final GridGainService service;
+   protected final GridGain60Service service;
 
-   public GridGainCacheInfo(GridGainService service) {
+   public GridGainCacheInfo(GridGain60Service service) {
       this.service = service;
    }
 
