@@ -45,6 +45,8 @@ VALUE_ENTRY_SIZE=1000
 
 SHOW_CONFIG=false
 DRY=false
+DO_BATCH=false
+BATCH_NAME=''
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
@@ -60,6 +62,11 @@ do
             ;;
         "--dry")
             DRY=true
+            ;;
+        "--batch-name")
+            DO_BATCH=true
+            BATCH_NAME="$2"
+            shift
             ;;
         "--single-plugin")
             CONFIGURATION="configuration-tmp"
@@ -234,10 +241,10 @@ function install {
     fi
     if [ "${KILL_JAVA}" = "all" ]; then
         echo Stopping all Java processes${JAVA_SUDO_LOG}
-        ssh ${USER}@${ADDRESS} -p ${PORT} -t "${JAVA_SUDO}killall -9 java"
+        ssh ${USER}@${ADDRESS} -p ${PORT} "${JAVA_SUDO}killall -9 java"
     elif [ "${KILL_JAVA}" = "no_idea" ]; then
         echo Stopping all Java processes${JAVA_SUDO_LOG} except IDEA
-        ssh ${USER}@${ADDRESS} -p ${PORT} -t "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs ${JAVA_SUDO}kill -9"
+        ssh ${USER}@${ADDRESS} -p ${PORT} "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs ${JAVA_SUDO}kill -9"
     fi
 
     # uploading target file
@@ -354,7 +361,7 @@ function tail_log {
 	ADDRESS=$(address ${MACHINE})
 	PORT=$(port ${MACHINE})
 	
-	ssh -t ${USER}@${ADDRESS} -p ${PORT} "tail -f ${RADARGUN_DIR}/radargun.log" &
+	ssh ${USER}@${ADDRESS} -p ${PORT} "tail -f ${RADARGUN_DIR}/radargun.log" &
 }
 
 function download_results {
@@ -392,12 +399,6 @@ function benchmark {
   	ADDRESS=$(address ${MASTER})
     PORT=$(port ${MASTER})
 
-    # create latest symlink
-	LATEST="${REPORTS_DIR}/latest"
-	mkdir -p ${DESTINATION_DIR}
-	rm -rf ${LATEST}
-	ln -s $(readlink -mv ${DESTINATION_DIR}) ${LATEST}
-
 	# start master
 	scp -C -P ${PORT} ${BENCHMARK_FILE} ${USER}@${ADDRESS}:${RADARGUN_DIR}/benchmark.xml
 	ssh ${USER}@${ADDRESS} -p ${PORT} "rm -fr ${RADARGUN_DIR}/reports"
@@ -412,8 +413,9 @@ function benchmark {
 	# wait for benchmark completion
 	tail_log ${MASTER}
 	wait_completion ${MASTER}
-	
+
 	# download results
+    mkdir -p ${DESTINATION_DIR}
 	echo Downloading results and logs
 	download_results ${MASTER} ${DESTINATION_DIR}
 	for SLAVE in "${MACHINES[@]}"
@@ -421,11 +423,26 @@ function benchmark {
 		download_logs ${SLAVE} ${DESTINATION_DIR}
 	done
 
-	# zip latest.zip
-	cd ${REPORTS_DIR}
-	rm -rf latest.zip
-	cd ./latest/
-	zip -r ${REPORTS_DIR}/latest.zip .
+    if [ "${DO_BATCH}" = true ]; then
+        # archive batch results
+        BATCH_DIR="${REPORTS_DIR}/batch"
+        mkdir -p ${BATCH_DIR}
+
+        cd ${DESTINATION_DIR}
+        zip -r ${BATCH_DIR}/${BATCH_NAME}.zip .
+        mv ${DESTINATION_DIR} ${BATCH_DIR}
+        mv ${BATCH_DIR}/${TIMESTAMP} ${BATCH_DIR}/${BATCH_NAME}
+    else
+        # create latest symlink
+        LATEST="${REPORTS_DIR}/latest"
+        rm -rf ${LATEST}
+        ln -s $(readlink -mv ${DESTINATION_DIR}) ${LATEST}
+
+        # zip latest.zip
+        rm -rf ${REPORTS_DIR}/latest.zip
+        cd ${LATEST}
+        zip -r ${REPORTS_DIR}/latest.zip .
+    fi
 
 	echo ===============================================================
 	echo Benchmark Completed

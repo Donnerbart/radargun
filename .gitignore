@@ -29,6 +29,8 @@ core/src/main/resources/schema
 *.*~
 deploy
 install
+deployment/benchmark-batch/batch-execute.sh
+deployment/benchmark-batch/batch-tmp.sh
 deployment/benchmark-configurations/configuration-tmp.xml
 deployment/benchmark-xml/benchmark-tmp.xml
 deployment/reports
