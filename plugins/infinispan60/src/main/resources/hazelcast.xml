@@ -19,7 +19,7 @@
       <unsafe unreliableReturnValues="true"/>
 
       <clustering mode="distribution">
-         <sync replTimeout="60000"/>
+         <sync replTimeout="120000"/>
          <l1 enabled="false"/>
          <hash numOwners="2" numSegments="40"/>
       </clustering>
@@ -35,7 +35,7 @@
       <unsafe unreliableReturnValues="true"/>
 
       <clustering mode="distribution">
-         <sync replTimeout="60000"/>
+         <sync replTimeout="120000"/>
          <l1 enabled="false"/>
          <hash numOwners="2" numSegments="40"/>
       </clustering>
