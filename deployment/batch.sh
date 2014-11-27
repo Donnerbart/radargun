@@ -71,6 +71,11 @@ function port {
 ADDRESS=$(address ${BATCH_HOST})
 PORT=$(port ${BATCH_HOST})
 
+if ! [ -e tests/${BATCH_FILE} ]; then
+    echo "Can't find batch file: tests/${BATCH_FILE}"
+    exit 1
+fi
+
 cat benchmark-batch/batch-header.sh > benchmark-batch/batch-tmp.sh
 cat tests/${BATCH_FILE} >> benchmark-batch/batch-tmp.sh
 
@@ -79,6 +84,7 @@ scp -q -C -P ${PORT} benchmark-batch/batch-tmp.sh ${BATCH_USER}@${ADDRESS}:${BAT
 rm -rf benchmark-batch/batch-tmp.sh
 
 echo Starting remote batch process...
+ssh -a ${BATCH_USER}@${ADDRESS} -p ${PORT} "chmod +x ${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh"
 ssh -a ${BATCH_USER}@${ADDRESS} -p ${PORT} "screen -d -m ${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh"
 
 echo Done!

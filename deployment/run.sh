@@ -197,6 +197,10 @@ function benchmark_info {
 	echo Key generator total-entries: ${KEY_TOTAL_ENTRIES}
 	echo Key generator num-entries-per-thread: ${KEY_NUM_ENTRIES_PER_THREAD}
 	echo Value generator entry-size: ${VALUE_ENTRY_SIZE}
+	echo Batch execution: ${DO_BATCH}
+	if [ ${DO_BATCH} = true ]; then
+	    echo Batch testname: ${BATCH_NAME}
+	fi
 	echo ===============================================================
 }
 
