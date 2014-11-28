@@ -37,14 +37,20 @@ NUMBER_OF_ITERATIONS=1
 GET_RATIO=4
 PUT_RATIO=1
 
-LOAD_DATA_NUM_ENTRIES=10000
+KEY_GENERATOR=LongKeyGenerator #StringKeyGenerator
+VALUE_GENERATOR=IntValueGenerator #ByteArrayValueGenerator
 
-KEY_TOTAL_ENTRIES=1000
+LOAD_DATA_NUM_ENTRIES=100000
+
+KEY_TOTAL_ENTRIES=100000
 KEY_NUM_ENTRIES_PER_THREAD=0
 VALUE_ENTRY_SIZE=8
 
+# other configuration
+
 SHOW_CONFIG=false
 DRY=false
+
 DO_BATCH=false
 BATCH_NAME=''
 
@@ -115,6 +121,14 @@ do
             PUT_RATIO="$2"
             shift
             ;;
+        "--key-generator")
+            KEY_GENERATOR="$2"
+            shift
+            ;;
+        "--value-generator")
+            VALUE_GENERATOR="$2"
+            shift
+            ;;
         "--load-data-num-entries")
             LOAD_DATA_NUM_ENTRIES="$2"
             shift
@@ -172,6 +186,8 @@ function create_config {
 	    | sed -e "s/{NUMBER_OF_ITERATIONS}/${NUMBER_OF_ITERATIONS}/g" \
 	    | sed -e "s/{GET_RATIO}/${GET_RATIO}/g" \
 	    | sed -e "s/{PUT_RATIO}/${PUT_RATIO}/g" \
+	    | sed -e "s/{KEY_GENERATOR}/${KEY_GENERATOR}/g" \
+	    | sed -e "s/{VALUE_GENERATOR}/${VALUE_GENERATOR}/g" \
 	    | sed -e "s/{LOAD_DATA_NUM_ENTRIES}/${LOAD_DATA_NUM_ENTRIES}/g" \
 	    | sed -e "s/{KEY_TOTAL_ENTRIES}/${KEY_TOTAL_ENTRIES}/g" \
 	    | sed -e "s/{KEY_NUM_ENTRIES_PER_THREAD}/${KEY_NUM_ENTRIES_PER_THREAD}/g" \
@@ -193,6 +209,8 @@ function benchmark_info {
 	echo Number of iterations: ${NUMBER_OF_ITERATIONS}
 	echo GET ratio: ${GET_RATIO}
 	echo PUT ratio: ${PUT_RATIO}
+	echo Key generator: ${KEY_GENERATOR}
+	echo Value generator: ${VALUE_GENERATOR}
 	echo Load-data num-entries: ${LOAD_DATA_NUM_ENTRIES}
 	echo Key generator total-entries: ${KEY_TOTAL_ENTRIES}
 	echo Key generator num-entries-per-thread: ${KEY_NUM_ENTRIES_PER_THREAD}
