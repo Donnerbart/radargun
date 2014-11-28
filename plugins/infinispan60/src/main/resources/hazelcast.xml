@@ -3,8 +3,9 @@
 <infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="urn:infinispan:config:6.0 http://www.infinispan.org/schemas/infinispan-config-6.0.xsd"
             xmlns="urn:infinispan:config:6.0">
+
    <global>
-      <transport clusterName="default">
+      <transport clusterName="default" distributedSyncTimeout="60000">
          <properties>
             <property name="configurationFile" value="jgroups-udp.xml"/>
          </properties>
@@ -14,14 +15,15 @@
    <default>
       <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
                    transactionMode="NON_TRANSACTIONAL"/>
-      <locking concurrencyLevel="1000" useLockStriping="false"/>
+      <locking concurrencyLevel="1000" isolationLevel="READ_COMMITTED"
+               useLockStriping="false" lockAcquisitionTimeout="3000"/>
 
       <unsafe unreliableReturnValues="true"/>
 
       <clustering mode="distribution">
-         <sync replTimeout="120000"/>
-         <l1 enabled="false"/>
-         <hash numOwners="2" numSegments="40"/>
+         <sync replTimeout="60000"/>
+         <l1 enabled="true" lifespan="60000"/>
+         <hash numOwners="2" numSegments="512"/>
       </clustering>
    </default>
 
@@ -29,15 +31,15 @@
 
    <namedCache name="transactional">
       <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
-                   transactionMode="TRANSACTIONAL"/>
-      <locking concurrencyLevel="1000" useLockStriping="false"/>
+                   transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC"/>
+      <locking concurrencyLevel="1000" useLockStriping="false" lockAcquisitionTimeout="3000"/>
 
       <unsafe unreliableReturnValues="true"/>
 
       <clustering mode="distribution">
-         <sync replTimeout="120000"/>
-         <l1 enabled="false"/>
-         <hash numOwners="2" numSegments="40"/>
+         <sync replTimeout="60000"/>
+         <l1 enabled="true" lifespan="60000"/>
+         <hash numOwners="2" numSegments="512"/>
       </clustering>
    </namedCache>
 </infinispan>
