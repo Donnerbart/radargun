@@ -6,9 +6,6 @@
 
    <!-- List of cluster configurations where the benchmark should run-->
    <clusters>
-      <scale from="{SLAVE_NUMBER}" to="{SLAVE_NUMBER}" inc="1">
-         <!-- No groups defined within the cluster -->
-         <cluster/>
-      </scale>
+      <cluster size="{SLAVE_NUMBER}"/>
    </clusters>
 
