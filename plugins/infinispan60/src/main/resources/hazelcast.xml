@@ -14,15 +14,20 @@
 
    <default>
       <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
-                   transactionMode="NON_TRANSACTIONAL"/>
+                   transactionMode="NON_TRANSACTIONAL" completedTxTimeout="60000" reaperWakeUpInterval="30000">
+         <recovery enabled="false"/>
+      </transaction>
       <locking concurrencyLevel="1000" isolationLevel="READ_COMMITTED"
                useLockStriping="false" lockAcquisitionTimeout="3000"/>
 
-      <unsafe unreliableReturnValues="true"/>
+      <unsafe unreliableReturnValues="false"/>
+
+      <indexing enabled="false" indexLocalOnly="false"/>
 
       <clustering mode="distribution">
+         <stateTransfer timeout="60000" chunkSize="512"/>
          <sync replTimeout="60000"/>
-         <l1 enabled="true" lifespan="60000"/>
+         <l1 enabled="false" lifespan="60000"/>
          <hash numOwners="2" numSegments="512"/>
       </clustering>
    </default>
@@ -31,12 +36,17 @@
 
    <namedCache name="transactional">
       <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
-                   transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC"/>
+                   transactionMode="TRANSACTIONAL" lockingMode="OPTIMISTIC" completedTxTimeout="60000" reaperWakeUpInterval="30000">
+         <recovery enabled="false"/>
+      </transaction>
       <locking concurrencyLevel="1000" useLockStriping="false" lockAcquisitionTimeout="3000"/>
 
-      <unsafe unreliableReturnValues="true"/>
+      <unsafe unreliableReturnValues="false"/>
+
+      <indexing enabled="false" indexLocalOnly="false"/>
 
       <clustering mode="distribution">
+         <stateTransfer timeout="60000" chunkSize="512"/>
          <sync replTimeout="60000"/>
          <l1 enabled="true" lifespan="60000"/>
          <hash numOwners="2" numSegments="512"/>
