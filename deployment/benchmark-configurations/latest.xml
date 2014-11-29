@@ -1,5 +1,8 @@
    <!-- List of configurations of the services -->
    <configurations>
+      <config name="GridGain 6.2">
+         <setup plugin="gridgain62" file="hazelcast.xml"/>
+      </config>
       <config name="GridGain 6.5">
          <setup plugin="gridgain65" file="hazelcast.xml"/>
       </config>
@@ -9,9 +12,11 @@
       <config name="Hazelcast 3.4">
          <setup plugin="hazelcast34" file="hazelcast.xml"/>
       </config>
+   <!--
       <config name="Infinispan 6.0">
          <setup plugin="infinispan60" file="hazelcast.xml"/>
       </config>
+      -->
       <config name="Infinispan 7.0">
          <setup plugin="infinispan70" file="hazelcast.xml"/>
       </config>
