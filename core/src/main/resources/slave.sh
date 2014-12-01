@@ -151,7 +151,7 @@ fi
 if [ "x$DEBUG" != "x" ]; then
    JVM_OPTS="${JVM_OPTS} -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${DEBUG}"
 fi
-RUN_CMD="${JAVA} ${JVM_OPTS} ${D_VARS} -classpath $CP org.radargun.Slave ${CONF} ${PLUGIN_PATHS} ${PLUGIN_CONFIGS}"
+RUN_CMD="${JAVA} ${JVM_OPTS} ${D_VARS} -Dhazelcast.selectorhack.enabled=true -classpath $CP org.radargun.Slave ${CONF} ${PLUGIN_PATHS} ${PLUGIN_CONFIGS}"
 
 if [ -z $OUT_FILE ]; then
    echo ${RUN_CMD}
