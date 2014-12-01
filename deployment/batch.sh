@@ -14,7 +14,7 @@ BATCH_HOST='192.168.2.101'
 
 DOWNLOAD_RESULTS=false
 RUN_LOCAL=false
-COMPILE=''
+COMPILE=false
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
@@ -26,7 +26,7 @@ while ! [ -z $1 ]
 do
     case "$1" in
         "--compile")
-            COMPILE=' --compile'
+            COMPILE=true
             ;;
         "--user")
             BATCH_USER="$2"
@@ -128,7 +128,13 @@ if ! [ -f tests/${BATCH_FILE} ]; then
     exit 1
 fi
 
-cat benchmark-batch/batch-header.sh > benchmark-batch/batch-tmp.sh
+if [ "${COMPILE}" = true ]; then
+    cat benchmark-batch/batch-header.sh \
+        | sed -e "s/COMPILE=false/COMPILE=true/g" \
+        > benchmark-batch/batch-tmp.sh
+else
+    cat benchmark-batch/batch-header.sh > benchmark-batch/batch-tmp.sh
+fi
 cat tests/${BATCH_FILE} >> benchmark-batch/batch-tmp.sh
 cat benchmark-batch/batch-footer.sh >> benchmark-batch/batch-tmp.sh
 
@@ -142,7 +148,7 @@ if [ "${RUN_LOCAL}" = true ]; then
     ./benchmark-batch/batch-execute.sh${COMPILE}
 else
     echo Copying batch file to remote server...
-    scp -q -C -P ${PORT} benchmark-batch/batch-tmp.sh ${BATCH_USER}@${ADDRESS}:${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh${COMPILE} &>/dev/null
+    scp -q -C -P ${PORT} benchmark-batch/batch-tmp.sh ${BATCH_USER}@${ADDRESS}:${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh &>/dev/null
     rm -rf benchmark-batch/batch-tmp.sh
 
     echo Starting remote batch process...
