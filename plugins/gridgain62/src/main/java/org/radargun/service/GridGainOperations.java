@@ -48,7 +48,7 @@ public class GridGainOperations implements BasicOperations, ConditionalOperation
       @Override
       public void put(K key, V value) {
          try {
-            map.putx(key, value);
+            map.put(key, value);
          } catch (GridException e) {
             throw new RuntimeException(e);
          }
