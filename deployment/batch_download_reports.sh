@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BATCH_SOURCE_DIR=/tmp/results/batch
-BATCH_TARGET_DIR=./reports
+BATCH_SOURCE_DIR=/tmp/reports/batch
+BATCH_TARGET_DIR=./reports/batch
 
 BATCH_USER=$(whoami)
 BATCH_HOST='192.168.2.101'
@@ -69,12 +69,33 @@ function port {
 ##### batch execution #####
 ###########################
 
+BATCH_TARGET_DIR=$(readlink -mv ${BATCH_TARGET_DIR})
+
 ADDRESS=$(address ${BATCH_HOST})
 PORT=$(port ${BATCH_HOST})
 
-echo Starting remote batch process...
-echo Executing: screen -d -m ${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh
-ssh -a ${BATCH_USER}@${ADDRESS} -p ${PORT} "chmod +x ${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh"
-ssh -a ${BATCH_USER}@${ADDRESS} -p ${PORT} "screen -d -m ${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh"
+mkdir -p ${BATCH_TARGET_DIR}
+cd ${BATCH_TARGET_DIR}
+
+if [ -f "batch.zip" ]; then
+    rm batch.zip
+fi
+
+echo Zipping batch reports...
+ssh -a ${BATCH_USER}@${ADDRESS} -p ${PORT} "cd ${BATCH_SOURCE_DIR}; zip -r batch.zip ."
+
+echo Downloading batch reports...
+scp -C -P ${PORT} -r ${DOWNLOAD_USER}@${ADDRESS}:${BATCH_SOURCE_DIR}/batch.zip batch.zip
+
+if [ -f "batch.zip" ]; then
+    echo Unpacking batch reports...
+    unzip batch.zip
+    echo Done!
+
+    exit 0
+else
+    echo Could not download batch reports!
+    exit 1
+fi
 
 echo Done!

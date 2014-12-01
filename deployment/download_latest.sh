@@ -64,7 +64,6 @@ function port {
 }
 
 DOWNLOAD_TARGET_DIR=$(readlink -mv ${DOWNLOAD_TARGET_DIR})
-DOWNLOAD_SOURCE_DIR=$(readlink -mv ${DOWNLOAD_SOURCE_DIR})
 
 ADDRESS=$(address ${DOWNLOAD_HOST})
 PORT=$(port ${DOWNLOAD_HOST})
