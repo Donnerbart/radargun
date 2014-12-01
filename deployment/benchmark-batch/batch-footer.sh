@@ -1,3 +1,4 @@
+
 BATCH_END_TIME=$(date +%s)
 
 echo
