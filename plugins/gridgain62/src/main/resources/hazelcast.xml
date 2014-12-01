@@ -27,7 +27,7 @@
                <property name="writeSynchronizationMode" value="PRIMARY_SYNC"/>
                <!--
                <property name="defaultTxConcurrency" value="OPTIMISTIC"/>
-               <property name="defaultTxIsolation" value="REPEATABLE_READ"/>
+               <property name="defaultTxIsolation" value="READ_COMMITTED"/>
                <property name="defaultTxTimeout" value="3000"/>
                -->
 
