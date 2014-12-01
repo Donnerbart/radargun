@@ -1,4 +1,4 @@
-COMMON_PARAMETERS="--threads 128 --duration 10m --configuration latest"
+COMMON_PARAMETERS="--threads 128 --duration 10m --configuration latest --value-generator ByteArrayValueGenerator"
 
 ./run.sh ${COMMON_PARAMETERS} --value-entry-size 8 --batch-name value-size-8
 ./run.sh ${COMMON_PARAMETERS} --value-entry-size 64 --batch-name value-size-64
