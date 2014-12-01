@@ -8,3 +8,4 @@ if [ "${COMPILE}" = true ]; then
 fi
 
 BATCH_START_TIME=$(date +%s)
+
