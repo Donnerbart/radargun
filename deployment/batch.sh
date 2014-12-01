@@ -14,6 +14,7 @@ BATCH_HOST='192.168.2.101'
 
 DOWNLOAD_RESULTS=false
 RUN_LOCAL=false
+COMPILE=''
 
 # override settings with local-settings file
 if [ -f local-settings ]; then
@@ -24,6 +25,9 @@ fi
 while ! [ -z $1 ]
 do
     case "$1" in
+        "--compile")
+            COMPILE=' --compile'
+            ;;
         "--user")
             BATCH_USER="$2"
             shift
@@ -126,6 +130,7 @@ fi
 
 cat benchmark-batch/batch-header.sh > benchmark-batch/batch-tmp.sh
 cat tests/${BATCH_FILE} >> benchmark-batch/batch-tmp.sh
+cat benchmark-batch/batch-footer.sh >> benchmark-batch/batch-tmp.sh
 
 if [ "${RUN_LOCAL}" = true ]; then
     echo Copying batch file locally...
@@ -134,15 +139,15 @@ if [ "${RUN_LOCAL}" = true ]; then
 
     echo Starting local batch process...
     chmod +x benchmark-batch/batch-execute.sh
-    ./benchmark-batch/batch-execute.sh
+    ./benchmark-batch/batch-execute.sh${COMPILE}
 else
     echo Copying batch file to remote server...
-    scp -q -C -P ${PORT} benchmark-batch/batch-tmp.sh ${BATCH_USER}@${ADDRESS}:${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh &>/dev/null
+    scp -q -C -P ${PORT} benchmark-batch/batch-tmp.sh ${BATCH_USER}@${ADDRESS}:${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh${COMPILE} &>/dev/null
     rm -rf benchmark-batch/batch-tmp.sh
 
     echo Starting remote batch process...
     ssh -a ${BATCH_USER}@${ADDRESS} -p ${PORT} "chmod +x ${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh"
     ssh -a ${BATCH_USER}@${ADDRESS} -p ${PORT} "screen -d -m ${BATCH_RADARGUN_DEPLOYMENT_DIR}/benchmark-batch/batch-execute.sh"
-fi
 
-echo Done!
+    echo Done!
+fi
