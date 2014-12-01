@@ -263,10 +263,10 @@ function install {
     fi
     if [ "${KILL_JAVA}" = "all" ]; then
         echo Stopping all Java processes${JAVA_SUDO_LOG}
-        ssh ${USER}@${ADDRESS} -p ${PORT} "${JAVA_SUDO}killall -9 java"
+        ssh ${USER}@${ADDRESS} -p ${PORT} -t "${JAVA_SUDO}killall -9 java"
     elif [ "${KILL_JAVA}" = "no_idea" ]; then
         echo Stopping all Java processes${JAVA_SUDO_LOG} except IDEA
-        ssh ${USER}@${ADDRESS} -p ${PORT} "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs ${JAVA_SUDO}kill -9"
+        ssh ${USER}@${ADDRESS} -p ${PORT} -t "ps aux | grep java | grep -vi com.intellij.idea.Main | grep -v grep | awk '{print \$2}' | xargs ${JAVA_SUDO}kill -9"
     fi
 
     # uploading target file
