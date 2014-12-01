@@ -1,7 +1,9 @@
-./run.sh --threads 40 --duration 10s --configuration latest --value-entry-size 8 --batch-name duration-10s
-./run.sh --threads 40 --duration 30s --configuration latest --value-entry-size 8 --batch-name duration-30s
-./run.sh --threads 40 --duration 60s --configuration latest --value-entry-size 8 --batch-name duration-60s
-./run.sh --threads 40 --duration 120s --configuration latest --value-entry-size 8 --batch-name duration-120s
-./run.sh --threads 40 --duration 300s --configuration latest --value-entry-size 8 --batch-name duration-300s
-./run.sh --threads 40 --duration 600s --configuration latest --value-entry-size 8 --batch-name duration-600s
-./run.sh --threads 40 --duration 900s --configuration latest --value-entry-size 8 --batch-name duration-900s
+COMMON_PARAMETERS="--threads 128 --configuration latest --value-entry-size 8"
+
+./run.sh ${COMMON_PARAMETERS} --duration 10s --batch-name duration-10s
+./run.sh ${COMMON_PARAMETERS} --duration 30s --batch-name duration-30s
+./run.sh ${COMMON_PARAMETERS} --duration 60s --batch-name duration-60s
+./run.sh ${COMMON_PARAMETERS} --duration 120s --batch-name duration-120s
+./run.sh ${COMMON_PARAMETERS} --duration 300s --batch-name duration-300s
+./run.sh ${COMMON_PARAMETERS} --duration 600s --batch-name duration-600s
+./run.sh ${COMMON_PARAMETERS} --duration 900s --batch-name duration-900s

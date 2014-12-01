@@ -1,0 +1,15 @@
+COMMON_PARAMETERS="--threads 128 --duration 10s --configuration latest"
+
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 0 --key-total-entries 10000 --batch-name load-0-key-10k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 0 --key-total-entries 100000 --batch-name load-0-key-100k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 0 --key-total-entries 500000 --batch-name load-0-key-500k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 0 --key-total-entries 1000000 --batch-name load-0-key-1m
+
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 100000 --key-total-entries 10000 --batch-name load-100k-key-10k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 100000 --key-total-entries 100000 --batch-name load-100k-key-100k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 100000 --key-total-entries 500000 --batch-name load-100k-key-500k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 100000 --key-total-entries 1000000 --batch-name load-100k-key-1m
+
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 10000 --key-total-entries 10000 --batch-name load-10k-key-10k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 500000 --key-total-entries 500000 --batch-name load-500k-key-500k
+./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 1000000 --key-total-entries 1000000 --batch-name load-1m-key-1m

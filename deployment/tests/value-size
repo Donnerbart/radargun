@@ -1,7 +1,9 @@
-./run.sh --threads 40 --duration 10m --configuration latest --value-entry-size 8 --batch-name value-size-8
-./run.sh --threads 40 --duration 10m --configuration latest --value-entry-size 64 --batch-name value-size-64
-./run.sh --threads 40 --duration 10m --configuration latest --value-entry-size 128 --batch-name value-size-128
-./run.sh --threads 40 --duration 10m --configuration latest --value-entry-size 256 --batch-name value-size-256
-./run.sh --threads 40 --duration 10m --configuration latest --value-entry-size 512 --batch-name value-size-512
-./run.sh --threads 40 --duration 10m --configuration latest --value-entry-size 1024 --batch-name value-size-1024
-./run.sh --threads 40 --duration 10m --configuration latest --value-entry-size 2048 --batch-name value-size-2048
+COMMON_PARAMETERS="--threads 128 --duration 10m --configuration latest"
+
+./run.sh ${COMMON_PARAMETERS} --value-entry-size 8 --batch-name value-size-8
+./run.sh ${COMMON_PARAMETERS} --value-entry-size 64 --batch-name value-size-64
+./run.sh ${COMMON_PARAMETERS} --value-entry-size 128 --batch-name value-size-128
+./run.sh ${COMMON_PARAMETERS} --value-entry-size 256 --batch-name value-size-256
+./run.sh ${COMMON_PARAMETERS} --value-entry-size 512 --batch-name value-size-512
+./run.sh ${COMMON_PARAMETERS} --value-entry-size 1024 --batch-name value-size-1024
+./run.sh ${COMMON_PARAMETERS} --value-entry-size 2048 --batch-name value-size-2048

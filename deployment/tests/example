@@ -1,2 +1,4 @@
-./run.sh --threads 10 --duration 10s --configuration latest-hz --batch-name 10-threads
-./run.sh --threads 20 --duration 10s --configuration latest-hz --batch-name 20-threads
+COMMON_PARAMETERS="--duration 10s --configuration latest-hz"
+
+./run.sh ${COMMON_PARAMETERS} --threads 10 --batch-name 10-threads
+./run.sh ${COMMON_PARAMETERS} --threads 20 --batch-name 20-threads
