@@ -1,4 +1,4 @@
-COMMON_PARAMETERS="--threads 128 --duration 10s --configuration latest"
+COMMON_PARAMETERS="--threads 128 --duration 5m --configuration latest"
 
 ./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 0 --key-total-entries 10000 --batch-name load-0-key-10k
 ./run.sh ${COMMON_PARAMETERS} --load-data-num-entries 0 --key-total-entries 100000 --batch-name load-0-key-100k
