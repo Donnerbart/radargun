@@ -1,0 +1,9 @@
+COMMON_PARAMETERS="--threads 128 --duration 5m --configuration latest --load-data-num-entries 0 --key-total-entries 2147483647"
+
+./run.sh ${COMMON_PARAMETERS} --get-ratio 10 --put-ratio 0 --batch-name write-percentage-0
+./run.sh ${COMMON_PARAMETERS} --get-ratio 9 --put-ratio 1 --batch-name write-percentage-10
+./run.sh ${COMMON_PARAMETERS} --get-ratio 8 --put-ratio 2 --batch-name write-percentage-20
+./run.sh ${COMMON_PARAMETERS} --get-ratio 5 --put-ratio 5 --batch-name write-percentage-50
+./run.sh ${COMMON_PARAMETERS} --get-ratio 2 --put-ratio 8 --batch-name write-percentage-80
+./run.sh ${COMMON_PARAMETERS} --get-ratio 1 --put-ratio 9 --batch-name write-percentage-90
+./run.sh ${COMMON_PARAMETERS} --get-ratio 0 --put-ratio 10 --batch-name write-percentage-100
