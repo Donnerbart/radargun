@@ -128,13 +128,9 @@ if ! [ -f tests/${BATCH_FILE} ]; then
     exit 1
 fi
 
-if [ "${COMPILE}" = true ]; then
-    cat benchmark-batch/batch-header.sh \
-        | sed -e "s/COMPILE=false/COMPILE=true/g" \
-        > benchmark-batch/batch-tmp.sh
-else
-    cat benchmark-batch/batch-header.sh > benchmark-batch/batch-tmp.sh
-fi
+cat benchmark-batch/batch-header.sh \
+    | sed -e "s/COMPILE=false/COMPILE=${COMPILE}/g" \
+    > benchmark-batch/batch-tmp.sh
 cat tests/${BATCH_FILE} >> benchmark-batch/batch-tmp.sh
 cat benchmark-batch/batch-footer.sh >> benchmark-batch/batch-tmp.sh
 
